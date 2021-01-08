@@ -55,6 +55,10 @@ class Post {
   deleteOne(data, cb) {
     this.connection.query("DELETE FROM posts WHERE id = ?", data, cb);
   }
+
+  like(data, cb) {
+    this.connection.query("UPDATE posts SET like = ? WHERE ?", data, cb);
+  }
 }
 
 export default Post;

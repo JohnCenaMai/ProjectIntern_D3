@@ -9,7 +9,13 @@ const getPost = (req, res) => {
   // callback
 
   new Post(connection).get(
-    ["posts.id", "posts.title", "posts.content", "users.username"],
+    [
+      "posts.id",
+      "posts.title",
+      "posts.content",
+      "posts.like",
+      "users.username",
+    ],
     {
       table_name: ["users"],
       condition: ["users.id = posts.user_id"],
@@ -17,6 +23,16 @@ const getPost = (req, res) => {
     req.params.id == null ? "" : "Where posts.id = 2",
     (err, result) => {
       if (err) console.log(err);
+
+      if (result.like != null) {
+        result.like = result.like.split(",");
+      }
+
+      result.map((item) => {
+        if (item.like != null) {
+          item.like = item.like.trim().split(",");
+        }
+      });
 
       res.status(200).json({
         status: "success",
@@ -39,7 +55,7 @@ const createOnePost = (req, res) => {
   new Post(connection).createOne(data, (err, result) => {
     if (err) console.log(err);
 
-    console.log("Last insert ID:", result.insertId);
+    console.log("Last insert ID:", result);
 
     res.status(200).json({
       status: "success",
@@ -77,4 +93,7 @@ const deletePost = (req, res) => {
   });
 };
 
-export { getPost, createOnePost, updatePost, deletePost };
+const likePost = (req, res) => {
+  console.log("User", req.user);
+};
+export { getPost, createOnePost, updatePost, deletePost, likePost };

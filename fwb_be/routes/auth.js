@@ -1,9 +1,28 @@
 import express from "express";
-import { ggSignIn, ggSignInCallback } from "../controllers/authController";
+import passport from "passport";
+import { isLoggedIn } from "../middlewares/isLogged.js";
 
 const router = express.Router();
 
-router.get("/auth/google", ggSignIn);
-router.get("/auth/google/callback", ggSignInCallback);
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/",
+  }),
+  (req, res) => {
+    res.redirect("/dashboard");
+  }
+);
+
+router.get("/logout", isLoggedIn, (req, res) => {
+  req.logOut();
+  req.flash("success_msg", "You are logged out");
+  res.redirect("/");
+});
 
 export default router;
