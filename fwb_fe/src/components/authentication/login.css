@@ -1,0 +1,12 @@
+.site-page-header{
+    border: 1px solid rgb(235, 237, 240);
+    padding: 24px;
+}
+.form{
+    margin: 0px auto;
+    width: 50%;
+    color: red;
+}
+.form__text--signin{
+    margin-right: 25%;
+}
