@@ -12,6 +12,7 @@ import {
 import "antd/dist/antd.css";
 import "./login.css";
 import { setCookie } from "../../utils/cookie";
+
 const { TabPane } = Tabs;
 
 const ButtonSignIn = styled.button`
@@ -257,7 +258,7 @@ function Login() {
                   message: "Please input your confirm password!",
                 },
               ]}
-            >
+            >https://github.com/JohnCenaMai/ProjectIntern_D3/pull/6/conflict?name=fwb_fe%252Fsrc%252Fcomponents%252Fauthentication%252Flogin.js&ancestor_oid=0650ac262a98077f304610046c643bb9dfdcb187&base_oid=fb55379e21767c00500d234df2104a7b6f1ef554&head_oid=5ca6d782e3f690d632ff8df2d2b3ebe94013b207
               <Input.Password placeholder="Confirm password" />
             </Form.Item>
             <Form.Item name="date-picker" label="Date of Birth" {...config}>
