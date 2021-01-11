@@ -11,6 +11,7 @@ import {
 } from "antd";
 import "antd/dist/antd.css";
 import "./login.css";
+import { setCookie } from "../../utils/cookie";
 const { TabPane } = Tabs;
 
 const ButtonSignIn = styled.button`
@@ -108,7 +109,7 @@ function Login() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        setCookie("jwt", data, { path: "/" });
       });
   };
 
@@ -129,7 +130,7 @@ function Login() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        setCookie("jwt", data, { path: "/" });
       });
   };
 
