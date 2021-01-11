@@ -1,8 +1,8 @@
 import nodemailer from "nodemailer";
 
-const sendEmail = async (username, email) => {
+const sendEmail = async (email, content) => {
   // This is the content of email
-  const output = `<p>Hello ${username}, welcome to Friend with benefit<p>`;
+  // const output = `<p>Hello ${username}, welcome to Friend with benefit<p>`;
 
   // Transporter is responseable for send email
   let transporter = nodemailer.createTransport({
@@ -25,7 +25,7 @@ const sendEmail = async (username, email) => {
     to: email, // list of receivers
     subject: "Hello ✔ from nodemailer", // Subject line
     text: "Hello world?", // plain text body
-    html: output, // html body
+    html: content, // html body
   });
 
   console.log("Message sent: %s", info.messageId);

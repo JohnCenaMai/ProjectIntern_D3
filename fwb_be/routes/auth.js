@@ -1,6 +1,11 @@
 import express from "express";
 import passport from "passport";
-import { loginUser, registerUser } from "../controllers/authController.js";
+import {
+  loginUser,
+  registerUser,
+  forgotPassword,
+  resetPassword,
+} from "../controllers/authController.js";
 import { isLoggedIn } from "../middlewares/isLogged.js";
 import { check } from "express-validator";
 
@@ -40,6 +45,9 @@ router.post(
   check("password", "Password is required").exists(),
   loginUser
 );
+
+router.post("/fotgotPassword", forgotPassword);
+router.put("/resetPassword/:token", resetPassword);
 
 router.get("/logout", (req, res) => {
   req.logOut();

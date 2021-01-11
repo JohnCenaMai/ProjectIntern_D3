@@ -4,6 +4,7 @@ import User from "./../models/User.js";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 import sendEmail from "./emailController.js";
 
 const registerUser = async (req, res) => {
@@ -53,7 +54,10 @@ const registerUser = async (req, res) => {
               httpOnly: true,
             });
 
-            sendEmail(result[0].username, userData.email);
+            sendEmail(
+              userData.email,
+              `<p>Hello ${userData.username}, welcome to Friend with benefit<p>`
+            );
 
             res.status(201).json({ token });
           });
@@ -109,4 +113,72 @@ const loginUser = async (req, res) => {
   });
 };
 
-export { registerUser, loginUser };
+const forgotPassword = async (req, res) => {
+  // Find user with email
+  const user = new User(connection);
+
+  user.getOne(`email = "${req.body.email}"`, (err, result) => {
+    if (err) console.log(err);
+
+    // Generate random token
+    let resetToken = crypto.randomBytes(32).toString("hex");
+
+    resetToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+
+    const data = [resetToken, Date.now() + 10 * 60 * 1000, result[0].id];
+    console.log("Data", data);
+
+    user.generateResetToken(data, (err, result) => {
+      if (err) console.log(err);
+    });
+
+    // Send token to user by email
+    sendEmail(result[0].email, `Your reset code: ${resetToken}`);
+
+    res.json({
+      status: "success",
+      msg: "Reset code has been sent",
+    });
+  });
+};
+
+const resetPassword = async (req, res) => {
+  // Find user with reset token
+  const user = new User(connection);
+
+  user.getOne(`reset_token = "${req.params.token}"`, async (err, result) => {
+    console.log(result);
+
+    if (result.length == 0) {
+      return res.status(404).json({
+        status: "fail",
+        msg: "Can't found this user",
+      });
+    } else {
+      if (result[0].reset_token_expire < Date.now()) {
+        return res.status(400).json({
+          status: "fail",
+          msg: "Invalid reset token",
+        });
+      } else {
+        const salt = await bcrypt.genSalt(10);
+        const encriptPassword = await bcrypt.hash(req.body.password, salt);
+
+        const data = [encriptPassword, result[0].id];
+        user.updatePassword(data, (err, result) => {
+          if (err) console.log(err);
+
+          return res.status(201).json({
+            status: "success",
+            msg: "Password changed!",
+          });
+        });
+      }
+    }
+  });
+  // Check if token expired
+  // Change Password
+  // Send token to user by email
+};
+
+export { registerUser, loginUser, forgotPassword, resetPassword };
