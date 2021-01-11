@@ -6,6 +6,7 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 import flash from "connect-flash";
+import cors from "cors";
 import postRoute from "./routes/posts.js";
 import indexRoute from "./routes/index.js";
 import authRoute from "./routes/auth.js";
@@ -24,6 +25,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+app.options("*", cors());
 
 // Setup flash
 app.use(flash());
