@@ -26,6 +26,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+app.use(cors());
 app.options("*", cors());
 
 // Setup flash
