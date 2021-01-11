@@ -1,0 +1,27 @@
+@media only screen and (max-width: 768px){
+    .ant-tabs-tab-btn{
+        font-size: 15px;
+    }
+    .form{
+        margin: 0;
+        width: 100%;
+    }
+    .ant-form-item-required{
+        display: none!important;
+    }
+    .ant-radio-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: unset;
+    }
+    .ant-tabs-nav-wrap{
+        margin-left: 8%;
+    }
+    .ant-form{
+        margin-left: 10%!important;
+        margin-right: 10%!important;
+    }
+    .ant-radio-group{
+        justify-content: center;
+    }
+}

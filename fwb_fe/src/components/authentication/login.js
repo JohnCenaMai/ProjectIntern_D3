@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
 import styled from "styled-components";
-import {PageHeader,Tabs,Tooltip,  Form, Input, Radio, DatePicker} from 'antd';
+import {Tabs,Tooltip,  Form, Input, Radio, DatePicker} from 'antd';
 import 'antd/dist/antd.css';
 import './login.css';
+import './responsive.css';
 const { TabPane } = Tabs;
 
   const ButtonSignIn = styled.button`
@@ -71,10 +72,6 @@ function Login() {
 
     return (
     <Fragment>
-        <PageHeader 
-        className="site-page-header"
-        onBack={() => null}
-        title="FWB" />
 
         <Tabs centered className="form">
             <TabPane tab="Sign In" key="1" className="form__text--signin">
