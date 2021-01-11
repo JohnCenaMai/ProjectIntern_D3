@@ -1,11 +1,13 @@
 import GoogleStrategy from "passport-google-oauth";
+import LocalStrategy from "passport-local";
 import authConfig from "./authConfig.js";
 import User from "./../models/User.js";
 import connection from "./../server.js";
 
 const googleStrategy = GoogleStrategy.OAuth2Strategy;
+const localStrategy = LocalStrategy.Strategy;
 
-export default function (passport) {
+function GgSignIn(passport) {
   // used to serialize the user for the session
   passport.serializeUser(function (user, done) {
     done(null, user[0].id);
@@ -54,3 +56,13 @@ export default function (passport) {
     )
   );
 }
+
+function LocalSignIn(passport) {
+  passport.use(
+    new localStrategy({ usernameField: "email" }, (email, password, done) => {
+      console.log("LOCAL SIGN IN");
+    })
+  );
+}
+
+export { GgSignIn, LocalSignIn };

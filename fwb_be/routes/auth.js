@@ -1,9 +1,12 @@
 import express from "express";
 import passport from "passport";
+import { loginUser, registerUser } from "../controllers/authController.js";
 import { isLoggedIn } from "../middlewares/isLogged.js";
+import { check } from "express-validator";
 
 const router = express.Router();
 
+// GG Sign In
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
@@ -15,14 +18,30 @@ router.get(
     failureRedirect: "/",
   }),
   (req, res) => {
+    res.cookie("User id", req.session.passport.user);
     res.redirect("/dashboard");
   }
 );
+// End GG Sign In
 
-router.get("/logout", isLoggedIn, (req, res) => {
-  req.logOut();
-  req.flash("success_msg", "You are logged out");
-  res.redirect("/");
-});
+router.post(
+  "/register",
+  check("username", "Username is required").notEmpty(),
+  check("email", "Please provide valid email").isEmail(),
+  check(
+    "password",
+    "Please enter a password with 6 or more characters"
+  ).isLength({ min: 6 }),
+  registerUser
+);
+
+router.post(
+  "/login",
+  check("email", "Please provide valid email").isEmail(),
+  check("password", "Password is required").exists(),
+  loginUser
+);
+
+router.get("/logout", (req, res) => {});
 
 export default router;

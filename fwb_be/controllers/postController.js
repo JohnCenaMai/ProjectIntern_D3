@@ -94,6 +94,6 @@ const deletePost = (req, res) => {
 };
 
 const likePost = (req, res) => {
-  console.log("User", req.user);
+  console.log("User", req.session.passport);
 };
 export { getPost, createOnePost, updatePost, deletePost, likePost };
