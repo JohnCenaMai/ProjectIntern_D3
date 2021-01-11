@@ -4,6 +4,7 @@ import User from "./../models/User.js";
 import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
+import sendEmail from "./emailController.js";
 
 const registerUser = async (req, res) => {
   const errors = validationResult(req);
@@ -34,7 +35,6 @@ const registerUser = async (req, res) => {
 
       return res.json({ status: "fail", msg: "This user has already created" });
     } else {
-      console.log("Create user", req.body.email);
       user.createOne(userData, (err, result) => {
         return user.getOne(`email = "${userData.email}"`, (err, result) => {
           const payload = {
@@ -52,6 +52,8 @@ const registerUser = async (req, res) => {
               ),
               httpOnly: true,
             });
+
+            sendEmail(result[0].username, userData.email);
 
             res.status(201).json({ token });
           });

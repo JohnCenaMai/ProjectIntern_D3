@@ -18,7 +18,6 @@ router.get(
     failureRedirect: "/",
   }),
   (req, res) => {
-    res.cookie("User id", req.session.passport.user);
     res.redirect("/dashboard");
   }
 );
@@ -42,6 +41,9 @@ router.post(
   loginUser
 );
 
-router.get("/logout", (req, res) => {});
+router.get("/logout", (req, res) => {
+  req.logOut();
+  res.redirect("/");
+});
 
 export default router;
