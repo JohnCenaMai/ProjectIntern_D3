@@ -1,0 +1,29 @@
+.site-page-header{
+    border: 1px solid rgb(235, 237, 240);
+    padding: 24px;
+    margin: 0px auto;
+    text-align: center;
+}
+.form{
+    margin: 0px auto;
+    width: 50%;
+    color: red;
+}
+.form__text--signin{
+    margin-right: 25%;
+}
+.ant-picker{
+    width: 100%!important;
+}
+.gmOLbd{
+    margin: 0px!important;
+}
+.eTvPpx{
+    margin: 0px!important;
+}
+.hQmGVR{
+    margin: 0px!important;
+}
+.ant-tabs-tab-btn{
+    font-size: 25px;
+}
