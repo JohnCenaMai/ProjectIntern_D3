@@ -25,12 +25,12 @@ class Post {
     // Handle join
     if (Object.keys(joinOpts).length > 0) {
       joinOpts.table_name.map((name, index) => {
-        sql += ` INNER JOIN ${name} ON ${joinOpts.condition[index]} `;
+        sql += ` LEFT JOIN ${name} ON ${joinOpts.condition[index]} `;
       });
     }
 
     // Handle Where
-    if (whereOpts != "") {
+    if (whereOpts !== "") {
       sql += whereOpts;
     }
 
@@ -46,7 +46,7 @@ class Post {
   // Data is an array
   updateOne(data, cb) {
     this.connection.query(
-      "UPDATE posts SET title = ?, content = ?, status = ? WHERE ?",
+      "UPDATE posts SET title = ?, content = ?, status = ? WHERE id = ?",
       data,
       cb
     );
@@ -57,7 +57,11 @@ class Post {
   }
 
   like(data, cb) {
-    this.connection.query("UPDATE posts SET like = ? WHERE ?", data, cb);
+    this.connection.query(
+      "UPDATE `posts` SET `like`= ? WHERE id = ?",
+      data,
+      cb
+    );
   }
 }
 

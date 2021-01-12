@@ -10,8 +10,6 @@ export default class User {
       sql += whereOpts;
     }
 
-    console.log(sql);
-
     this.connection.query(sql, cb);
   }
 
@@ -20,14 +18,14 @@ export default class User {
   }
 
   generateResetToken(data, cb) {
-    let sql =
+    const sql =
       "UPDATE `users` SET `reset_token`= ?,`reset_token_expire`=? WHERE id = ?";
 
     this.connection.query(sql, data, cb);
   }
 
   updatePassword(data, cb) {
-    let sql =
+    const sql =
       "UPDATE `users` SET `password` = ? ,`reset_token`= null,`reset_token_expire`= null WHERE id = ?";
 
     this.connection.query(sql, data, cb);
