@@ -1,13 +1,10 @@
 import React from 'react';
 import './App.css';
-import Login from './components/authentication/login';
-import Sidebar from './components/common/sidebar/sider';
+import HomePage from './components/pages/home/homepage';
 
 function App() {
   return (
-    <div className="App">
-      <Login />
-    </div>
+    <HomePage />
   );
 }
 
