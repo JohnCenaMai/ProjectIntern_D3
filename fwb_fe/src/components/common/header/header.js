@@ -3,7 +3,7 @@ import styled from "styled-components";
 import 'antd/dist/antd.css';
 import '../../common/header/header.css';
 import {Row,Col} from 'antd';
-import { ThunderboltOutlined, SlidersFilled } from '@ant-design/icons';
+import { SettingOutlined, SlidersFilled } from '@ant-design/icons';
 
 const Button = styled.button`
     border: none;
@@ -25,7 +25,7 @@ function Header() {
     <Row>
                     <Col span={8}>
                     <Button onClick={onRandom}>
-                    <ThunderboltOutlined style={{color: '#FF1493'}} />
+                    <SettingOutlined style={{color: '#FF1493'}} />
                     </Button>
                     </Col>
                     <Col span={8}>People near you</Col>
