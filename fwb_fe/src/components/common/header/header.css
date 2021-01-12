@@ -16,7 +16,7 @@
     height: 200px!important;
     margin: 0px auto;
     margin-top: 23%;
-    animation: ripple 2s linear infinite;
+    animation: ripple 1s linear infinite;
 }
 @keyframes ripple {
     0% {
