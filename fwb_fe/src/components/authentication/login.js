@@ -11,7 +11,10 @@ import {
 } from "antd";
 import "antd/dist/antd.css";
 import "./login.css";
+import "./responsive.css";
+import { useHistory } from "react-router";
 import { setCookie } from "../../utils/cookie";
+
 const { TabPane } = Tabs;
 
 const ButtonSignIn = styled.button`
@@ -19,11 +22,10 @@ const ButtonSignIn = styled.button`
   color: white;
   background-color: #ff2e68;
   font-size: 1em;
-  margin: 1em;
   padding: 1%;
   border: 2px solid #ff4081;
   border-radius: 32px;
-  width: 94%;
+  width: 100%;
   cursor: pointer;
 `;
 
@@ -32,7 +34,6 @@ const ButtonSignUp = styled.button`
   color: white;
   background-color: #ff2e68;
   font-size: 1em;
-  margin: 1em;
   padding: 1%;
   border: 2px solid #ff4081;
   border-radius: 32px;
@@ -43,11 +44,10 @@ const ButtonSignInWithGG = styled.button`
   display: inline-block;
   color: black;
   font-size: 1em;
-  margin: 1em;
   padding: 1%;
   border: 2px solid #ff4081;
   border-radius: 32px;
-  width: 94%;
+  width: 100%;
   cursor: pointer;
 `;
 const config = {
@@ -69,6 +69,8 @@ const requireRadio = {
 };
 
 function Login() {
+  let history = useHistory();
+
   const [emailLogin, setEmailLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
 
