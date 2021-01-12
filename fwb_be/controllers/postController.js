@@ -1,3 +1,7 @@
+import Comment from "../models/Comment.js";
+import Image from "../models/Image.js";
+import User from "../models/User.js";
+import constants from "../utlis/constants.js";
 import Post from "./../models/Post.js";
 import connection from "./../server.js";
 
@@ -15,12 +19,13 @@ const getPost = (req, res) => {
       "posts.content",
       "posts.like",
       "users.username",
+      "images.imageUrl",
     ],
     {
-      table_name: ["users"],
-      condition: ["users.id = posts.user_id"],
+      table_name: ["users", "images"],
+      condition: ["users.id = posts.user_id", "posts.id = images.post_id"],
     },
-    req.params.id == null ? "" : "Where posts.id = 2",
+    req.params.id === null ? "" : `Where posts.id = ${req.params.id}`,
     (err, result) => {
       if (err) console.log(err);
 
@@ -48,18 +53,28 @@ const createOnePost = (req, res) => {
   const data = {
     title: req.body.title,
     content: req.body.content,
-    status: 0,
-    user_id: 1,
+    status: constants.DEFAULT_POST_STATUS,
+    user_id: req.user.id,
   };
 
-  new Post(connection).createOne(data, (err, result) => {
+  console.log(data);
+
+  const post = new Post(connection);
+  const image = new Image(connection);
+
+  post.createOne(data, (err, result) => {
     if (err) console.log(err);
 
-    console.log("Last insert ID:", result);
+    const lastInsertId = result.insertId;
+    console.log(lastInsertId);
 
-    res.status(200).json({
-      status: "success",
-      msg: `Item id ${result.insertId} created!`,
+    image.upload([req.file.filename, lastInsertId], (err, uploadRes) => {
+      if (err) console.log(err);
+
+      res.status(200).json({
+        status: "success",
+        msg: "Post created!",
+      });
     });
   });
 };
@@ -83,17 +98,52 @@ const updatePost = (req, res) => {
 };
 
 const deletePost = (req, res) => {
-  new Post(connection).deleteOne(req.params.id, (err, result) => {
+  const post = new Post(connection);
+  const comment = new Comment(connection);
+  const image = new Image(connection);
+
+  post.deleteOne(req.params.id, (err, result) => {
     if (err) console.log(err);
 
-    res.status(200).json({
-      status: "success",
-      msg: `Item id ${result.insertId} deleted!`,
+    comment.deleteByPost(req.params.id, (err, result) => {
+      if (err) console.log(err);
+
+      image.delete(req.params.id, (err, result) => {
+        res.status(200).json({
+          status: "success",
+          msg: `Item id ${result.insertId} deleted!`,
+        });
+      });
     });
   });
 };
 
 const likePost = (req, res) => {
-  console.log("User", req.session.passport);
+  const post = new Post(connection);
+
+  post.get([], {}, ` where posts.id = ${req.params.id}`, (err, result) => {
+    let likes = result[0].like;
+
+    // Check user liked or not
+    new User(connection).getOne(`id = "${req.user.id}"`, (err, result) => {
+      let email = result[0].email;
+      if (likes.includes(email)) {
+        res.json({
+          status: "fail",
+          msg: "You've already liked this post!",
+        });
+      } else {
+        likes += `,${email}`;
+
+        post.like([likes, req.params.id], (err, data) => {
+          res.status(200).json({
+            status: "success",
+            msg: "Post liked!",
+          });
+        });
+      }
+    });
+  });
 };
+
 export { getPost, createOnePost, updatePost, deletePost, likePost };

@@ -1,4 +1,5 @@
 import { promisify } from "util";
+import jwt from "jsonwebtoken";
 
 const isLoggedInPassport = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -21,8 +22,9 @@ const isLoggedInPassport = (req, res, next) => {
 // };
 
 const protectedRoute = (req, res, next) => {
+  // Get token from header
   let token;
-  // Get token from request
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -34,13 +36,19 @@ const protectedRoute = (req, res, next) => {
     return res.status(401).json({ msg: "No token, authorization denied" });
   }
 
-  // Verify token
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded.user;
-    next();
-  } catch (error) {
-    return res.status(401).json({ status: "fail", msg: "Invalid Credentials" });
+    jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
+      if (error) {
+        return res.status(401).json({ msg: "Token is not valid" });
+      } else {
+        console.log();
+        req.user = decoded.user;
+        next();
+      }
+    });
+  } catch (err) {
+    console.error("something wrong with auth middleware");
+    res.status(500).json({ msg: "Server Error" });
   }
 };
 

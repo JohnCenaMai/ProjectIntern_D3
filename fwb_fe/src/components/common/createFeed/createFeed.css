@@ -1,0 +1,48 @@
+.createFeed {
+  padding: 1rem;
+  box-shadow: 1px 12px 23px -8px rgba(0, 0, 0, 0.55);
+  border-radius: 1rem;
+}
+
+.createFeed__form {
+}
+
+.createFeed__form input,
+textarea {
+  outline: none;
+  margin-top: 10px;
+  border: none;
+  width: 100%;
+  padding: 10px;
+}
+
+.createFeed__form--action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.createFeed__form--button {
+  border: none;
+  outline: none;
+  padding: 10px 25px;
+  margin-left: 15px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.discardBtn {
+  background-color: transparent;
+  transition: 0.3s;
+}
+
+.discardBtn:hover {
+  background-color: red;
+  color: white;
+}
+
+.postBtn {
+  background-color: #ff2e68;
+  font-size: 1.3rem;
+  color: white;
+}

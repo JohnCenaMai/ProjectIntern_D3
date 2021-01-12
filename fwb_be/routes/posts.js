@@ -6,6 +6,8 @@ import {
   deletePost,
   likePost,
 } from "../controllers/postController.js";
+import { protectedRoute } from "../middlewares/isLogged.js";
+import uploadImage from "../middlewares/uploadImage.js";
 
 const router = express.Router();
 
@@ -13,9 +15,9 @@ const router = express.Router();
 router.get("/", getPost);
 // This route has req.params.id
 router.get("/:id", getPost);
-router.post("/", createOnePost);
+router.post("/", protectedRoute, uploadImage, createOnePost);
 router.put("/:id", updatePost);
-router.put("/like/:id", likePost);
+router.put("/like/:id", protectedRoute, likePost);
 router.delete("/:id", deletePost);
 
 export default router;
