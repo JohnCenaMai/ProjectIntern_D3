@@ -24,6 +24,11 @@ class Comment {
     const sql = "DELETE FROM `comments` WHERE id = ? OR parent_id = ?";
     this.connection.query(sql, data, cb);
   }
+
+  deleteByPost(data, cb) {
+    const sql = "DELETE FROM `comments` WHERE post_id = ? ";
+    this.connection.query(sql, data, cb);
+  }
 }
 
 export default Comment;
