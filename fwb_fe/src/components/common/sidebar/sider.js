@@ -8,7 +8,7 @@ import {AppstoreFilled, LoadingOutlined,EyeFilled,LikeFilled,StarFilled,
 
 
 const { SubMenu } = Menu;
-const {Sider, Content } = Layout;
+const {Sider } = Layout;
 
 const ButtonPayment = styled.button`
     display: inline-block;
@@ -36,12 +36,12 @@ function Sidebar() {
                 defaultOpenKeys={['sub1']}
                 // onMouseUp={ChangeColorText}
                 mode="inline"
-                style={{color:color,width: '350px',fontSize: '17px'}} >
+                style={{color:color,width: '360px',fontSize: '17px'}} >
                 <Menu.Item>
                     <Row>
                         <Image
                         style={{width: '150px',
-                            marginLeft: '40px'}}
+                            marginLeft: '50%'}}
                         src="https://howzuapp.com/web/static/media/logo-c-64.60b36bd1.png" 
                         />
                     </Row>
@@ -52,7 +52,7 @@ function Sidebar() {
                         <Avatar style={{ backgroundColor: color, verticalAlign: 'middle' }} size="medium"></Avatar>
                     </Col>
                     <Col span={12}>Sơn Đặng Cao</Col>
-                    <Col span={6}  style={{verticalAlign: 'middle'}} size="medium" ><SettingOutlined /></Col>
+                    <Col span={6}  style={{textAlign: 'end'}} size="medium" ><SettingOutlined /></Col>
                 </Row>
                 </Menu.Item>
                 <Menu.Item key="1" icon={<LoadingOutlined />}>
@@ -90,11 +90,6 @@ function Sidebar() {
                     <ButtonPayment>Become a Premium Member</ButtonPayment>
             </Menu>
                 </Sider>
-                <Content>
-                    <Row>
-                        <Col>1</Col>
-                    </Row>
-                </Content>
             </Layout>
         </Fragment>
     );
