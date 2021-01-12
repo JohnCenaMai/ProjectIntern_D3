@@ -5,7 +5,7 @@ import HomePage from './components/pages/home/homepage';
 
 function App() {
   return (
-    <Login />
+    <HomePage />
   );
 }
 
