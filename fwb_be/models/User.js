@@ -17,6 +17,22 @@ export default class User {
     this.connection.query("INSERT INTO users SET ?", data, cb);
   }
 
+  update(data, cb) {
+    const sql =
+      "UPDATE `users` SET `username`=?,`full_name`=?,`gender`=?,`age`=?,`link_fb`=?,`description`= ? WHERE id = ?";
+    this.connection.query(sql, data, cb);
+  }
+
+  updateHobits(data, cb) {
+    const sql = "UPDATE `users` SET `hobits`=? WHERE id = ?";
+    this.connection.query(sql, data, cb);
+  }
+
+  updateImage(data, cb) {
+    const sql = "UPDATE `users` SET `imageUrl`= ? WHERE id = ?";
+    this.connection.query(sql, data, cb);
+  }
+
   generateResetToken(data, cb) {
     const sql =
       "UPDATE `users` SET `reset_token`= ?,`reset_token_expire`=? WHERE id = ?";
