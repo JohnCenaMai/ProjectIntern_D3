@@ -1,10 +1,10 @@
 import React, { Fragment,useState } from 'react';
 import { Layout, Image } from 'antd';
-
+import './sider.css';
 import { Menu, Row, Col, Avatar } from 'antd';
 import styled from "styled-components";
 import {AppstoreFilled, LoadingOutlined,EyeFilled,LikeFilled,StarFilled,
-      HeartFilled, MessageFilled,EllipsisOutlined,SearchOutlined,SettingOutlined } from '@ant-design/icons';
+      HeartFilled, MessageFilled,EllipsisOutlined,SearchOutlined } from '@ant-design/icons';
 
 
 const { SubMenu } = Menu;
@@ -36,7 +36,7 @@ function Sidebar() {
                 defaultOpenKeys={['sub1']}
                 // onMouseUp={ChangeColorText}
                 mode="inline"
-                style={{color:color,width: '360px',fontSize: '17px'}} >
+                style={{color:color,width: '360px',height: '700px',overflow:'auto',fontSize: '17px'}} >
                 <Menu.Item>
                     <Row>
                         <Image
@@ -52,7 +52,6 @@ function Sidebar() {
                         <Avatar style={{ backgroundColor: color, verticalAlign: 'middle' }} size="medium"></Avatar>
                     </Col>
                     <Col span={12}>Sơn Đặng Cao</Col>
-                    <Col span={6}  style={{textAlign: 'end'}} size="medium" ><SettingOutlined /></Col>
                 </Row>
                 </Menu.Item>
                 <Menu.Item key="1" icon={<LoadingOutlined />}>
