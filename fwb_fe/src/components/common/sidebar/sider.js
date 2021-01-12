@@ -36,7 +36,7 @@ function Sidebar() {
                 defaultOpenKeys={['sub1']}
                 // onMouseUp={ChangeColorText}
                 mode="inline"
-                style={{color:color,width: '360px',height: '700px',overflow:'auto',fontSize: '17px'}} >
+                style={{color:color,width: '360px',height: '100vh',fontSize: '17px'}} >
                 <Menu.Item>
                     <Row>
                         <Image
