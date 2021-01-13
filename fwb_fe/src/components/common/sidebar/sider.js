@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import { Layout, Image } from "antd";
 import "./sider.css";
 import { Menu, Row, Col, Avatar } from "antd";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
   AppstoreFilled,
@@ -14,6 +15,7 @@ import {
   EllipsisOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
+import Match from "../../pages/match/match";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -63,7 +65,7 @@ function Sidebar() {
                 </Row>
                 </Menu.Item>
                 <Menu.Item key="1" icon={<LoadingOutlined />}>
-                    People near you
+                   <Link to="/find-near-you"> People near you</Link>
                 </Menu.Item>
                 <Menu.Item key="2" icon={<SearchOutlined />}>
                     Find new people
@@ -72,13 +74,13 @@ function Sidebar() {
                     Visitors
                 </Menu.Item>
                 <Menu.Item key="4" icon={<MessageFilled />}>
-                    Message
+                    <Link to="/message">Message</Link>
                 </Menu.Item>
                 <Menu.Item key="5" icon={<HeartFilled />}>
-                    Feeds
+                    <Link to="/feeds">Feeds</Link>
                 </Menu.Item>
                 <Menu.Item key="6" icon={<HeartFilled />}>
-                    Matches
+                    <Link to="/matches">Matches</Link>
                 </Menu.Item>
                 <Menu.Item key="7" icon={<StarFilled />}>
                     Super Likes
