@@ -1,8 +1,7 @@
 import React, { Fragment, useState } from "react";
 import "antd/dist/antd.css";
-import { Row, Col, Avatar, Typography } from "antd";
+import { Row, Col } from "antd";
 import Sidebar from "../../common/sidebar/sider";
-import Header from "../../common/header/header";
 import "./feedPage.css";
 import FeedItem from "../../common/feedItem/feedItem";
 import CreateFeed from "../../common/createFeed/createFeed";

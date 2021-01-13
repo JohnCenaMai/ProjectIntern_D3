@@ -1,0 +1,15 @@
+.recentChatItem {
+  display: flex;
+  align-items: center;
+  transition: 0.3s ease-in-out;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.recentChatItem:hover {
+  background-color: #dbdbdb;
+}
+
+.recentChatItem__infor {
+  margin-left: 1rem;
+}
