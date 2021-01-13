@@ -43,14 +43,13 @@ function Sidebar() {
             defaultOpenKeys={["sub1"]}
             // onMouseUp={ChangeColorText}
             mode="inline"
-            style={{
-              color: color,
-              width: "360px",
-              height: "100vh",
-              overflow: "auto",
-              overflowX: "hidden",
-              fontSize: "17px",
-            }}
+            style={{ 
+              width: '360px',
+              overflow: 'auto',
+              height: '100vh',
+              position: 'fixed',
+              left: 0,
+          }}
           >
             <Menu.Item>
               <Row>
