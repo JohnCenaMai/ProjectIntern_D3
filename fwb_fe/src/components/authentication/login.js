@@ -12,6 +12,7 @@ import {
 import "antd/dist/antd.css";
 import "./login.css";
 import "./responsive.css";
+import { useHistory } from "react-router";
 import { setCookie } from "../../utils/cookie";
 
 const { TabPane } = Tabs;
@@ -68,6 +69,8 @@ const requireRadio = {
 };
 
 function Login() {
+  let history = useHistory();
+
   const [emailLogin, setEmailLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
 

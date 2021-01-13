@@ -6,9 +6,9 @@ import {Row,Col, Drawer,Radio,Select, Form, Input,Collapse} from 'antd';
 import { SettingOutlined, SlidersFilled } from '@ant-design/icons';
 
 const Button = styled.button`
-    border: none;
-    border-radius: 50%;
-    background-color: white;
+  border: none;
+  border-radius: 50%;
+  background-color: white;
 `;
 
 const ButtonSubmit = styled.button`
@@ -91,7 +91,7 @@ function Header() {
             </Col>
         </Row>
     </>
-    );
+  );
 }
 
 export default Header;

@@ -6,6 +6,7 @@ import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import sendEmail from "./emailController.js";
+import constants from "../utlis/constants.js";
 
 const registerUser = async (req, res) => {
   const errors = validationResult(req);
@@ -21,7 +22,7 @@ const registerUser = async (req, res) => {
     password: req.body.password,
     age: req.body.age,
     gender: req.body.gender,
-    status: 0,
+    status: constants.DEFAULT_USER_STATUS,
   };
 
   const salt = await bcrypt.genSalt(10);
@@ -34,7 +35,10 @@ const registerUser = async (req, res) => {
     if (result.length != 0) {
       console.log("Check user", req.body.email);
 
-      return res.json({ status: "fail", msg: "This user has already created" });
+      return res.json({
+        status: "fail",
+        msg: "This user has already created",
+      });
     } else {
       user.createOne(userData, (err, result) => {
         return user.getOne(`email = "${userData.email}"`, (err, result) => {

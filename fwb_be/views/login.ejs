@@ -1,47 +1,57 @@
-<a href="/auth/google">Google login</a>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <a href="/auth/google">Google login</a>
 
-<form id="loginForm">
-  <input
-    id="loginFormEmail"
-    type="text"
-    name="email"
-    placeholder="Email"
-    value="khaclam@gmail.com"
-  />
-  <input
-    id="loginFormPass"
-    type="text"
-    name="passsword"
-    placeholder="Password"
-    value="123456"
-  />
-  <button>Login</button>
-</form>
+    <form id="loginForm">
+      <input
+        id="loginFormEmail"
+        type="text"
+        name="email"
+        placeholder="Email"
+        value="khaclam@gmail.com"
+      />
+      <input
+        id="loginFormPass"
+        type="text"
+        name="passsword"
+        placeholder="Password"
+        value="123456"
+      />
+      <button>Login</button>
+    </form>
 
-<script>
-  const email = document.querySelector("#loginFormEmail").value;
-  const password = document.querySelector("#loginFormPass").value;
+    <script>
+      const email = document.querySelector("#loginFormEmail").value;
+      const password = document.querySelector("#loginFormPass").value;
 
-  document.getElementById("loginForm").addEventListener("submit", (e) => {
-    e.preventDefault();
+      document.getElementById("loginForm").addEventListener("submit", (e) => {
+        e.preventDefault();
 
-    const data = {
-      email,
-      password,
-    };
+        const data = {
+          email,
+          password,
+        };
 
-    console.log(data);
+        console.log(data);
 
-    fetch("http://localhost:5000/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.token);
+        fetch("http://localhost:5000/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data.token);
+          });
       });
-  });
-</script>
+    </script>
+  </body>
+</html>

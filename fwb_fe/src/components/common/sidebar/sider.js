@@ -1,38 +1,46 @@
-import React, { Fragment,useState } from 'react';
-import { Layout, Image } from 'antd';
-import './sider.css';
-import { Menu, Row, Col, Avatar } from 'antd';
+import React, { Fragment, useState } from "react";
+import { Layout, Image } from "antd";
+import "./sider.css";
+import { Menu, Row, Col, Avatar } from "antd";
 import styled from "styled-components";
-import {AppstoreFilled, LoadingOutlined,EyeFilled,LikeFilled,StarFilled,
-      HeartFilled, MessageFilled,EllipsisOutlined,SearchOutlined } from '@ant-design/icons';
-
+import {
+  AppstoreFilled,
+  LoadingOutlined,
+  EyeFilled,
+  LikeFilled,
+  StarFilled,
+  HeartFilled,
+  MessageFilled,
+  EllipsisOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 
 const { SubMenu } = Menu;
-const {Sider } = Layout;
+const { Sider } = Layout;
 
 const ButtonPayment = styled.button`
-    display: inline-block;
-    color: white;
-    background-color: #ff2e68;
-    font-size: 1em;
-    margin: 3%;
-    padding: 6%;
-    border: 2px solid #ff4081;
-    border-radius: 32px;
-    width: 94%;
-    cursor: pointer;
+  display: inline-block;
+  color: white;
+  background-color: #ff2e68;
+  font-size: 1em;
+  margin: 3%;
+  padding: 6%;
+  border: 2px solid #ff4081;
+  border-radius: 32px;
+  width: 94%;
+  cursor: pointer;
 `;
 
 function Sidebar() {
+  const [color, setColor] = useState("black");
 
-    const [color,setColor] = useState('black');
 
     return(
         <Fragment>
             <Layout>
                 <Sider>
                 <Menu
-                defaultSelectedKeys={['1']}
+                defaultSelectedKeys={['5']}
                 defaultOpenKeys={['sub1']}
                 // onMouseUp={ChangeColorText}
                 mode="inline"
