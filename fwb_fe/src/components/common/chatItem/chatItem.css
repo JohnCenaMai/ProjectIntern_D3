@@ -1,0 +1,22 @@
+.chatItem {
+  margin-top: 1rem;
+}
+
+.myMessage {
+}
+
+.chatItem__message {
+  margin: 0 !important;
+  font-size: 1.1rem;
+  background-color: blueviolet;
+  color: white;
+  padding: 0.5rem;
+  width: fit-content;
+  border-radius: 1rem;
+  max-width: 300px;
+}
+
+.chatItem__from,
+.chatItem__createdAt {
+  padding-left: 1rem;
+}
