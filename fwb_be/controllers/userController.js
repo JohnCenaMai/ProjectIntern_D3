@@ -72,4 +72,29 @@ const uploadProfileImage = (req, res) => {
   });
 };
 
-export { getUserProfile, updateProfile, updateHobits, uploadProfileImage };
+const getRandomUser = (req, res) => {
+  console.log(req.user.id);
+  const user = new User(connection);
+
+  user.getRandomUser(
+    ["email, username, full_name", "imageUrl"],
+    [req.user.id],
+    (err, result) => {
+      if (err) console.log(err);
+
+      res.status(200).json({
+        status: "success",
+        count: result.length,
+        data: result,
+      });
+    }
+  );
+};
+
+export {
+  getUserProfile,
+  updateProfile,
+  updateHobits,
+  uploadProfileImage,
+  getRandomUser,
+};

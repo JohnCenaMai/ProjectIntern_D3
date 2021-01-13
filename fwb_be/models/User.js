@@ -46,4 +46,26 @@ export default class User {
 
     this.connection.query(sql, data, cb);
   }
+
+  getRandomUser(selectOpts, data, cb) {
+    let sql = `SELECT * FROM users
+    WHERE id NOT IN (SELECT id FROM users WHERE id = ?)
+    ORDER BY RAND()
+    LIMIT 3`;
+
+    if (selectOpts.length > 0) {
+      let selection = "";
+
+      selectOpts.map(
+        (select, index) =>
+          (selection += `${select} ${
+            index == selectOpts.length - 1 ? "" : ","
+          }`)
+      );
+
+      sql = sql.replace("*", selection);
+    }
+
+    this.connection.query(sql, data, cb);
+  }
 }
