@@ -7,7 +7,9 @@ import Chat from "./components/pages/chat/chat";
 import Match from "./components/pages/match/match";
 
 function App() {
-  return <Match />;
+  return (
+    <Chat />
+  );
 }
 
 export default App;
