@@ -19,8 +19,6 @@ import http from "http";
 import * as ioSocket from "socket.io";
 
 const app = express();
-const server = http.Server(app);
-const io = new ioSocket.Server(server);
 
 GgSignIn(passport);
 // LocalSignIn(passport);
@@ -42,17 +40,6 @@ app.options("*", cors());
 
 // Setup flash
 app.use(flash());
-
-// let store = new session.MemoryStore();
-
-// app.use(
-//   session({
-//     secret: "secret",
-//     resave: true,
-//     saveUninitialized: true,
-//     store: store,
-//   })
-// );
 
 // Passport
 app.use(passport.initialize());
@@ -79,9 +66,5 @@ app.use((err, req, res, next) => {
         msg: err.message,
     });
 });
-
-io.on('connection', (socket) => {
-    console.log('a user connected');
-})
 
 export default app;

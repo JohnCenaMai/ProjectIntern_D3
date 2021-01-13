@@ -1,7 +1,7 @@
-export default function (arr) {
-  const stringArr = JSON.stringify(arr);
+export default function(arr) {
+    const stringArr = JSON.stringify(arr);
 
-  const stringJson = stringArr.slice(1, stringArr.length - 1);
+    const stringJson = stringArr.slice(1, stringArr.length - 1);
 
-  return JSON.parse(stringJson);
+    return JSON.parse(stringJson);
 }
