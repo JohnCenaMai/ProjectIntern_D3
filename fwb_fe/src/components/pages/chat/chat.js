@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { Row, Col, Typography, Input, Form, Avatar, Button } from "antd";
 import Sidebar from "../../common/sidebar/sider";
 import RecentChatItem from "./../../common/recentChat/recentChat";
-import { MessageOutlined, VideoCameraOutlined } from "@ant-design/icons";
+import { MessageOutlined, VideoCameraFilled, PhoneFilled } from "@ant-design/icons";
 import "./chat.css";
 import ChatConversation from "../../common/chatConservation/chatConversation";
 
@@ -14,7 +14,7 @@ function Chat() {
   return (
     <Fragment>
       <Row>
-        <Col span={13} push={5}>
+        <Col span={12} push={6}>
           <div className="chats">
             <Form
               name="message"
@@ -42,11 +42,23 @@ function Chat() {
                 </div>
               </div>
 
-              <Button type="link">
-                <VideoCameraOutlined
-                  style={{ fontSize: "32px" }}
-                  twoToneColor="#eb2f96"
-                />
+
+            <Button type="link"
+              style={{ fontSize: "25px",position: "absolute",
+              right: "17%",
+              top: "1%",
+              color: "#FF1493"
+           }}>
+              <PhoneFilled />
+            </Button>
+
+              <Button type="link"
+                style={{ fontSize: "25px",position: "absolute",
+                right: "10%",
+                top: "1%",
+                color: "#FF1493"
+             }}>
+                <VideoCameraFilled/>
               </Button>
             </div>
 
@@ -57,11 +69,11 @@ function Chat() {
           <div className="chats__sidebar">
             <Input.Search
               placeholder="Search conversation..."
-              size="large"
+              size="medium"
               enterButton
               loading={false}
             />
-            <div className="recentChats">
+            {/* <div className="recentChats">
               <Typography.Title level={5}>Recent chats</Typography.Title>
 
               <RecentChatItem />
@@ -72,10 +84,10 @@ function Chat() {
               <RecentChatItem />
               <RecentChatItem />
               <RecentChatItem />
-            </div>
+            </div> */}
           </div>
         </Col>
-        <Col span={5} pull={19}>
+        <Col span={5} pull={18}>
           <Sidebar />
         </Col>
       </Row>

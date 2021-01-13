@@ -36,7 +36,6 @@ const ButtonPayment = styled.button`
 function Sidebar() {
   const [color, setColor] = useState("black");
 
-
     return(
         <Fragment>
             <Layout>

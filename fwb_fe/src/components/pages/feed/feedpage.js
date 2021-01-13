@@ -46,8 +46,6 @@ function FeedPage() {
         </Col>
         <Col span={18} push={6}>
           <div className="feedPage">
-            <h1>Feeds</h1>
-
             <div className="feedPage__container">
               <CreateFeed />
               {feeds.length === 0 ? (
