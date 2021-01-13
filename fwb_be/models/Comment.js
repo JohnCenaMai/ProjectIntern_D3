@@ -1,34 +1,34 @@
 class Comment {
-  constructor(connection) {
-    this.connection = connection;
-  }
-
-  get(whereOpts, cb) {
-    let sql = "SELECT * FROM comments";
-
-    // Handle Where
-    if (whereOpts != "") {
-      sql += whereOpts;
+    constructor(connection) {
+        this.connection = connection;
     }
 
-    this.connection.query(sql, cb);
-  }
+    get(whereOpts, cb) {
+        let sql = "SELECT * FROM comments";
 
-  create(data, cb) {
-    const sql =
-      "INSERT INTO `comments`(`content`,`parent_id`, `post_id`, `user_id`) VALUES (?,?,?,?)";
-    this.connection.query(sql, data, cb);
-  }
+        // Handle Where
+        if (whereOpts != "") {
+            sql += whereOpts;
+        }
 
-  delete(data, cb) {
-    const sql = "DELETE FROM `comments` WHERE id = ? OR parent_id = ?";
-    this.connection.query(sql, data, cb);
-  }
+        this.connection.query(sql, cb);
+    }
 
-  deleteByPost(data, cb) {
-    const sql = "DELETE FROM `comments` WHERE post_id = ? ";
-    this.connection.query(sql, data, cb);
-  }
+    create(data, cb) {
+        const sql =
+            "INSERT INTO `comments`(`content`,`parent_id`, `post_id`, `user_id`) VALUES (?,?,?,?)";
+        this.connection.query(sql, data, cb);
+    }
+
+    delete(data, cb) {
+        const sql = "DELETE FROM `comments` WHERE id = ? OR parent_id = ?";
+        this.connection.query(sql, data, cb);
+    }
+
+    deleteByPost(data, cb) {
+        const sql = "DELETE FROM `comments` WHERE post_id = ? ";
+        this.connection.query(sql, data, cb);
+    }
 }
 
 export default Comment;

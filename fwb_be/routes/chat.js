@@ -3,12 +3,9 @@ import { isLoggedIn } from "../middlewares/isLogged.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.render("login");
-});
-
-router.get("/dashboard", isLoggedIn, (req, res) => {
-    res.render("dashboard");
+router.get("/room", (req, res) => {
+    //console.log('hello world');
+    res.render("room_chat");
 });
 
 export default router;

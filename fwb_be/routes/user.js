@@ -1,9 +1,9 @@
 import express from "express";
 import {
-  getUserProfile,
-  updateHobits,
-  updateProfile,
-  uploadProfileImage,
+    getUserProfile,
+    updateHobits,
+    updateProfile,
+    uploadProfileImage,
 } from "../controllers/userController.js";
 import { protectedRoute } from "../middlewares/isLogged.js";
 import uploadImage from "../middlewares/uploadImage.js";
