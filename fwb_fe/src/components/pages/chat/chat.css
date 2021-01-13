@@ -1,3 +1,11 @@
 .chats {
   padding: 1rem 2rem;
 }
+
+.chats__sidebar {
+  padding: 1rem;
+}
+
+.recentChats {
+  margin-top: 1rem;
+}
