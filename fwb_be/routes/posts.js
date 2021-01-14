@@ -1,10 +1,10 @@
 import express from "express";
 import {
-  getPost,
-  createOnePost,
-  updatePost,
-  deletePost,
-  likePost,
+    getPost,
+    createOnePost,
+    updatePost,
+    deletePost,
+    likePost,
 } from "../controllers/postController.js";
 import { protectedRoute } from "../middlewares/isLogged.js";
 import uploadImage from "../middlewares/uploadImage.js";

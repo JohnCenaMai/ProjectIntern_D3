@@ -17,30 +17,30 @@
             border: 1px solid #eee;
             font: 13px Helvetica, Arial;
         }
-        
+
         #chat p {
             padding: 8px;
             margin: 0;
         }
-        
+
         #chat p:nth-child(odd) {
             background: #F6F6F6;
         }
-        
+
         #form {
             width: 782px;
             background: #333;
             padding: 5px 10px;
             display: none;
         }
-        
+
         #form input[type=text] {
             width: 700px;
             padding: 5px;
             background: #fff;
             border: 1px solid #fff;
         }
-        
+
         #form input[type=submit] {
             cursor: pointer;
             background: #999;
@@ -49,27 +49,27 @@
             margin-left: 5px;
             text-shadow: 0 1px 0 #fff;
         }
-        
+
         #form input[type=submit]:hover {
             background: #A2A2A2;
         }
-        
+
         #form input[type=submit]:active {
             position: relative;
             top: 2px;
         }
-        
+
         .pointer {
             position: absolute;
             width: 50px;
             height: 50px;
             border: 1px solid;
         }
-        
+
         .pointer h1 {
             font-size: 9pt;
         }
-        
+
         .pointer img {
             width: 48px;
         }
@@ -77,32 +77,105 @@
 </head>
 
 <body>
-    <button id="joinRoom">Vào phòng</button>
-    <button id="leaveRoom">Rời phòng</button>
-    <div id="notification"></div>
+
+    <form id="senduser">
+        <input id="name" placeholder="Enter name">
+        <input type="submit">
+    </form>
+    <ul id="users"></ul>
+
+    <form id="sendmessage">
+        <input id="message" placeholder="Enter message">
+        <input type="submit">
+    </form>
+
+    <ul id="messages"></ul>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script>
         //Khởi tạo kết nối
-        var socket = io('/freetuts');
-        $('#joinRoom').click(function() {
-            //Gọi sự kiện tham gia phòng
-            socket.emit('join room', '')
+        const socket = io('/');
+        var receiver = "";
+        var sender = "";
+
+        $('#senduser').submit(() => {
+            socket.emit("user_connected", $('#name').val());
+            sender = $('#name').val();
+            console.log(`sender: ` + sender);
+            $('#name').val('');
+            return false;
         })
-        $('#leaveRoom').click(function() {
-                //Gọi sự kiện rời phòng
-                socket.emit('leave room', '')
-            })
-            //Bắt sự kiện notification
-        socket.on('notification', function(data) {
-            console.log(data)
-            $('#notification').append(`<p>${data}</p><br>`)
+
+        // listen from servers
+        socket.on("user_connected", (username) => {
+            var html = "";
+            //console.log(username);
+            html += "<li><button onclick='onUserSelected(this.innerHTML);'>" + username + "</button></li>";
+
+            document.getElementById("users").innerHTML += html;
+            return false;
+        });
+
+        function onUserSelected(username) {
+            // save selected user in global variable
+            receiver = username;
+            // call an ajax
+            $.ajax({
+                method: 'POST',
+                url: '/get_messages',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({
+                    sender: sender,
+                    receiver: receiver
+                }),
+                cache: false,
+                processData: false,
+                success: function(response) {
+                    console.log("response: " + response);
+
+                    let messages = JSON.parse(response);
+                    let html = "";
+
+                    for (let a = 0; a < messages.length; a++) {
+                        html += "<li>" + messages[a].sender + " says: " + messages[a].message + "</li>";
+                    }
+
+                    // append in list
+                    document.getElementById("messages").innerHTML += html;
+                }
+            });
+        }
+
+        $('#sendmessage').submit(() => {
+            console.log(`sender: ` + sender + ` ` + `receiver: ` + receiver);
+            socket.emit("send_message", {
+                sender: sender,
+                receiver: receiver,
+                message: $('#message').val()
+            });
+            // append your own message
+            let html = "";
+            html += "<li>You said: " + message + "</li>";
+
+            document.getElementById("messages").innerHTML += html;
+
+            // prevent form from submitting
+            return false;
         })
+
+        // listen from server
+        socket.on("new_message", function(data) {
+            let html = "";
+            html += "<li>" + data.sender + " says: " + data.message + "</li>";
+
+            document.getElementById("messages").innerHTML += html;
+        });
     </script>
 </body>
 

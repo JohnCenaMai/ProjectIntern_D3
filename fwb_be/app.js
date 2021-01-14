@@ -13,6 +13,7 @@ import indexRoute from "./routes/index.js";
 import authRoute from "./routes/auth.js";
 import chatRoute from "./routes/chat.js";
 import userRoute from "./routes/user.js";
+import roomRoute from "./routes/room.js";
 import { GgSignIn, LocalSignIn } from "./utlis/passport.js";
 import AppError from "./utlis/appError.js";
 import http from "http";
@@ -47,10 +48,10 @@ app.use(passport.session());
 
 app.use("/", indexRoute);
 app.use("/auth", authRoute);
-app.use("/chat", chatRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
 app.use("/api/users", userRoute);
+app.use("/api/rooms", roomRoute);
 
 app.all("*", (req, res, next) => {
     next(new AppError(`Can not find ${req.originalUrl} on this server!`, 404));

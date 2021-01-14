@@ -31,8 +31,7 @@ const server = app.listen(port, () => {
     console.log(`App is running on port ${port}`);
 });
 
-const io = new ioSocket.Server(server);
-
+/*const io = new ioSocket.Server(server);
 const freetuts = io.of("/freetuts");
 //Chi định namespace có tên /freetuts
 freetuts.on("connection", function(socket) {
@@ -57,6 +56,31 @@ freetuts.on("connection", function(socket) {
         //Trả lại thông báo cho tất cả người trong phòng
         freetuts.to("freetutsRoom").emit("notification", "Một người đã rời phòng.");
     });
+});*/
+
+const io = new ioSocket.Server(server);
+var users = [];
+io.on("connection", (socket) => {
+    //console.log("User connected", socket.id);
+    // attach incoming listener for new user
+    socket.on("user_connected", (username) => {
+        // save in array
+        users[username] = socket.id;
+
+        // socket ID will be used to send message to individual person
+
+        // notify all connected clients
+        socket.emit("user_connected", username);
+    });
+
+    // listen from client inside IO "connection" event
+    socket.on("send_message", (data) => {
+        // send event to receiver
+        const socketId = users[data.receiver];
+        console.log(socketId);
+        io.to(socketId).emit("new_message", data);
+    });
+
 });
 
 export default connection;

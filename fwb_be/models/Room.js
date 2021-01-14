@@ -3,18 +3,16 @@ export default class Room {
         this.connection = connection;
     }
 
-    getOne(whereOpts, cb) {
-        let sql = "SELECT * FROM rooms WHERE ";
-
-        if (whereOpts) {
-            sql += whereOpts;
-        }
-
+    createOne(data, cb) {
+        let sql = `INSERT INTO rooms (name) values ("${data.name}")`;
+        //console.log(sql);
         this.connection.query(sql, cb);
     }
 
-    createOne(data, cb) {
-        this.connection.query("INSERT INTO rooms SET ?", data, cb);
+    getOne(idroom, cb) {
+        let sql = `SELECT * FROM rooms WHERE id = '${idroom}'`;
+
+        this.connection.query(sql, cb);
     }
 
 }
