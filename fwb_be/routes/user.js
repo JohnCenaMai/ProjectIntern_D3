@@ -4,12 +4,14 @@ import {
   updateHobits,
   updateProfile,
   uploadProfileImage,
+  getMyProfile,
 } from "../controllers/userController.js";
 import { protectedRoute } from "../middlewares/isLogged.js";
 import uploadImage from "../middlewares/uploadImage.js";
 
 const router = express.Router();
 
+router.get("/me", protectedRoute, getMyProfile);
 router.get("/:id", getUserProfile);
 router.patch("/:id", protectedRoute, updateProfile);
 

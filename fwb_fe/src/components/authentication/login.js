@@ -14,6 +14,10 @@ import "./login.css";
 import "./responsive.css";
 import { useHistory } from "react-router";
 import { setCookie } from "../../utils/cookie";
+// Redux
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { login, register } from "./../../redux/actions/auth";
 
 const { TabPane } = Tabs;
 
@@ -68,7 +72,7 @@ const requireRadio = {
   ],
 };
 
-function Login() {
+function Login({ login, register, isAuthenticated }) {
   let history = useHistory();
 
   const [emailLogin, setEmailLogin] = useState("");
@@ -98,42 +102,21 @@ function Login() {
   };
 
   const handleLogin = () => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    fetch("http://localhost:5000/auth/login", {
-      method: "POST",
-      headers: myHeaders,
-      body: JSON.stringify({
-        email: emailLogin,
-        password: passwordLogin,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setCookie("jwt", data, { path: "/" });
-      });
+    console.log("Logining...");
+    console.log(login);
+    login(emailLogin, passwordLogin);
+    history.push("/feeds");
   };
 
   const handleRegister = () => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    fetch("http://localhost:5000/auth/register", {
-      method: "POST",
-      headers: myHeaders,
-      body: JSON.stringify({
-        username: usernameRegister,
-        age: birthRegister,
-        gender: genderRegister,
-        email: emailRegister,
-        password: passwordRegister,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setCookie("jwt", data, { path: "/" });
-      });
+    register(
+      usernameRegister,
+      birthRegister,
+      genderRegister,
+      emailRegister,
+      passwordRegister
+    );
+    history.push("/feeds");
   };
 
   return (
@@ -290,4 +273,14 @@ function Login() {
   );
 }
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login, register })(Login);
