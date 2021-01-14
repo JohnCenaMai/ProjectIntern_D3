@@ -2,8 +2,8 @@ import React, { Fragment, useState } from "react";
 import { Layout, Image } from "antd";
 import "./sider.css";
 import { Menu, Row, Col, Avatar } from "antd";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import {ButtonPayment} from './styles'
 import {
   AppstoreFilled,
   LoadingOutlined,
@@ -19,19 +19,6 @@ import {
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
-const ButtonPayment = styled.button`
-  display: inline-block;
-  color: white;
-  background-color: #ff2e68;
-  font-size: 1em;
-  margin: 3%;
-  padding: 6%;
-  border: 2px solid #ff4081;
-  border-radius: 32px;
-  width: 94%;
-  cursor: pointer;
-`;
-
 function Sidebar() {
   const [color, setColor] = useState("black");
 
@@ -40,7 +27,7 @@ function Sidebar() {
       <Layout>
         <Sider>
           <Menu
-            defaultSelectedKeys={["1"]}
+            // defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
             // onMouseUp={ChangeColorText}
             mode="inline"
@@ -61,6 +48,7 @@ function Sidebar() {
               </Row>
             </Menu.Item>
             <Menu.Item>
+              <Link to="/me">
               <Row>
                 <Col span={6}>
                   <Avatar
@@ -70,6 +58,7 @@ function Sidebar() {
                 </Col>
                 <Col span={12}>Sơn Đặng Cao</Col>
               </Row>
+              </Link>
             </Menu.Item>
             <Menu.Item key="1" icon={<LoadingOutlined />}>
               <Link to="/find-near-you"> People near you</Link>

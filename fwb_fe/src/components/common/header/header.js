@@ -1,26 +1,10 @@
-import React, { Fragment, useState } from "react";
-import styled from "styled-components";
+import React, {useState } from "react";
 import "antd/dist/antd.css";
 import "../../common/header/header.css";
 import { CountryDropdown } from 'react-country-region-selector';
 import {Row,Col, Drawer,Slider, Form,Collapse} from 'antd';
 import { SettingOutlined, SlidersFilled } from "@ant-design/icons";
-
-// import '@mobiscroll/react/dist/css/mobiscroll.min.css';
-
-const Button = styled.button`
-  border: none;
-  border-radius: 50%;
-  background-color: white;
-`;
-
-const ButtonSubmit = styled.button`
-    background-color: #ff2e68;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 7%;
-`;
+import {Button, ButtonSubmit} from "./styles";
 
 function formatterKilometer(value) {
     return `${value}Km`;
@@ -50,7 +34,7 @@ function Header() {
     }
 
   return (
-<>
+    <>
         <Row>
             <Col span={8}>
                 <Button>

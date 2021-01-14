@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import styled from "styled-components";
+import {ButtonSignIn, ButtonSignInWithGG, ButtonSignUp} from "./styles";
 import {
   PageHeader,
   Tabs,
@@ -21,39 +22,6 @@ import { login, register } from "./../../redux/actions/auth";
 
 const { TabPane } = Tabs;
 
-const ButtonSignIn = styled.button`
-  display: inline-block;
-  color: white;
-  background-color: #ff2e68;
-  font-size: 1em;
-  padding: 1%;
-  border: 2px solid #ff4081;
-  border-radius: 32px;
-  width: 100%;
-  cursor: pointer;
-`;
-
-const ButtonSignUp = styled.button`
-  display: inline-block;
-  color: white;
-  background-color: #ff2e68;
-  font-size: 1em;
-  padding: 1%;
-  border: 2px solid #ff4081;
-  border-radius: 32px;
-  width: 100%;
-  cursor: pointer;
-`;
-const ButtonSignInWithGG = styled.button`
-  display: inline-block;
-  color: black;
-  font-size: 1em;
-  padding: 1%;
-  border: 2px solid #ff4081;
-  border-radius: 32px;
-  width: 100%;
-  cursor: pointer;
-`;
 const config = {
   rules: [
     {
