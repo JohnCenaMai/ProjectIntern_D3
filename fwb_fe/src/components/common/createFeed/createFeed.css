@@ -4,9 +4,6 @@
   border-radius: 1rem;
 }
 
-.createFeed__form {
-}
-
 .createFeed__form input,
 textarea {
   outline: none;

@@ -1,3 +1,38 @@
 .chats {
   padding: 1rem 2rem;
+  position: relative;
+}
+
+.chats__sidebar {
+  padding: 1rem;
+}
+
+.chats__sidebar {
+  height: 100vh;
+}
+
+.recentChats {
+  margin-top: 1rem;
+  overflow: auto;
+}
+
+.chats__form {
+  position: fixed;
+  width: 45%;
+  bottom: 0;
+}
+
+.chats__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chats__headerLeft {
+  display: flex;
+  align-content: center;
+}
+
+.chat__header--infor {
+  margin-left: 1rem;
 }
