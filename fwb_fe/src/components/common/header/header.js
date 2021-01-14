@@ -2,8 +2,11 @@ import React, { Fragment, useState } from "react";
 import styled from "styled-components";
 import "antd/dist/antd.css";
 import "../../common/header/header.css";
-import {Row,Col, Drawer,Radio,Select, Form, Input,Collapse} from 'antd';
+import { CountryDropdown } from 'react-country-region-selector';
+import {Row,Col, Drawer,Slider, Form,Collapse} from 'antd';
 import { SettingOutlined, SlidersFilled } from "@ant-design/icons";
+
+// import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 
 const Button = styled.button`
   border: none;
@@ -12,32 +15,38 @@ const Button = styled.button`
 `;
 
 const ButtonSubmit = styled.button`
-    background-color: blue;
+    background-color: #ff2e68;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 5%;
+    border-radius: 7%;
 `;
+
+function formatterKilometer(value) {
+    return `${value}Km`;
+  }
+
 const { Panel } = Collapse;
-
-const { Option } = Select;
-
-const { TextArea } = Input;
-
-const children = [];
-for (let i = 10; i < 36; i++) {
-  children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-}
 
 function Header() {
 
+    const [active,setActive] = useState("grey");
+
+    const remoteData = {
+        url: 'https://trial.mobiscroll.com/content/countries.json',
+        type: 'json'
+    };
+
     const [visible,setVisible] = useState(false);
 
-    const  onShowDrawer = () => {
+    const onShowDrawer = () => {
             setVisible(true);
     }
     const onClose = () => {
         setVisible(false);
+    }
+    const onChangeColor = () => {
+        setActive("#ff2e68");
     }
 
   return (
@@ -47,7 +56,7 @@ function Header() {
                 <Button>
                     <SettingOutlined style={{color: '#FF1493'}} />
                     <Drawer
-                        title="Edit Profile Your Infomation"
+                        title="Filter People Near You"
                         width={500}
                         onClose={onClose}
                         visible={visible}
@@ -60,23 +69,29 @@ function Header() {
                             Submit
                         </ButtonSubmit>
                         </div>}>
-                        <Form layout="vertical" hideRequiredMark>
+                        <Form className="filter" layout="vertical" hideRequiredMark>
                             <Collapse defaultActiveKey={['1']}>
-                                <Panel header="Basic info" key="1">
-                                    <Input className="space_input" placeholder="Name"/>
-                                    <Input className="space_input" placeholder="Email" />
-                                    <Input className="space_input" placeholder="Age" />
-                                    <Select className="space_input" defaultValue="a1" style={{ width: '100%' }}>
-                                        {children}
-                                    </Select>
-                                    <Radio.Group className="space_input rdEditProfile" defaultValue="a" size="large">
-                                        <Radio.Button value="a">Male</Radio.Button>
-                                        <Radio.Button value="b">Female</Radio.Button>
-                                        <Radio.Button value="c">Other</Radio.Button>
-                                    </Radio.Group>
-                                    <TextArea placeholder="About me" showCount maxLength={100} />
-                                </Panel>
-                                <Panel header="Hobits" key="2">
+                                <Panel header="Please Choose" key="1">
+                                    <p>I'm interested in</p>
+                                    <div className="filter__interesting space_input">
+                                        <input style={{backgroundColor: active}} onClick={onChangeColor} type="button" id="men" value="Men" />
+                                        <input style={{backgroundColor: active}} onClick={onChangeColor} type="button" id="women" value="Women" />
+                                        <input style={{backgroundColor: active}} onClick={onChangeColor} type="button" id="everyone" value="Everyone" />
+                                    </div>
+                                    <p>I am here for</p>
+                                    <div className="filter__matches--require space_input">
+                                        <input style={{backgroundColor: active}} onClick={onChangeColor} type="button" id="dating" value="Dating" />
+                                        <input style={{backgroundColor: active}} onClick={onChangeColor} type="button" id="friend" value="Friends" />
+                                        <input style={{backgroundColor: active}} onClick={onChangeColor} type="button" id="partner" value="Partner" />
+                                        <input style={{backgroundColor: active}} onClick={onChangeColor} type="button" id="vani" value="Vani" />
+                                    </div>
+                                    <span>Show Age</span>
+                                    <Slider className="space_input" defaultValue={18}/>
+                                    <span>Distance within</span>
+                                    <Slider className="space_input" tipFormatter={formatterKilometer}/>           
+                                    <CountryDropdown className="space_input choice_country"
+                                    value={remoteData}
+                                    />
                                 </Panel>
                             </Collapse>
                         </Form>

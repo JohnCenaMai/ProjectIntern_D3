@@ -42,3 +42,40 @@
     flex-direction: row;
     justify-content: space-between;
 }
+.choice_country{
+    width: 100%;border: 1px solid #E8E8E8;height: 30px;
+}
+.filter{
+    font-size: 25px;
+    font-weight: bold;
+}
+.filter__interesting{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   
+}
+.filter__interesting>input{
+    border-radius: 55%;
+    border: none;
+    width: 80px;
+    height: 80px;
+    color: white;
+    cursor: pointer;
+}
+input[type="button"]{
+    outline: none;
+}
+.filter__matches--require{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.filter__matches--require>input{
+    border-radius: 55%;
+    border: none;
+    width: 80px;
+    height: 80px;
+    color: white;
+    cursor: pointer;
+}
