@@ -11,4 +11,8 @@ const getCookie = (name) => {
   return cookie;
 };
 
-export { setCookie, getCookie };
+const removeCookie = (name) => {
+  cookies.remove(name);
+};
+
+export { setCookie, getCookie, removeCookie };

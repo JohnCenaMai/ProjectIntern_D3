@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./components/authentication/login";
@@ -10,8 +10,18 @@ import MyProfile from "./components/pages/userProfile/myProfile";
 import EditProfile from "./components/pages/editProfile/editProfile";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import { getCookie } from "./utils/cookie";
+import setAuthToken from "./utils/setAuthToken";
+import { loadUser } from "./redux/actions/auth";
 
 function App() {
+  useEffect(() => {
+    if (getCookie("jwt")) {
+      setAuthToken(getCookie("jwt"));
+    }
+    store.dispatch(loadUser());
+  }, []);
+
   return (
     <Provider store={store}>
       <Router>

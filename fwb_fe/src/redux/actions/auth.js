@@ -5,8 +5,26 @@ import {
   LOGIN_FAIL,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  USER_LOADED,
+  AUTH_ERROR,
   LOGOUT,
 } from "./types";
+
+// Load user
+export const loadUser = () => async (dispatch) => {
+  try {
+    const response = await api.get("/users/me");
+
+    dispatch({
+      type: USER_LOADED,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: AUTH_ERROR,
+    });
+  }
+};
 
 // Register
 export const register = (username, age, gender, email, password) => async (
