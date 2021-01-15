@@ -47,16 +47,7 @@ function MyProfile() {
       name: "Hanging out",
     },
   ]);
-  const [userHobits, setUserHobits] = useState([
-    {
-      id: 1,
-      name: "Gaming",
-    },
-    {
-      id: 2,
-      name: "Riding",
-    },
-  ]);
+  const [userHobits, setUserHobits] = useState(["Gaming", "Riding"]);
 
   return (
     <Fragment>
@@ -111,7 +102,7 @@ function MyProfile() {
                   onClick={() => setIsModalVisible(true)}
                 >
                   <Typography.Title level={5}>
-                    {userHobits.map((e) => `${e.name}, `)}
+                    {userHobits.toString()}
                   </Typography.Title>
                   <RightOutlined
                     style={{

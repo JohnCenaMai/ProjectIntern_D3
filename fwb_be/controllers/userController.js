@@ -8,6 +8,8 @@ const getUserProfile = (req, res) => {
   user.getOne(`id = ${req.params.id}`, (err, result) => {
     if (err) console.log(err);
 
+    result[0].hobits = result[0].hobits.split(",");
+
     res.status(200).json({
       status: "success",
       data: arrayToJson(result),
@@ -20,6 +22,8 @@ const getMyProfile = (req, res) => {
 
   user.getOne(`id = ${req.user.id}`, (err, result) => {
     if (err) console.log(err);
+
+    result[0].hobits = result[0].hobits.split(",");
 
     res.status(200).json({
       status: "success",
