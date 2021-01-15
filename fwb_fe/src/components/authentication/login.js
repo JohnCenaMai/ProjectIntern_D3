@@ -119,7 +119,7 @@ function Login({ login, register, isAuthenticated }) {
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/me" />;
+    return <Redirect to="/matches" />;
   }
 
   return (
