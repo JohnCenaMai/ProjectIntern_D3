@@ -79,12 +79,13 @@ const updateHobits = (req, res) => {
 const uploadProfileImage = (req, res) => {
   const user = new User(connection);
 
-  user.updateImage([req.file.path, req.params.id], (err, result) => {
+  user.updateImage([req.file.filename, req.params.id], (err, result) => {
     if (err) console.log(err);
 
     res.status(200).json({
       status: "success",
       msg: "Profile image updated!",
+      data: req.file.filename,
     });
   });
 };

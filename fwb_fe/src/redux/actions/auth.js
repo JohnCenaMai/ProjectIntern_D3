@@ -1,5 +1,6 @@
-import { setCookie } from "../../utils/cookie";
+import { removeCookie, setCookie } from "../../utils/cookie";
 import api from "./../../utils/api";
+import axios from "axios";
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -7,6 +8,7 @@ import {
   REGISTER_SUCCESS,
   USER_LOADED,
   AUTH_ERROR,
+  UPLOAD_PROFILE_IMAGE,
   LOGOUT,
 } from "./types";
 
@@ -17,7 +19,7 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({
       type: USER_LOADED,
-      payload: response.data,
+      payload: response.data.data,
     });
   } catch (error) {
     dispatch({
@@ -71,5 +73,43 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({
       type: LOGIN_FAIL,
     });
+  }
+};
+
+// Upload profile image
+export const uploadProfilePic = (id, token, file) => async (dispatch) => {
+  try {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    let formData = new FormData();
+    formData.append("image", file);
+
+    const response = await axios.patch(
+      `http://localhost:5000/api/users/image/${id}`,
+      formData,
+      config
+    );
+
+    dispatch({
+      type: UPLOAD_PROFILE_IMAGE,
+      payload: response.data.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// log out
+export const logout = () => async (dispatch) => {
+  try {
+    removeCookie("jwt");
+
+    dispatch({
+      type: LOGOUT,
+    });
+  } catch (error) {
+    console.log(error);
   }
 };

@@ -5,6 +5,7 @@ import {
   REGISTER_FAIL,
   REGISTER_SUCCESS,
   USER_LOADED,
+  UPLOAD_PROFILE_IMAGE,
   AUTH_ERROR,
   LOGOUT,
 } from "../actions/types";
@@ -26,6 +27,11 @@ function authReducer(state = initialState, action) {
         loading: false,
         user: payload,
       };
+    case UPLOAD_PROFILE_IMAGE:
+      return {
+        ...state,
+        user: { ...state.user, imageUrl: payload },
+      };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       return {
@@ -34,6 +40,7 @@ function authReducer(state = initialState, action) {
         isAuthenticated: true,
         loading: false,
       };
+
     case AUTH_ERROR:
     case LOGOUT:
       return {

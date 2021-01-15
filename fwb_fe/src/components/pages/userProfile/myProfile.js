@@ -18,8 +18,13 @@ import {
 } from "@ant-design/icons";
 import "./myProfile.css";
 import { Link } from "react-router-dom";
+// Redux
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { logout, uploadProfilePic } from "./../../../redux/actions/auth";
+import { getCookie } from "../../../utils/cookie";
 
-function MyProfile() {
+function MyProfile({ user, logout, uploadProfilePic }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [hobits, setHobits] = useState([
     {
@@ -47,7 +52,11 @@ function MyProfile() {
       name: "Hanging out",
     },
   ]);
-  const [userHobits, setUserHobits] = useState(["Gaming", "Riding"]);
+
+  const handleChangeImage = (file) => {
+    const token = getCookie("jwt");
+    uploadProfilePic(user.id, token, file);
+  };
 
   return (
     <Fragment>
@@ -63,23 +72,26 @@ function MyProfile() {
             <div className="myProfile__pic">
               <img
                 className="myProfile__photo"
-                src="https://upload.wikimedia.org/wikipedia/commons/4/44/180506_%EB%AA%A8%EB%AA%A8%EB%9E%9C%EB%93%9C_%EC%84%9C%EB%93%A0%EC%96%B4%ED%83%9D_%ED%8C%AC%EB%AF%B8%ED%8C%85_%281%29.jpg"
+                src={`http://localhost:5000/images/${user.imageUrl}`}
                 alt="myProfile__pic"
               />
-              <Form className="myProfile__uploadForm">
-                <Upload>
-                  <Tooltip title="Upload picture">
-                    <Button
-                      type="primary"
-                      shape="circle"
-                      className="myProfile__upload"
-                      icon={<UploadOutlined style={{ fontSize: "24px" }} />}
-                    />
-                  </Tooltip>
-                </Upload>
-              </Form>
+              <form className="myProfile__uploadForm">
+                <Tooltip title="Upload picture">
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    className="myProfile__upload"
+                    icon={<UploadOutlined style={{ fontSize: "24px" }} />}
+                  />
+                </Tooltip>
+                <input
+                  type="file"
+                  className="changeProfile__pic"
+                  onChange={(e) => handleChangeImage(e.target.files[0])}
+                />
+              </form>
             </div>
-            <div class="myProfile__info">
+            <div className="myProfile__info">
               <div className="myProfile__info--item">
                 <Typography.Title level={5}>Basic info</Typography.Title>
                 <Link to="/me/edit" className="myProfile__info--show">
@@ -102,7 +114,7 @@ function MyProfile() {
                   onClick={() => setIsModalVisible(true)}
                 >
                   <Typography.Title level={5}>
-                    {userHobits.toString()}
+                    {user.hobits.toString()}
                   </Typography.Title>
                   <RightOutlined
                     style={{
@@ -157,4 +169,15 @@ function MyProfile() {
   );
 }
 
-export default MyProfile;
+MyProfile.propTypes = {
+  logout: PropTypes.func.isRequired,
+  uploadProfilePic: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps, { logout, uploadProfilePic })(
+  MyProfile
+);
