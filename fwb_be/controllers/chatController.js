@@ -1,23 +1,24 @@
 import Chat from "../models/Chat.js";
 import arrayToJson from "../utlis/arrayToJson.js";
 import connection from "./../server.js";
+import constants from "../utlis/constants.js";
 
-const createMessage = (req, res) => {
+const createChat = (req, res) => {
     const data = {
         status: constants.DEFAULT_POST_STATUS,
         content: req.body.content,
         from: req.body.from,
-        to: req.body.to,
-        created_at: Date.now()
+        to: req.body.to
+            //created_at: new Date().getTime()
     };
-
-    const chatMessage = new Chat(connection);
-    chatMessage.createOne(data, (err, result) => {
+    //console.log(data);
+    const chat = new Chat(connection);
+    chat.createOne(data, (err, result) => {
         if (err) console.log(err);
 
         res.status(200).json({
             status: "success",
-            data: arrayToJson(result),
+            data: result
         });
     })
 }
@@ -25,51 +26,25 @@ const createMessage = (req, res) => {
 const getAllMessageFromRoom = (req, res) => {
     new Chat(connection).getAll(
         [
-            "posts.id",
-            "posts.title",
-            "posts.content",
-            "posts.like",
-            "users.username",
-            "images.imageUrl",
+            "chats.content",
+            "chats.status",
+            "chats.created_at",
+            "rooms.name"
         ], {
             table_name: ["rooms"],
-            condition: ["users.id = posts.user_id"],
+            condition: ["chats.to = rooms.id"],
         },
-        req.params.id === null ? "" : `Where posts.id = ${req.params.id}`,
+        req.params.id === null ? "" : `Where rooms.id = ${req.params.id}`,
         (err, result) => {
             if (err) console.log(err);
-
-            if (result.like != null) {
-                result.like = result.like.split(",");
-            }
-
-            result.map((item) => {
-                if (item.like != null) {
-                    item.like = item.like.trim().split(",");
-                }
-            });
-
+            //console.log(result);
             res.status(200).json({
                 status: "success",
                 msg: "Query successfully!",
-                count: result.length,
-                data: result,
+                data: result
             });
         }
     )
 };
 
-const removeChatSender_To = (req, res) => {
-    const remove_chat_sender_to = new Chat(connection);
-
-    remove_chat_sender_to.removeIdMessage(`id = ${req.params.id}`, (err, result) => {
-        if (err) console.log(err);
-
-        res.status(200).json({
-            status: "success",
-            data: arrayToJson(result),
-        });
-    });
-};
-
-export { createMessage, getAllMessageFromRoom, removeChatSender_To };
+export { createChat, getAllMessageFromRoom };

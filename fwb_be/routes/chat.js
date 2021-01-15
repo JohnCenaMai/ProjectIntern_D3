@@ -1,11 +1,10 @@
 import express from "express";
-import { isLoggedIn } from "../middlewares/isLogged.js";
+import { createChat, getAllMessageFromRoom } from "../controllers/chatController.js";
 
 const router = express.Router();
 
-router.get("/room", (req, res) => {
-    //console.log('hello world');
-    res.render("room_chat");
-});
+router.get("/room/:id", getAllMessageFromRoom);
+
+router.post("/", createChat);
 
 export default router;

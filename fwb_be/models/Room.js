@@ -5,7 +5,7 @@ export default class Room {
 
     createOne(data, cb) {
         let sql = `INSERT INTO rooms (name) values ("${data.name}")`;
-        //console.log(sql);
+
         this.connection.query(sql, cb);
     }
 

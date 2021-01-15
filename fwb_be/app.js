@@ -52,6 +52,7 @@ app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
 app.use("/api/users", userRoute);
 app.use("/api/rooms", roomRoute);
+app.use("/api/chats", chatRoute);
 
 app.all("*", (req, res, next) => {
     next(new AppError(`Can not find ${req.originalUrl} on this server!`, 404));
