@@ -9,4 +9,5 @@ export const UPLOAD_PROFILE_SUCCESS = "UPLOAD_PROFILE_SUCCESS";
 export const UPLOAD_PROFILE_FAIL = "UPLOAD_PROFILE_FAIL";
 export const SET_ALERT = "SET_ALERT";
 export const REMOVE_ALERT = "REMOVE_ALERT";
+export const LOAD_HOBIT = "LOAD_HOBIT";
 export const LOGOUT = "LOGOUT";

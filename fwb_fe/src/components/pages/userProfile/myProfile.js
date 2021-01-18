@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Row,
   Col,
@@ -22,37 +22,17 @@ import { Link, Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout, uploadProfilePic } from "./../../../redux/actions/auth";
+import { getAllHobits } from "./../../../redux/actions/hobits";
 import { getCookie } from "../../../utils/cookie";
 
-function MyProfile({ user, logout, uploadProfilePic }) {
+function MyProfile({ user, hobits, logout, uploadProfilePic, getAllHobits }) {
   let histoty = useHistory();
+
+  useEffect(() => {
+    getAllHobits();
+  }, []);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [hobits, setHobits] = useState([
-    {
-      id: 1,
-      name: "Gaming",
-    },
-    {
-      id: 2,
-      name: "Riding",
-    },
-    {
-      id: 3,
-      name: "Reading",
-    },
-    {
-      id: 4,
-      name: "Football",
-    },
-    {
-      id: 5,
-      name: "Swimming",
-    },
-    {
-      id: 6,
-      name: "Hanging out",
-    },
-  ]);
 
   const handleChangeImage = (file) => {
     const token = getCookie("jwt");
@@ -144,15 +124,8 @@ function MyProfile({ user, logout, uploadProfilePic }) {
                 itemLayout="horizontal"
                 dataSource={hobits}
                 renderItem={(item) => (
-                  <List.Item
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "10px 1rem",
-                    }}
-                  >
-                    <Typography.Title level={5}>{item.name}</Typography.Title>
-                    {/* {checkInclude(item, hobits) && <CheckOutlined />} */}
+                  <List.Item style={{ width: "100%" }}>
+                    <Typography.Title level={5}>{item}</Typography.Title>
                   </List.Item>
                 )}
               />
@@ -179,12 +152,16 @@ function MyProfile({ user, logout, uploadProfilePic }) {
 MyProfile.propTypes = {
   logout: PropTypes.func.isRequired,
   uploadProfilePic: PropTypes.func.isRequired,
+  getAllHobits: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  hobits: state.hobits,
 });
 
-export default connect(mapStateToProps, { logout, uploadProfilePic })(
-  MyProfile
-);
+export default connect(mapStateToProps, {
+  logout,
+  uploadProfilePic,
+  getAllHobits,
+})(MyProfile);
