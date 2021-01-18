@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Row,
   Col,
@@ -17,46 +17,32 @@ import {
   CheckOutlined,
 } from "@ant-design/icons";
 import "./myProfile.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
+// Redux
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { logout, uploadProfilePic } from "./../../../redux/actions/auth";
+import { getAllHobits } from "./../../../redux/actions/hobits";
+import { getCookie } from "../../../utils/cookie";
 
-function MyProfile() {
+function MyProfile({ user, hobits, logout, uploadProfilePic, getAllHobits }) {
+  let histoty = useHistory();
+
+  useEffect(() => {
+    getAllHobits();
+  }, []);
+
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [hobits, setHobits] = useState([
-    {
-      id: 1,
-      name: "Gaming",
-    },
-    {
-      id: 2,
-      name: "Riding",
-    },
-    {
-      id: 3,
-      name: "Reading",
-    },
-    {
-      id: 4,
-      name: "Football",
-    },
-    {
-      id: 5,
-      name: "Swimming",
-    },
-    {
-      id: 6,
-      name: "Hanging out",
-    },
-  ]);
-  const [userHobits, setUserHobits] = useState([
-    {
-      id: 1,
-      name: "Gaming",
-    },
-    {
-      id: 2,
-      name: "Riding",
-    },
-  ]);
+
+  const handleChangeImage = (file) => {
+    const token = getCookie("jwt");
+    uploadProfilePic(user.id, token, file);
+  };
+
+  const handleLogout = () => {
+    logout();
+    histoty.push("/");
+  };
 
   return (
     <Fragment>
@@ -72,23 +58,26 @@ function MyProfile() {
             <div className="myProfile__pic">
               <img
                 className="myProfile__photo"
-                src="https://upload.wikimedia.org/wikipedia/commons/4/44/180506_%EB%AA%A8%EB%AA%A8%EB%9E%9C%EB%93%9C_%EC%84%9C%EB%93%A0%EC%96%B4%ED%83%9D_%ED%8C%AC%EB%AF%B8%ED%8C%85_%281%29.jpg"
+                src={`http://localhost:5000/images/${user.imageUrl}`}
                 alt="myProfile__pic"
               />
-              <Form className="myProfile__uploadForm">
-                <Upload>
-                  <Tooltip title="Upload picture">
-                    <Button
-                      type="primary"
-                      shape="circle"
-                      className="myProfile__upload"
-                      icon={<UploadOutlined style={{ fontSize: "24px" }} />}
-                    />
-                  </Tooltip>
-                </Upload>
-              </Form>
+              <form className="myProfile__uploadForm">
+                <Tooltip title="Upload picture">
+                  <Button
+                    type="primary"
+                    shape="circle"
+                    className="myProfile__upload"
+                    icon={<UploadOutlined style={{ fontSize: "24px" }} />}
+                  />
+                </Tooltip>
+                <input
+                  type="file"
+                  className="changeProfile__pic"
+                  onChange={(e) => handleChangeImage(e.target.files[0])}
+                />
+              </form>
             </div>
-            <div class="myProfile__info">
+            <div className="myProfile__info">
               <div className="myProfile__info--item">
                 <Typography.Title level={5}>Basic info</Typography.Title>
                 <Link to="/me/edit" className="myProfile__info--show">
@@ -103,7 +92,7 @@ function MyProfile() {
                 </Link>
               </div>
             </div>
-            <div class="myProfile__info">
+            <div className="myProfile__info">
               <div className="myProfile__info--item">
                 <Typography.Title level={5}>Interest</Typography.Title>
                 <div
@@ -111,7 +100,7 @@ function MyProfile() {
                   onClick={() => setIsModalVisible(true)}
                 >
                   <Typography.Title level={5}>
-                    {userHobits.map((e) => `${e.name}, `)}
+                    {user.hobits.toString()}
                   </Typography.Title>
                   <RightOutlined
                     style={{
@@ -135,15 +124,8 @@ function MyProfile() {
                 itemLayout="horizontal"
                 dataSource={hobits}
                 renderItem={(item) => (
-                  <List.Item
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "10px 1rem",
-                    }}
-                  >
-                    <Typography.Title level={5}>{item.name}</Typography.Title>
-                    {/* {checkInclude(item, hobits) && <CheckOutlined />} */}
+                  <List.Item style={{ width: "100%" }}>
+                    <Typography.Title level={5}>{item}</Typography.Title>
                   </List.Item>
                 )}
               />
@@ -152,6 +134,7 @@ function MyProfile() {
             <Button
               type="primary"
               danger
+              onClick={handleLogout}
               style={{ width: "80%", marginTop: "2rem" }}
             >
               Sign out
@@ -166,4 +149,19 @@ function MyProfile() {
   );
 }
 
-export default MyProfile;
+MyProfile.propTypes = {
+  logout: PropTypes.func.isRequired,
+  uploadProfilePic: PropTypes.func.isRequired,
+  getAllHobits: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+  hobits: state.hobits,
+});
+
+export default connect(mapStateToProps, {
+  logout,
+  uploadProfilePic,
+  getAllHobits,
+})(MyProfile);

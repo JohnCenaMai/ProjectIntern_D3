@@ -19,7 +19,7 @@ export default class User {
 
   update(data, cb) {
     const sql =
-      "UPDATE `users` SET `username`=?,`full_name`=?,`gender`=?,`age`=?,`link_fb`=?,`description`= ? WHERE id = ?";
+      "UPDATE `users` SET `username`=?,`full_name`=?,`gender`=?,`birthday`=?,`link_fb`=?,`description`= ?,`country`= ?,`region`= ? WHERE id = ?";
     this.connection.query(sql, data, cb);
   }
 

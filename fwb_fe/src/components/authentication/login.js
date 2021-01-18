@@ -104,7 +104,7 @@ function Login({ login, register, isAuthenticated }) {
     console.log("Logining...");
     console.log(login);
     login(emailLogin, passwordLogin);
-    history.push("/feeds");
+    history.push("/matches");
   };
 
   const handleRegister = () => {
@@ -115,7 +115,7 @@ function Login({ login, register, isAuthenticated }) {
       emailRegister,
       passwordRegister
     );
-    history.push("/feeds");
+    history.push("/matches");
   };
 
   if (isAuthenticated) {
