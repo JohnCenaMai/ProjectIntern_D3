@@ -104,7 +104,7 @@ const uploadProfileImage = (req, res) => {
   });
 };
 
-const getRandomUser = (req, res) => {
+const getRandomUser = (req, res, next) => {
   console.log(req.user.id);
   const user = new User(connection);
 
@@ -112,7 +112,9 @@ const getRandomUser = (req, res) => {
     ["email, username, full_name", "imageUrl"],
     [req.user.id],
     (err, result) => {
-      if (err) console.log(err);
+      if (err) {
+        next(new AppError(err.sqlMessage, 500));
+      }
 
       res.status(200).json({
         status: "success",

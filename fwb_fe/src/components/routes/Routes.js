@@ -10,6 +10,8 @@ import MyProfile from "./../pages/userProfile/myProfile";
 import EditProfile from "./../pages/editProfile/editProfile";
 import { Route } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
+import Payment from "../pages/payment/payment";
+import Checkout from "../pages/payment/checkout";
 
 function Routes(props) {
   return (
@@ -20,6 +22,8 @@ function Routes(props) {
       <PrivateRoutes exact path="/me" component={MyProfile} />
       <PrivateRoutes exact path="/feeds" component={FeedPage} />
       <PrivateRoutes exact path="/message" component={Chat} />
+      <PrivateRoutes exact path="/payment" component={Payment} />
+      <PrivateRoutes exact path="/checkout" component={Checkout} />
       <Route exact path="/" component={Login} />
     </div>
   );

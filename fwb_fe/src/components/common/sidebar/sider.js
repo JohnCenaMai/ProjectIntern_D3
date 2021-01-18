@@ -21,6 +21,7 @@ const { Sider } = Layout;
 
 const ButtonPayment = styled.button`
   display: inline-block;
+  outline: none;
   color: white;
   background-color: #ff2e68;
   font-size: 1em;
@@ -113,7 +114,11 @@ function Sidebar() {
               <Menu.Item key="11">Vietnam</Menu.Item>
               <Menu.Item key="12">China</Menu.Item>
             </SubMenu>
-            <ButtonPayment>Become a Premium Member</ButtonPayment>
+            <ButtonPayment>
+              <Link to="/payment" style={{ color: "white" }}>
+                Become a Premium Member
+              </Link>
+            </ButtonPayment>
           </Menu>
         </Sider>
       </Layout>
