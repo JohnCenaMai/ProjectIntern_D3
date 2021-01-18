@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import AppError from "../utlis/appError.js";
 import arrayToJson from "../utlis/arrayToJson.js";
 import connection from "./../server.js";
 
@@ -7,6 +8,8 @@ const getUserProfile = (req, res) => {
 
   user.getOne(`id = ${req.params.id}`, (err, result) => {
     if (err) console.log(err);
+
+    result[0].hobits = result[0].hobits.split(",");
 
     res.status(200).json({
       status: "success",
@@ -21,6 +24,8 @@ const getMyProfile = (req, res) => {
   user.getOne(`id = ${req.user.id}`, (err, result) => {
     if (err) console.log(err);
 
+    result[0].hobits = result[0].hobits.split(",");
+
     res.status(200).json({
       status: "success",
       data: arrayToJson(result),
@@ -28,25 +33,38 @@ const getMyProfile = (req, res) => {
   });
 };
 
-const updateProfile = (req, res) => {
+const updateProfile = (req, res, next) => {
   const user = new User(connection);
 
   const data = [
     req.body.username,
     req.body.fullname,
     req.body.gender,
-    req.body.age,
+    req.body.birthday,
     req.body.link_fb,
     req.body.description,
+    req.body.country,
+    req.body.region,
     req.params.id,
   ];
 
   user.update(data, (err, result) => {
-    if (err) console.log(err);
+    if (err) {
+      next(new AppError(err.sqlMessage, 500));
+    }
 
-    res.status(200).json({
-      status: "success",
-      msg: "Updated!",
+    user.getOne(`id = ${req.params.id}`, (err, getResult) => {
+      if (err) {
+        next(new AppError(err.sqlMessage, 500));
+      } else {
+        getResult[0].hobits = getResult[0].hobits.split(",");
+
+        res.status(200).json({
+          status: "success",
+          msg: "Updated!",
+          data: arrayToJson(getResult),
+        });
+      }
     });
   });
 };
@@ -75,12 +93,13 @@ const updateHobits = (req, res) => {
 const uploadProfileImage = (req, res) => {
   const user = new User(connection);
 
-  user.updateImage([req.file.path, req.params.id], (err, result) => {
+  user.updateImage([req.file.filename, req.params.id], (err, result) => {
     if (err) console.log(err);
 
     res.status(200).json({
       status: "success",
       msg: "Profile image updated!",
+      data: req.file.filename,
     });
   });
 };

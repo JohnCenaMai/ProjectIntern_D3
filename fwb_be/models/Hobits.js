@@ -1,4 +1,4 @@
-class Hobit {
+export default class Hobit {
   constructor(connection) {
     this.connection = connection;
   }

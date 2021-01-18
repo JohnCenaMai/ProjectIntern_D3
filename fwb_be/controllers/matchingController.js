@@ -8,11 +8,12 @@ const getAllMatchingByUser = (req, res) => {
   matching.getAllMatchingByUser(
     [req.user.id],
     [
+      "users.id AS userId",
       "users.username",
       "users.email",
       "users.full_name",
       "users.imageUrl",
-      "users.age",
+      "users.birthday",
       "matchings.status",
     ],
     (err, result) => {

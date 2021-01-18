@@ -1,5 +1,6 @@
-import { setCookie } from "../../utils/cookie";
+import { removeCookie, setCookie } from "../../utils/cookie";
 import api from "./../../utils/api";
+import axios from "axios";
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -7,8 +8,11 @@ import {
   REGISTER_SUCCESS,
   USER_LOADED,
   AUTH_ERROR,
+  UPLOAD_PROFILE_IMAGE,
   LOGOUT,
+  UPLOAD_PROFILE_SUCCESS,
 } from "./types";
+import { setAlert } from "./alert";
 
 // Load user
 export const loadUser = () => async (dispatch) => {
@@ -17,7 +21,7 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({
       type: USER_LOADED,
-      payload: response.data,
+      payload: response.data.data,
     });
   } catch (error) {
     dispatch({
@@ -65,11 +69,98 @@ export const login = (email, password) => async (dispatch) => {
       type: LOGIN_SUCCESS,
       payload: response.data,
     });
+    dispatch(loadUser());
   } catch (error) {
-    const errors = error.response.data.errors;
-
     dispatch({
       type: LOGIN_FAIL,
     });
+  }
+};
+
+// Upload profile image
+export const uploadProfilePic = (id, token, file) => async (dispatch) => {
+  try {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    let formData = new FormData();
+    formData.append("image", file);
+
+    const response = await axios.patch(
+      `http://localhost:5000/api/users/image/${id}`,
+      formData,
+      config
+    );
+
+    dispatch({
+      type: UPLOAD_PROFILE_IMAGE,
+      payload: response.data.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// log out
+export const logout = () => async (dispatch) => {
+  try {
+    removeCookie("jwt");
+
+    dispatch({
+      type: LOGOUT,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Edit profile
+export const editProfile = (
+  id,
+  token,
+  username,
+  fullname,
+  email,
+  birthday,
+  gender,
+  description,
+  country,
+  region
+) => async (dispatch) => {
+  try {
+    console.log(birthday);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    };
+
+    let data = {
+      username,
+      fullname,
+      email,
+      birthday,
+      gender,
+      description,
+      country,
+      region,
+    };
+
+    const response = await axios.put(
+      `http://localhost:5000/api/users/${id}`,
+      JSON.stringify(data),
+      config
+    );
+
+    dispatch({
+      type: UPLOAD_PROFILE_SUCCESS,
+      payload: response.data.data,
+    });
+
+    dispatch(setAlert(response.data, "success"));
+  } catch (error) {
+    console.log(error);
   }
 };

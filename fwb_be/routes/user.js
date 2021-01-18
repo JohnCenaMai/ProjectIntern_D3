@@ -13,8 +13,9 @@ import uploadImage from "../middlewares/uploadImage.js";
 const router = express.Router();
 
 router.get("/random", protectedRoute, getRandomUser);
+router.get("/me", protectedRoute, getMyProfile);
 router.get("/:id", getUserProfile);
-router.patch("/:id", protectedRoute, updateProfile);
+router.put("/:id", protectedRoute, updateProfile);
 
 // Input: Array of strings
 router.patch("/hobits/:id", protectedRoute, updateHobits);

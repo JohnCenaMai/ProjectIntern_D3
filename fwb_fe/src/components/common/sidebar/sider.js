@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Layout, Image } from "antd";
+import { Layout, Image, Typography } from "antd";
 import "./sider.css";
 import { Menu, Row, Col, Avatar } from "antd";
 import styled from "styled-components";
@@ -61,15 +61,21 @@ function Sidebar() {
               </Row>
             </Menu.Item>
             <Menu.Item>
-              <Row>
-                <Col span={6}>
-                  <Avatar
-                    style={{ backgroundColor: color, verticalAlign: "middle" }}
-                    size="medium"
-                  ></Avatar>
-                </Col>
-                <Col span={12}>Sơn Đặng Cao</Col>
-              </Row>
+              <Link to="/me" style={{ display: "flex", alignItems: "center" }}>
+                <Avatar
+                  style={{
+                    backgroundColor: color,
+                    verticalAlign: "middle",
+                  }}
+                  size="medium"
+                ></Avatar>
+                <Typography.Title
+                  level={5}
+                  style={{ paddingLeft: "1rem", margin: "0" }}
+                >
+                  Sơn Đặng Cao
+                </Typography.Title>
+              </Link>
             </Menu.Item>
             <Menu.Item key="1" icon={<LoadingOutlined />}>
               <Link to="/find-near-you"> People near you</Link>
@@ -100,7 +106,6 @@ function Sidebar() {
             </Menu.Item>
             <SubMenu
               style={{ fontSize: "17px" }}
-              key="sub1"
               icon={<AppstoreFilled />}
               title="Multi Language"
             >
