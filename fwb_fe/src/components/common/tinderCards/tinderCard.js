@@ -13,6 +13,7 @@ function TinderCards({ randoms, getRandomUser, likePeople }) {
     getRandomUser();
   }, []);
 
+  console.log(randoms);
   const [people, setPeople] = useState(randoms);
 
   const handleSwipe = (direction, userId) => {

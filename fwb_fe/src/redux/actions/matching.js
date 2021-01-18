@@ -8,8 +8,9 @@ import {
 
 export const getRandomUser = () => async (dispatch) => {
   try {
-    const response = await api.get("/matching/me");
+    const response = await api.get("/users/random");
 
+    console.log(response);
     dispatch({
       type: GET_RANDOM_USER,
       payload: response.data.data,
