@@ -12,8 +12,7 @@ import {
 import "antd/dist/antd.css";
 import "./login.css";
 import "./responsive.css";
-import { useHistory } from "react-router";
-import { setCookie } from "../../utils/cookie";
+import { useHistory, Redirect } from "react-router-dom";
 // Redux
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -118,6 +117,10 @@ function Login({ login, register, isAuthenticated }) {
     );
     history.push("/matches");
   };
+
+  if (isAuthenticated) {
+    return <Redirect to="/matches" />;
+  }
 
   return (
     <Fragment>
