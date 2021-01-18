@@ -1,13 +1,19 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "antd/dist/antd.css";
 import { Row, Col } from "antd";
 import Sidebar from "../../common/sidebar/sider";
 import "./feedPage.css";
 import FeedItem from "../../common/feedItem/feedItem";
 import CreateFeed from "../../common/createFeed/createFeed";
+// Redux
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getPosts } from "./../../../redux/actions/post";
 
-function FeedPage() {
-  const [feeds, setFeeds] = useState([{}]);
+function FeedPage({ getPosts, posts: { posts } }) {
+  useEffect(() => {
+    getPosts();
+  }, [getPosts]);
 
   return (
     <Fragment>
@@ -19,15 +25,15 @@ function FeedPage() {
           <div className="feedPage">
             <div className="feedPage__container">
               <CreateFeed />
-              {feeds.length === 0 ? (
+              {posts.length === 0 ? (
                 <div className="feedPage--noFeeds">
                   <img src="https://howzuapp.com/web/static/media/no-visiters-premium.3898f035.png" />
                 </div>
               ) : (
                 <div className="feedPage--content">
-                  <FeedItem />
-                  <FeedItem />
-                  <FeedItem />
+                  {posts.map((post) => (
+                    <FeedItem key={post.id} post={post} />
+                  ))}
                 </div>
               )}
             </div>
@@ -39,4 +45,12 @@ function FeedPage() {
   );
 }
 
-export default FeedPage;
+FeedPage.propTypes = {
+  getPosts: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  posts: state.posts,
+});
+
+export default connect(mapStateToProps, { getPosts })(FeedPage);

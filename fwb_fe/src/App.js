@@ -13,6 +13,13 @@ import store from "./redux/store";
 import { getCookie } from "./utils/cookie";
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./redux/actions/auth";
+import TimeAgo from "javascript-time-ago";
+
+import en from "javascript-time-ago/locale/en";
+import ru from "javascript-time-ago/locale/ru";
+
+TimeAgo.addDefaultLocale(en);
+TimeAgo.addLocale(ru);
 
 function App() {
   useEffect(() => {

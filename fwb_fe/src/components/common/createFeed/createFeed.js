@@ -1,50 +1,73 @@
 import React, { useState } from "react";
 import "./createFeed.css";
-import { Upload, Button,Row,Col, message, Divider, Typography, Input } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import {
+  Upload,
+  Button,
+  Row,
+  Col,
+  message,
+  Divider,
+  Typography,
+  Input,
+  Form,
+} from "antd";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { addPost } from "./../../../redux/actions/post";
+import { getCookie } from "./../../../utils/cookie";
 
-function CreateFeed() {
-  const [fileList, updateFileList] = useState([]);
+function CreateFeed({ addPost }) {
+  const [text, setText] = useState("");
+  const [file, setFile] = useState(null);
 
-  const props = {
-    fileList,
-    beforeUpload: (file) => {
-      console.log(file);
-      if (file.type !== "image/png" || file.type !== "image/jpeg") {
-        message.error(`${file.name} is not a image file`);
-      }
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-      return file.type === "image/png" || file.type === "image/jpeg";
-    },
-    onChange: (info) => {
-      console.log(info.fileList);
-      updateFileList(info.fileList.filter((file) => !!file.status));
-    },
+    if (text === "" || file === null) {
+      alert("Please write something");
+    }
+
+    const token = getCookie("jwt");
+
+    addPost(text, file, token);
+    setText("");
   };
 
   return (
     <Row>
       <Col span={24} push={3}>
-          <div className="createFeed">
-            <Typography.Title level={3}>How do you feel now?</Typography.Title>
-          <form className="createFeed__form">
+        <div className="createFeed">
+          <Typography.Title level={3}>How do you feel now?</Typography.Title>
+          <form onSubmit={(e) => handleSubmit(e)} className="createFeed__form">
             <Input.TextArea
+              value={text}
               bordered={false}
               showCount
               maxLength={1000}
               rows={3}
+              onChange={(e) => setText(e.target.value)}
               placeholder="Let's help people know more about this"
             />
             <Divider />
             <div className="createFeed__form--action">
-              <Upload {...props}>
-                <Button icon={<UploadOutlined />}>Upload png only</Button>
-              </Upload>
+              <div class="upload-btn-wrapper">
+                <button class="btn">Upload a file</button>
+                <input
+                  type="file"
+                  name="myfile"
+                  onChange={(e) => setFile(e.target.files[0])}
+                />
+              </div>
               <div>
                 <button className="createFeed__form--button discardBtn">
                   Discard
                 </button>
-                <button className="createFeed__form--button postBtn">Post</button>
+                <button
+                  className="createFeed__form--button postBtn"
+                  type="submit"
+                >
+                  Post
+                </button>
               </div>
             </div>
           </form>
@@ -54,4 +77,6 @@ function CreateFeed() {
   );
 }
 
-export default CreateFeed;
+const mapStateToProps = (state) => ({});
+
+export default connect(mapStateToProps, { addPost })(CreateFeed);
