@@ -6,12 +6,14 @@ import {
   REGISTER_SUCCESS,
   USER_LOADED,
   UPLOAD_PROFILE_IMAGE,
+  UPLOAD_PROFILE_FAIL,
+  UPLOAD_PROFILE_SUCCESS,
   AUTH_ERROR,
   LOGOUT,
 } from "../actions/types";
 
 const initialState = {
-  token: getCookie("token"),
+  token: getCookie("jwt"),
   isAuthenticated: null,
   loading: true,
   user: null,
@@ -40,7 +42,11 @@ function authReducer(state = initialState, action) {
         isAuthenticated: true,
         loading: false,
       };
-
+    case UPLOAD_PROFILE_SUCCESS:
+      return {
+        ...state,
+        user: payload,
+      };
     case AUTH_ERROR:
     case LOGOUT:
       return {

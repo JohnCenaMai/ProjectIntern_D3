@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import AppError from "../utlis/appError.js";
 import arrayToJson from "../utlis/arrayToJson.js";
 import connection from "./../server.js";
 
@@ -32,7 +33,7 @@ const getMyProfile = (req, res) => {
   });
 };
 
-const updateProfile = (req, res) => {
+const updateProfile = (req, res, next) => {
   const user = new User(connection);
 
   const data = [
@@ -42,15 +43,28 @@ const updateProfile = (req, res) => {
     req.body.age,
     req.body.link_fb,
     req.body.description,
+    req.body.country,
+    req.body.region,
     req.params.id,
   ];
 
   user.update(data, (err, result) => {
-    if (err) console.log(err);
+    if (err) {
+      next(new AppError(err.sqlMessage, 500));
+    }
 
-    res.status(200).json({
-      status: "success",
-      msg: "Updated!",
+    user.getOne(`id = ${req.params.id}`, (err, getResult) => {
+      if (err) {
+        next(new AppError(err.sqlMessage, 500));
+      } else {
+        getResult[0].hobits = getResult[0].hobits.split(",");
+
+        res.status(200).json({
+          status: "success",
+          msg: "Updated!",
+          data: arrayToJson(getResult),
+        });
+      }
     });
   });
 };

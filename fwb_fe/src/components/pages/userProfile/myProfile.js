@@ -17,7 +17,7 @@ import {
   CheckOutlined,
 } from "@ant-design/icons";
 import "./myProfile.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 // Redux
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -25,6 +25,7 @@ import { logout, uploadProfilePic } from "./../../../redux/actions/auth";
 import { getCookie } from "../../../utils/cookie";
 
 function MyProfile({ user, logout, uploadProfilePic }) {
+  let histoty = useHistory();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [hobits, setHobits] = useState([
     {
@@ -56,6 +57,11 @@ function MyProfile({ user, logout, uploadProfilePic }) {
   const handleChangeImage = (file) => {
     const token = getCookie("jwt");
     uploadProfilePic(user.id, token, file);
+  };
+
+  const handleLogout = () => {
+    logout();
+    histoty.push("/");
   };
 
   return (
@@ -106,7 +112,7 @@ function MyProfile({ user, logout, uploadProfilePic }) {
                 </Link>
               </div>
             </div>
-            <div class="myProfile__info">
+            <div className="myProfile__info">
               <div className="myProfile__info--item">
                 <Typography.Title level={5}>Interest</Typography.Title>
                 <div
@@ -155,6 +161,7 @@ function MyProfile({ user, logout, uploadProfilePic }) {
             <Button
               type="primary"
               danger
+              onClick={handleLogout}
               style={{ width: "80%", marginTop: "2rem" }}
             >
               Sign out
