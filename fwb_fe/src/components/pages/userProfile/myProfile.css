@@ -1,0 +1,55 @@
+.myProfile {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.myProfile__pic {
+  position: relative;
+}
+
+.myProfile__pic .myProfile__photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.myProfile__pic .myProfile__uploadForm {
+  position: absolute;
+  bottom: 0;
+  right: 5%;
+}
+.myProfile__pic .myProfile__uploadForm .myProfile__upload {
+  width: 50px;
+  height: 50px;
+}
+
+.myProfile__info {
+  margin-top: 2rem;
+  width: 80%;
+}
+
+.myProfile__info--item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.myProfile__info--item .myProfile__info--show {
+  cursor: pointer;
+}
+
+.myProfile__info--item .myProfile__info--show h5 {
+  margin: 0;
+}
+
+.myProfile__info--item .myProfile__info--show {
+  display: flex;
+  align-items: center;
+}
+
+.modalList {
+  height: 300px;
+  overflow: auto;
+}

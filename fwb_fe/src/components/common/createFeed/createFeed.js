@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./createFeed.css";
-import { Upload, Button, message, Divider, Typography, Input } from "antd";
+import { Upload, Button,Row,Col, message, Divider, Typography, Input } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 function CreateFeed() {
@@ -23,30 +23,34 @@ function CreateFeed() {
   };
 
   return (
-    <div className="createFeed">
-      <Typography.Title level={3}>How do you feel now?</Typography.Title>
-      <form className="createFeed__form">
-        <Input.TextArea
-          bordered={false}
-          showCount
-          maxLength={1000}
-          rows={3}
-          placeholder="Let's help people know more about this"
-        />
-        <Divider />
-        <div className="createFeed__form--action">
-          <Upload {...props}>
-            <Button icon={<UploadOutlined />}>Upload png only</Button>
-          </Upload>
-          <div>
-            <button className="createFeed__form--button discardBtn">
-              Discard
-            </button>
-            <button className="createFeed__form--button postBtn">Post</button>
-          </div>
+    <Row>
+      <Col span={24} push={3}>
+          <div className="createFeed">
+            <Typography.Title level={3}>How do you feel now?</Typography.Title>
+          <form className="createFeed__form">
+            <Input.TextArea
+              bordered={false}
+              showCount
+              maxLength={1000}
+              rows={3}
+              placeholder="Let's help people know more about this"
+            />
+            <Divider />
+            <div className="createFeed__form--action">
+              <Upload {...props}>
+                <Button icon={<UploadOutlined />}>Upload png only</Button>
+              </Upload>
+              <div>
+                <button className="createFeed__form--button discardBtn">
+                  Discard
+                </button>
+                <button className="createFeed__form--button postBtn">Post</button>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
+      </Col>
+    </Row>
   );
 }
 

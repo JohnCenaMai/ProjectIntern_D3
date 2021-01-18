@@ -15,6 +15,19 @@ const getUserProfile = (req, res) => {
   });
 };
 
+const getMyProfile = (req, res) => {
+  const user = new User(connection);
+
+  user.getOne(`id = ${req.user.id}`, (err, result) => {
+    if (err) console.log(err);
+
+    res.status(200).json({
+      status: "success",
+      data: arrayToJson(result),
+    });
+  });
+};
+
 const updateProfile = (req, res) => {
   const user = new User(connection);
 
@@ -97,4 +110,5 @@ export {
   updateHobits,
   uploadProfileImage,
   getRandomUser,
+  getMyProfile,
 };

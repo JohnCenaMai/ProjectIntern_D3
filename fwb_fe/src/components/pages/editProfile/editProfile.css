@@ -1,0 +1,18 @@
+.editProfile {
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.editProfile__form {
+  width: 80%;
+}
+
+.editProfile__btn {
+  width: 100%;
+  background-color: palevioletred;
+  outline: none;
+  border: none;
+  border-radius: 1rem;
+}

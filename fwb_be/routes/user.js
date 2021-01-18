@@ -5,6 +5,7 @@ import {
   updateHobits,
   updateProfile,
   uploadProfileImage,
+  getMyProfile,
 } from "../controllers/userController.js";
 import { protectedRoute } from "../middlewares/isLogged.js";
 import uploadImage from "../middlewares/uploadImage.js";
