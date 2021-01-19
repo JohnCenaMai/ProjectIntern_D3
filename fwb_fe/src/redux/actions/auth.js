@@ -11,6 +11,7 @@ import {
   UPLOAD_PROFILE_IMAGE,
   LOGOUT,
   UPLOAD_PROFILE_SUCCESS,
+  JOIN_PREMIUM,
 } from "./types";
 import { setAlert } from "./alert";
 
@@ -130,7 +131,6 @@ export const editProfile = (
   region
 ) => async (dispatch) => {
   try {
-    console.log(birthday);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -157,6 +157,26 @@ export const editProfile = (
 
     dispatch({
       type: UPLOAD_PROFILE_SUCCESS,
+      payload: response.data.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const joinPremium = (method, amount) => async (dispatch) => {
+  try {
+    const data = {
+      method,
+      amount,
+    };
+
+    const response = await api.post("/payment", data, {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    dispatch({
+      type: JOIN_PREMIUM,
       payload: response.data.data,
     });
   } catch (error) {

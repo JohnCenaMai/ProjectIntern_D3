@@ -21,6 +21,11 @@
   color: white;
 }
 
+.card > h4 {
+  margin: 0 !important;
+  color: white;
+}
+
 .tinderCards__cardContainer {
   display: flex;
   justify-content: center;

@@ -34,6 +34,9 @@ const createPayment = (req, res, next) => {
           res.status(201).json({
             status: "success",
             msg: "Paid!",
+            data: {
+              role: "premium",
+            },
           });
         }
       });

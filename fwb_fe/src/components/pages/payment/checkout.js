@@ -8,17 +8,21 @@ import {
   useElements,
   Elements,
 } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import { joinPremium } from "./../../../redux/actions/auth";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import "./payment.css";
+import { message } from "antd";
+import { useHistory } from "react-router";
 
-function Checkout() {
+function Checkout({ joinPremium }) {
+  let history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
   const [clientSercet, setClientSercet] = useState("");
 
   useEffect(() => {
     const getClientSercet = async () => {
-      console.log("getClientSercet");
       const response = await api.post(`/payment/create?total=20000`);
       setClientSercet(response.data.clientSecret);
     };
@@ -37,9 +41,16 @@ function Checkout() {
       })
       .then(({ paymentIntent }) => {
         console.log(paymentIntent);
+        joinPremium(
+          paymentIntent.payment_method_types[0],
+          paymentIntent.amount
+        );
       });
+    message.success("Welcome you to join premium");
+    history.push("/find-near-you");
   };
 
+  console.log(clientSercet);
   return (
     <Fragment>
       <Row>
@@ -63,4 +74,10 @@ function Checkout() {
   );
 }
 
-export default Checkout;
+Checkout.propTypes = {
+  joinPremium: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({});
+
+export default connect(mapStateToProps, { joinPremium })(Checkout);

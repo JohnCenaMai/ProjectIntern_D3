@@ -65,3 +65,9 @@
   height: 300px;
   overflow: auto;
 }
+
+.hobitItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+}

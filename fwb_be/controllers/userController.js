@@ -133,7 +133,7 @@ const getRandomUser = (req, res, next) => {
   const user = new User(connection);
 
   user.getRandomUser(
-    ["email, username, full_name", "imageUrl"],
+    ["id", "email, username, full_name", "imageUrl", "region", "country"],
     [req.user.id],
     (err, result) => {
       if (err) {

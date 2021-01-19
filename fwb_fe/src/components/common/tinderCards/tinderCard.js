@@ -16,10 +16,10 @@ function TinderCards({ randoms, getRandomUser, likePeople }) {
   console.log(randoms);
   const [people, setPeople] = useState(randoms);
 
-  const handleSwipe = (direction, userId) => {
+  const handleSwipe = (direction, person) => {
     switch (direction) {
       case "right":
-        likePeople(userId);
+        likePeople(person.id);
         break;
 
       default:
@@ -31,7 +31,7 @@ function TinderCards({ randoms, getRandomUser, likePeople }) {
     <Fragment>
       {people.map((person) => (
         <TinderCard
-          onSwipe={(direction) => handleSwipe(direction, person.userId)}
+          onSwipe={(direction) => handleSwipe(direction, person)}
           key={person.username}
           preventSwipe={["down"]}
           className="swipe"
@@ -47,6 +47,9 @@ function TinderCards({ randoms, getRandomUser, likePeople }) {
             }}
           >
             <Typography.Title level={3}>{person.username}</Typography.Title>
+            <Typography.Title level={4}>
+              {person.region}, {person.country}
+            </Typography.Title>
           </div>
         </TinderCard>
       ))}

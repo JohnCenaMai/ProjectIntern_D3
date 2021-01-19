@@ -9,6 +9,7 @@ import {
   UPLOAD_PROFILE_FAIL,
   UPLOAD_PROFILE_SUCCESS,
   AUTH_ERROR,
+  JOIN_PREMIUM,
   LOGOUT,
 } from "../actions/types";
 
@@ -46,6 +47,11 @@ function authReducer(state = initialState, action) {
       return {
         ...state,
         user: payload,
+      };
+    case JOIN_PREMIUM:
+      return {
+        ...state,
+        user: { ...state, role: payload },
       };
     case AUTH_ERROR:
     case LOGOUT:

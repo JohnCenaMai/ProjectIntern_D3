@@ -45,7 +45,12 @@ function MyProfile({
     loadUser();
   }, []);
 
+  const [userHobit, setUserHobit] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const checkInclude = (el) => {
+    return user.hobits.includes(el);
+  };
 
   const handleChangeImage = (file) => {
     const token = getCookie("jwt");
@@ -56,6 +61,8 @@ function MyProfile({
     logout();
     histoty.push("/");
   };
+
+  console.log(userHobit);
 
   return (
     <Fragment>
@@ -132,16 +139,19 @@ function MyProfile({
               onOk={() => setIsModalVisible(false)}
               onCancel={() => setIsModalVisible(false)}
             >
-              <List
-                className="modalList"
-                itemLayout="horizontal"
-                dataSource={hobits}
-                renderItem={(item) => (
-                  <List.Item style={{ width: "100%" }}>
-                    <Typography.Title level={5}>{item}</Typography.Title>
-                  </List.Item>
-                )}
-              />
+              {hobits.map((item) => (
+                <div
+                  className="hobitItem"
+                  onClick={() => setUserHobit([...userHobit, item])}
+                >
+                  <Typography.Title level={5}>{item}</Typography.Title>
+                  {checkInclude(item) && (
+                    <CheckOutlined
+                      style={{ color: "#ff2e68", fontSize: "18px" }}
+                    />
+                  )}
+                </div>
+              ))}
             </Modal>
 
             <Button
