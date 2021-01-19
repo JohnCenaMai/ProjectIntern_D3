@@ -19,6 +19,7 @@ export const loadUser = () => async (dispatch) => {
   try {
     const response = await api.get("/users/me");
 
+    console.log("Load User");
     dispatch({
       type: USER_LOADED,
       payload: response.data.data,
@@ -31,10 +32,10 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register
-export const register = (username, age, gender, email, password) => async (
+export const register = (username, birthday, gender, email, password) => async (
   dispatch
 ) => {
-  const body = { username, age, gender, email, password };
+  const body = { username, birthday, gender, email, password };
 
   try {
     const response = await api.post("/auth/register", body);
@@ -158,8 +159,6 @@ export const editProfile = (
       type: UPLOAD_PROFILE_SUCCESS,
       payload: response.data.data,
     });
-
-    dispatch(setAlert(response.data, "success"));
   } catch (error) {
     console.log(error);
   }

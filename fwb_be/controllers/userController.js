@@ -6,7 +6,7 @@ import connection from "./../server.js";
 const getUserProfile = (req, res) => {
   const user = new User(connection);
 
-  user.getOne(`id = ${req.params.id}`, (err, result) => {
+  user.getOne([], {}, `id = ${req.params.id}`, (err, result) => {
     if (err) console.log(err);
 
     result[0].hobits = result[0].hobits.split(",");
@@ -21,16 +21,40 @@ const getUserProfile = (req, res) => {
 const getMyProfile = (req, res) => {
   const user = new User(connection);
 
-  user.getOne(`id = ${req.user.id}`, (err, result) => {
-    if (err) console.log(err);
+  user.getOne(
+    [
+      "users.id",
+      "users.username",
+      "users.full_name",
+      "users.email",
+      "users.birthday",
+      "users.country",
+      "users.region",
+      "users.description",
+      "users.gender",
+      "users.imageUrl",
+      "users.hobits",
+      "roles.name AS role",
+    ],
+    {
+      table_name: ["user_role", "roles"],
+      condition: [
+        "users.id = user_role.user_id",
+        "user_role.role_id = roles.id",
+      ],
+    },
+    ` WHERE users.id = ${req.user.id}`,
+    (err, result) => {
+      if (err) console.log(err);
 
-    result[0].hobits = result[0].hobits.split(",");
+      result[0].hobits = result[0].hobits.split(",");
 
-    res.status(200).json({
-      status: "success",
-      data: arrayToJson(result),
-    });
-  });
+      res.status(200).json({
+        status: "success",
+        data: arrayToJson(result),
+      });
+    }
+  );
 };
 
 const updateProfile = (req, res, next) => {
@@ -53,7 +77,7 @@ const updateProfile = (req, res, next) => {
       next(new AppError(err.sqlMessage, 500));
     }
 
-    user.getOne(`id = ${req.params.id}`, (err, getResult) => {
+    user.getOne([], {}, `id = ${req.params.id}`, (err, getResult) => {
       if (err) {
         next(new AppError(err.sqlMessage, 500));
       } else {

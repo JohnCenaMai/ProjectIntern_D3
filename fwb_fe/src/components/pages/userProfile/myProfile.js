@@ -21,15 +21,28 @@ import { Link, Redirect, useHistory } from "react-router-dom";
 // Redux
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { logout, uploadProfilePic } from "./../../../redux/actions/auth";
+import {
+  logout,
+  uploadProfilePic,
+  loadUser,
+} from "./../../../redux/actions/auth";
+import store from "./../../../redux/store";
 import { getAllHobits } from "./../../../redux/actions/hobits";
 import { getCookie } from "../../../utils/cookie";
 
-function MyProfile({ user, hobits, logout, uploadProfilePic, getAllHobits }) {
+function MyProfile({
+  user,
+  hobits,
+  logout,
+  uploadProfilePic,
+  loadUser,
+  getAllHobits,
+}) {
   let histoty = useHistory();
 
   useEffect(() => {
     getAllHobits();
+    loadUser();
   }, []);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -164,4 +177,5 @@ export default connect(mapStateToProps, {
   logout,
   uploadProfilePic,
   getAllHobits,
+  loadUser,
 })(MyProfile);

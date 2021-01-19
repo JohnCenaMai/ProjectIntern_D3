@@ -51,3 +51,28 @@
   width: 250px;
   height: 50px;
 }
+
+.checkout form {
+  padding: 1rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout__card {
+  width: 80%;
+  box-shadow: 1px 12px 23px -8px rgba(0, 0, 0, 0.55);
+  border-radius: 1rem;
+}
+
+.checkout__btn {
+  width: 80%;
+  margin-top: 1rem;
+  color: white;
+  background-color: #ff2e68;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  height: 40px;
+}
