@@ -34,6 +34,8 @@ class Post {
       sql += whereOpts;
     }
 
+    console.log(sql);
+
     this.connection.query(`${sql} ORDER BY posts.created_at DESC`, cb);
   }
 

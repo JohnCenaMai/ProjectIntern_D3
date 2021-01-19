@@ -11,6 +11,7 @@ import {
   UPLOAD_PROFILE_IMAGE,
   LOGOUT,
   UPLOAD_PROFILE_SUCCESS,
+  JOIN_PREMIUM,
 } from "./types";
 import { setAlert } from "./alert";
 
@@ -19,6 +20,7 @@ export const loadUser = () => async (dispatch) => {
   try {
     const response = await api.get("/users/me");
 
+    console.log("Load User");
     dispatch({
       type: USER_LOADED,
       payload: response.data.data,
@@ -31,10 +33,10 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register
-export const register = (username, age, gender, email, password) => async (
+export const register = (username, birthday, gender, email, password) => async (
   dispatch
 ) => {
-  const body = { username, age, gender, email, password };
+  const body = { username, birthday, gender, email, password };
 
   try {
     const response = await api.post("/auth/register", body);
@@ -157,8 +159,26 @@ export const editProfile = (
       type: UPLOAD_PROFILE_SUCCESS,
       payload: response.data.data,
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-    dispatch(setAlert(response.data, "success"));
+export const joinPremium = (method, amount) => async (dispatch) => {
+  try {
+    const data = {
+      method,
+      amount,
+    };
+
+    const response = await api.post("/payment", data, {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    dispatch({
+      type: JOIN_PREMIUM,
+      payload: response.data.data,
+    });
   } catch (error) {
     console.log(error);
   }

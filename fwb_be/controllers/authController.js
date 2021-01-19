@@ -7,8 +7,9 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import sendEmail from "./emailController.js";
 import constants from "../utlis/constants.js";
+import AppError from "../utlis/appError.js";
 
-const registerUser = async (req, res) => {
+const registerUser = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -20,7 +21,7 @@ const registerUser = async (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-    age: req.body.age,
+    birthday: req.body.birthday,
     gender: req.body.gender,
     status: constants.DEFAULT_USER_STATUS,
   };
@@ -29,7 +30,7 @@ const registerUser = async (req, res) => {
 
   userData.password = await bcrypt.hash(userData.password, salt);
 
-  user.getOne(`email = "${req.body.email}"`, (err, result) => {
+  user.getOne([], {}, ` WHERE email = "${req.body.email}"`, (err, result) => {
     if (err) console.log(err);
 
     if (result.length != 0) {
@@ -41,31 +42,49 @@ const registerUser = async (req, res) => {
       });
     } else {
       user.createOne(userData, (err, result) => {
-        return user.getOne(`email = "${userData.email}"`, (err, result) => {
-          const payload = {
-            user: {
-              id: result[0].id,
-            },
-          };
+        if (err) {
+          next(new AppError(err.sqlMessage, 500));
+        } else {
+          user.createUserRole(
+            [result.insertId, constants.DEFAULT_USER_ROLE],
+            (err, createRes) => {
+              if (err) {
+                console.log(err);
+              }
+              user.getOne(
+                [],
+                {},
+                ` WHERE email = "${userData.email}"`,
+                (err, getResult) => {
+                  const payload = {
+                    user: {
+                      id: getResult[0].id,
+                    },
+                  };
 
-          jwt.sign(payload, process.env.JWT_SECRET, (err, token) => {
-            if (err) throw err;
+                  jwt.sign(payload, process.env.JWT_SECRET, (err, token) => {
+                    if (err) throw err;
 
-            res.cookie("jwt", token, {
-              expires: new Date(
-                Date.now() + process.env.JWT_EXPIRED_IN * 24 * 60 * 60 * 1000
-              ),
-              httpOnly: true,
-            });
+                    res.cookie("jwt", token, {
+                      expires: new Date(
+                        Date.now() +
+                          process.env.JWT_EXPIRED_IN * 24 * 60 * 60 * 1000
+                      ),
+                      httpOnly: true,
+                    });
 
-            sendEmail(
-              userData.email,
-              `<p>Hello ${userData.username}, welcome to Friend with benefit<p>`
-            );
+                    sendEmail(
+                      userData.email,
+                      `<p>Hello ${userData.username}, welcome to Friend with benefit<p>`
+                    );
 
-            res.status(201).json({ token });
-          });
-        });
+                    res.status(201).json({ token });
+                  });
+                }
+              );
+            }
+          );
+        }
       });
     }
   });
@@ -81,7 +100,7 @@ const loginUser = async (req, res) => {
 
   const user = new User(connection);
 
-  user.getOne(`email = "${email}"`, async (err, result) => {
+  user.getOne([], {}, ` WHERE email = "${email}"`, async (err, result) => {
     if (err) console.log(err);
 
     if (result.length == 0) {
@@ -121,7 +140,7 @@ const forgotPassword = async (req, res) => {
   // Find user with email
   const user = new User(connection);
 
-  user.getOne(`email = "${req.body.email}"`, (err, result) => {
+  user.getOne([], {}, ` WHERE email = "${req.body.email}"`, (err, result) => {
     if (err) console.log(err);
 
     // Generate random token

@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  getRandomUser,
   getUserProfile,
   updateHobits,
   updateProfile,
@@ -11,6 +12,7 @@ import uploadImage from "../middlewares/uploadImage.js";
 
 const router = express.Router();
 
+router.get("/random", protectedRoute, getRandomUser);
 router.get("/me", protectedRoute, getMyProfile);
 router.get("/:id", getUserProfile);
 router.put("/:id", protectedRoute, updateProfile);

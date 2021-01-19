@@ -7,8 +7,16 @@ import Header from "../../common/header/header";
 function HomePage() {
   return (
     <Fragment>
-      <Row style={{overflow: 'auto', height: '100vh',position: 'sticky',top: 0,left: 0}}>
-        <Col span={18} push={6}>
+      <Row
+        style={{
+          overflow: "auto",
+          height: "100vh",
+          position: "sticky",
+          top: 0,
+          left: 0,
+        }}
+      >
+        <Col span={19} push={5}>
           <Header />
           <Row>
             <Avatar
@@ -17,7 +25,7 @@ function HomePage() {
             />
           </Row>
         </Col>
-        <Col span={5} pull={18}>
+        <Col span={5} pull={19}>
           <Sidebar />
         </Col>
       </Row>

@@ -32,6 +32,14 @@ function postReducer(state = initialState, action) {
         posts: [payload, ...state.posts],
         loading: false,
       };
+    case UPDATE_LIKES:
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post.id === payload.id ? { ...post, like: payload.like } : post
+        ),
+        loading: false,
+      };
     case DELETE_POST:
       return {
         ...state,

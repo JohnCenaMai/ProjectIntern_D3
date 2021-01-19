@@ -1,6 +1,7 @@
 import Comment from "../models/Comment.js";
 import Image from "../models/Image.js";
 import User from "../models/User.js";
+import AppError from "../utlis/appError.js";
 import arrayToJson from "../utlis/arrayToJson.js";
 import constants from "../utlis/constants.js";
 import Post from "./../models/Post.js";
@@ -33,12 +34,12 @@ const getPost = (req, res) => {
       if (err) console.log(err);
 
       if (result.like != null) {
-        result.like = result.like.split(",");
+        result.like = result.like.split(" ");
       }
 
       result.map((item) => {
         if (item.like != null) {
-          item.like = item.like.trim().split(",");
+          item.like = item.like.trim().split(" ");
         } else {
           item.like = [];
         }
@@ -93,12 +94,12 @@ const createOnePost = (req, res) => {
           if (err) console.log(err);
 
           if (createRes.like != null) {
-            createRes.like = createRes.like.split(",");
+            createRes.like = createRes.like.split(" ");
           }
 
           createRes.map((item) => {
             if (item.like != null) {
-              item.like = item.like.trim().split(",");
+              item.like = item.like.trim().split(" ");
             } else {
               item.like = [];
             }
@@ -156,7 +157,7 @@ const deletePost = (req, res) => {
   });
 };
 
-const likePost = (req, res) => {
+const likePost = (req, res, next) => {
   const post = new Post(connection);
 
   post.get([], {}, ` where posts.id = ${req.params.id}`, (err, result) => {
@@ -171,13 +172,36 @@ const likePost = (req, res) => {
           msg: "You've already liked this post!",
         });
       } else {
-        likes += `,${email}`;
+        likes += `${email} `;
 
         post.like([likes, req.params.id], (err, data) => {
-          res.status(200).json({
-            status: "success",
-            msg: "Post liked!",
-          });
+          if (err) {
+            next(new AppError(err.sqlMessage, 500));
+          } else {
+            post.get(
+              ["posts.id,posts.like"],
+              {},
+              ` Where posts.id = ${req.params.id}`,
+              (err, getRes) => {
+                if (getRes.like != null) {
+                  getRes.like = getRes.like.split(" ");
+                }
+
+                getRes.map((item) => {
+                  if (item.like != null) {
+                    item.like = item.like.trim().split(" ");
+                  } else {
+                    item.like = [];
+                  }
+                });
+                res.json({
+                  status: "fail",
+                  msg: "Post liked!",
+                  data: arrayToJson(getRes),
+                });
+              }
+            );
+          }
         });
       }
     });

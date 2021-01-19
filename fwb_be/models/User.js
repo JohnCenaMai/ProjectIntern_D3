@@ -3,12 +3,34 @@ export default class User {
     this.connection = connection;
   }
 
-  getOne(whereOpts, cb) {
-    let sql = "SELECT * FROM users WHERE ";
+  getOne(selectOpts, joinOpts, whereOpts, cb) {
+    let sql = "SELECT * FROM users";
+
+    if (selectOpts.length > 0) {
+      let selection = "";
+
+      selectOpts.map(
+        (select, index) =>
+          (selection += `${select} ${
+            index == selectOpts.length - 1 ? "" : ","
+          }`)
+      );
+
+      sql = sql.replace("*", selection);
+    }
+
+    // Handle join
+    if (Object.keys(joinOpts).length > 0) {
+      joinOpts.table_name.map((name, index) => {
+        sql += ` INNER JOIN ${name} ON ${joinOpts.condition[index]} `;
+      });
+    }
 
     if (whereOpts) {
       sql += whereOpts;
     }
+
+    console.log(sql);
 
     this.connection.query(sql, cb);
   }
@@ -44,6 +66,39 @@ export default class User {
     const sql =
       "UPDATE `users` SET `password` = ? ,`reset_token`= null,`reset_token_expire`= null WHERE id = ?";
 
+    this.connection.query(sql, data, cb);
+  }
+
+  getRandomUser(selectOpts, data, cb) {
+    let sql = `SELECT * FROM users
+    WHERE id NOT IN (SELECT id FROM users WHERE id = ?)
+    ORDER BY RAND()
+    LIMIT 3`;
+
+    if (selectOpts.length > 0) {
+      let selection = "";
+
+      selectOpts.map(
+        (select, index) =>
+          (selection += `${select} ${
+            index == selectOpts.length - 1 ? "" : ","
+          }`)
+      );
+
+      sql = sql.replace("*", selection);
+    }
+
+    this.connection.query(sql, data, cb);
+  }
+
+  createUserRole(data, cb) {
+    const sql = "INSERT INTO `user_role` (`user_id`, `role_id`) VALUES (?,?);";
+    this.connection.query(sql, data, cb);
+  }
+
+  updateUserRole(data, cb) {
+    const sql =
+      "UPDATE `user_role` SET `role_id`= ? WHERE `user_id`= ? AND `role_id`= ?";
     this.connection.query(sql, data, cb);
   }
 }

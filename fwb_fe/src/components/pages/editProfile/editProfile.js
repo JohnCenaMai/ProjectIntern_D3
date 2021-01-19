@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import {
   Row,
   Col,
@@ -9,6 +9,7 @@ import {
   Alert,
   Radio,
   Button,
+  message,
 } from "antd";
 import Sidebar from "../../common/sidebar/sider";
 import "./editProfile.css";
@@ -21,11 +22,12 @@ import {
   RegionDropdown,
   CountryRegionData,
 } from "react-country-region-selector";
-import { editProfile } from "./../../../redux/actions/auth";
+import { editProfile, loadUser } from "./../../../redux/actions/auth";
 import { connect } from "react-redux";
 import { getCookie } from "../../../utils/cookie";
+import store from "./../../../redux/store";
 
-function EditProfile({ user, editProfile, alerts }) {
+function EditProfile({ user, editProfile, loadUser, alerts }) {
   const [username, setUsername] = useState(user.username);
   const [fullname, setFullname] = useState(user.full_name);
   const [gender, setGender] = useState(user.gender);
@@ -49,6 +51,7 @@ function EditProfile({ user, editProfile, alerts }) {
       country,
       region
     );
+    message.success("Profile Updated!");
   };
 
   return (
@@ -84,6 +87,7 @@ function EditProfile({ user, editProfile, alerts }) {
               <Form.Item label="Email" name="email">
                 <Input
                   placeholder="Email"
+                  disabled
                   defaultValue={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -154,4 +158,4 @@ const mapStateToProps = (state) => ({
   alerts: state.alert,
 });
 
-export default connect(mapStateToProps, { editProfile })(EditProfile);
+export default connect(mapStateToProps, { editProfile, loadUser })(EditProfile);

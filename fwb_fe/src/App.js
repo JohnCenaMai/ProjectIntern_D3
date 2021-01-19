@@ -6,6 +6,8 @@ import HomePage from "./components/pages/home/homepage";
 import FeedPage from "./components/pages/feed/feedpage";
 import Chat from "./components/pages/chat/chat";
 import Match from "./components/pages/match/match";
+import ForgotPassword from "./components/pages/forgotPassword/forgotPassword";
+import MyMatching from "./components/pages/myMatching/myMatching";
 import MyProfile from "./components/pages/userProfile/myProfile";
 import EditProfile from "./components/pages/editProfile/editProfile";
 import { Provider } from "react-redux";
@@ -17,6 +19,7 @@ import TimeAgo from "javascript-time-ago";
 
 import en from "javascript-time-ago/locale/en";
 import ru from "javascript-time-ago/locale/ru";
+import Routes from "./components/routes/Routes";
 
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(ru);
@@ -33,27 +36,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route path="/find-near-you">
-            <HomePage />
-          </Route>
-          <Route path="/matches">
-            <Match />
-          </Route>
-          <Route path="/me/edit">
-            <EditProfile />
-          </Route>
-          <Route path="/me">
-            <MyProfile />
-          </Route>
-          <Route path="/feeds">
-            <FeedPage />
-          </Route>
-          <Route path="/message">
-            <Chat />
-          </Route>
-          <Route path="/">
-            <Login />
-          </Route>
+          <Route component={Routes} />
         </Switch>
       </Router>
     </Provider>

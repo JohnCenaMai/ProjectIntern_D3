@@ -48,7 +48,7 @@ function FeedItem({ post, user, likePost, deletePost }) {
               <Avatar
                 src={
                   post.userImageUrl &&
-                  `http://localhost:5000/${post.userImageUrl}`
+                  `http://localhost:5000/images/${post.userImageUrl}`
                 }
               />
               <div className="feedItem__header--inforText">
@@ -61,7 +61,7 @@ function FeedItem({ post, user, likePost, deletePost }) {
               </div>
             </div>
             <div className="feedItem__header--action">
-              {user.data.username !== post.username ? (
+              {user.username !== post.username ? (
                 ""
               ) : (
                 <Dropdown
@@ -90,7 +90,7 @@ function FeedItem({ post, user, likePost, deletePost }) {
           </div>
           <div className="feedItem__footer">
             <div className="feedItem__footer--infor">
-              {post.like.includes(user.data.email) ? (
+              {post.like.includes(user.email) ? (
                 <LikeFilled
                   style={{ fontSize: "24px", marginRight: "0.5rem" }}
                 />

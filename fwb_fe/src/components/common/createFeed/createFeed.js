@@ -50,8 +50,8 @@ function CreateFeed({ addPost }) {
             />
             <Divider />
             <div className="createFeed__form--action">
-              <div class="upload-btn-wrapper">
-                <button class="btn">Upload a file</button>
+              <div className="upload-btn-wrapper">
+                <button className="btn">Upload a file</button>
                 <input
                   type="file"
                   name="myfile"

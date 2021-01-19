@@ -21,18 +21,36 @@ import { Link, Redirect, useHistory } from "react-router-dom";
 // Redux
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { logout, uploadProfilePic } from "./../../../redux/actions/auth";
+import {
+  logout,
+  uploadProfilePic,
+  loadUser,
+} from "./../../../redux/actions/auth";
+import store from "./../../../redux/store";
 import { getAllHobits } from "./../../../redux/actions/hobits";
 import { getCookie } from "../../../utils/cookie";
 
-function MyProfile({ user, hobits, logout, uploadProfilePic, getAllHobits }) {
+function MyProfile({
+  user,
+  hobits,
+  logout,
+  uploadProfilePic,
+  loadUser,
+  getAllHobits,
+}) {
   let histoty = useHistory();
 
   useEffect(() => {
     getAllHobits();
+    loadUser();
   }, []);
 
+  const [userHobit, setUserHobit] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const checkInclude = (el) => {
+    return user.hobits.includes(el);
+  };
 
   const handleChangeImage = (file) => {
     const token = getCookie("jwt");
@@ -43,6 +61,8 @@ function MyProfile({ user, hobits, logout, uploadProfilePic, getAllHobits }) {
     logout();
     histoty.push("/");
   };
+
+  console.log(userHobit);
 
   return (
     <Fragment>
@@ -119,16 +139,19 @@ function MyProfile({ user, hobits, logout, uploadProfilePic, getAllHobits }) {
               onOk={() => setIsModalVisible(false)}
               onCancel={() => setIsModalVisible(false)}
             >
-              <List
-                className="modalList"
-                itemLayout="horizontal"
-                dataSource={hobits}
-                renderItem={(item) => (
-                  <List.Item style={{ width: "100%" }}>
-                    <Typography.Title level={5}>{item}</Typography.Title>
-                  </List.Item>
-                )}
-              />
+              {hobits.map((item) => (
+                <div
+                  className="hobitItem"
+                  onClick={() => setUserHobit([...userHobit, item])}
+                >
+                  <Typography.Title level={5}>{item}</Typography.Title>
+                  {checkInclude(item) && (
+                    <CheckOutlined
+                      style={{ color: "#ff2e68", fontSize: "18px" }}
+                    />
+                  )}
+                </div>
+              ))}
             </Modal>
 
             <Button
@@ -164,4 +187,5 @@ export default connect(mapStateToProps, {
   logout,
   uploadProfilePic,
   getAllHobits,
+  loadUser,
 })(MyProfile);

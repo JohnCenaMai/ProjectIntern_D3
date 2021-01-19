@@ -15,12 +15,15 @@ import {
   EllipsisOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
 
 const ButtonPayment = styled.button`
   display: inline-block;
+  outline: none;
   color: white;
   background-color: #ff2e68;
   font-size: 1em;
@@ -32,7 +35,7 @@ const ButtonPayment = styled.button`
   cursor: pointer;
 `;
 
-function Sidebar() {
+function Sidebar({ user }) {
   const [color, setColor] = useState("black");
 
   return (
@@ -68,12 +71,17 @@ function Sidebar() {
                     verticalAlign: "middle",
                   }}
                   size="medium"
+                  src={
+                    user === null
+                      ? ""
+                      : `http://localhost:5000/images/${user.imageUrl}`
+                  }
                 ></Avatar>
                 <Typography.Title
                   level={5}
                   style={{ paddingLeft: "1rem", margin: "0" }}
                 >
-                  Sơn Đặng Cao
+                  {user === null ? "" : user.username}
                 </Typography.Title>
               </Link>
             </Menu.Item>
@@ -113,7 +121,13 @@ function Sidebar() {
               <Menu.Item key="11">Vietnam</Menu.Item>
               <Menu.Item key="12">China</Menu.Item>
             </SubMenu>
-            <ButtonPayment>Become a Premium Member</ButtonPayment>
+            {user !== null && user.role === "free" && (
+              <ButtonPayment>
+                <Link to="/payment" style={{ color: "white" }}>
+                  Become a Premium Member
+                </Link>
+              </ButtonPayment>
+            )}
           </Menu>
         </Sider>
       </Layout>
@@ -121,4 +135,12 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+Sidebar.propTypes = {
+  user: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+});
+
+export default connect(mapStateToProps, {})(Sidebar);

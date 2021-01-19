@@ -14,6 +14,7 @@ import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
 import matchingRoute from "./routes/matching.js";
 import hobitRoute from "./routes/hobits.js";
+import paymentRoute from "./routes/payment.js";
 import { GgSignIn, LocalSignIn } from "./utlis/passport.js";
 import AppError from "./utlis/appError.js";
 
@@ -61,6 +62,7 @@ app.use("/api/comments", commentRoute);
 app.use("/api/users", userRoute);
 app.use("/api/matching", matchingRoute);
 app.use("/api/hobits", hobitRoute);
+app.use("/api/payment", paymentRoute);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can not find ${req.originalUrl} on this server!`, 404));

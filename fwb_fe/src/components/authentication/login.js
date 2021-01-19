@@ -104,7 +104,7 @@ function Login({ login, register, isAuthenticated }) {
     console.log("Logining...");
     console.log(login);
     login(emailLogin, passwordLogin);
-    history.push("/matches");
+    history.push("/find-near-you");
   };
 
   const handleRegister = () => {
@@ -115,11 +115,11 @@ function Login({ login, register, isAuthenticated }) {
       emailRegister,
       passwordRegister
     );
-    history.push("/matches");
+    history.push("/find-near-you");
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/matches" />;
+    return <Redirect to="/find-near-you" />;
   }
 
   return (
