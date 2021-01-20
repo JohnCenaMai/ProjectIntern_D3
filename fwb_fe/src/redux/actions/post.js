@@ -33,6 +33,8 @@ export const likePost = (id) => async (dispatch) => {
   try {
     const response = await api.put(`/posts/like/${id}`);
 
+    console.log(response.data.data);
+
     dispatch({
       type: UPDATE_LIKES,
       payload: response.data.data,

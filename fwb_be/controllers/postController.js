@@ -160,52 +160,63 @@ const deletePost = (req, res) => {
 const likePost = (req, res, next) => {
   const post = new Post(connection);
 
-  post.get([], {}, ` where posts.id = ${req.params.id}`, (err, result) => {
-    let likes = result[0].like;
+  post.get(
+    ["posts.id", "posts.like"],
+    {},
+    ` WHERE posts.id = ${req.params.id}`,
+    (err, result) => {
+      let likes = result[0].like;
 
-    // Check user liked or not
-    new User(connection).getOne(`id = "${req.user.id}"`, (err, result) => {
-      let email = result[0].email;
-      if (likes !== null && likes.includes(email)) {
-        res.json({
-          status: "fail",
-          msg: "You've already liked this post!",
-        });
-      } else {
-        likes += `${email} `;
-
-        post.like([likes, req.params.id], (err, data) => {
-          if (err) {
-            next(new AppError(err.sqlMessage, 500));
+      // Check user liked or not
+      new User(connection).getOne(
+        ["users.email"],
+        {},
+        ` WHERE id = "${req.user.id}"`,
+        (err, result) => {
+          let email = result[0].email;
+          if (likes !== null && likes.includes(email)) {
+            res.json({
+              status: "fail",
+              msg: "You've already liked this post!",
+            });
           } else {
-            post.get(
-              ["posts.id,posts.like"],
-              {},
-              ` Where posts.id = ${req.params.id}`,
-              (err, getRes) => {
-                if (getRes.like != null) {
-                  getRes.like = getRes.like.split(" ");
-                }
+            likes += `${email} `;
 
-                getRes.map((item) => {
-                  if (item.like != null) {
-                    item.like = item.like.trim().split(" ");
-                  } else {
-                    item.like = [];
+            post.like([likes, req.params.id], (err, data) => {
+              if (err) {
+                next(new AppError(err.sqlMessage, 500));
+              } else {
+                post.get(
+                  ["posts.id, posts.like"],
+                  {},
+                  ` WHERE id = ${req.params.id}`,
+                  (err, getRes) => {
+                    if (getRes.like != null) {
+                      getRes.like = getRes.like.split(" ");
+                    }
+
+                    getRes.map((item) => {
+                      if (item.like != null) {
+                        item.like = item.like.trim().split(" ");
+                      } else {
+                        item.like = [];
+                      }
+                    });
+
+                    res.status(200).json({
+                      status: "success",
+                      msg: "Create successfully!",
+                      data: arrayToJson(getRes),
+                    });
                   }
-                });
-                res.json({
-                  status: "fail",
-                  msg: "Post liked!",
-                  data: arrayToJson(getRes),
-                });
+                );
               }
-            );
+            });
           }
-        });
-      }
-    });
-  });
+        }
+      );
+    }
+  );
 };
 
 export { getPost, createOnePost, updatePost, deletePost, likePost };

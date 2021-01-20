@@ -8,8 +8,9 @@ class Post {
   get(selectOpts, joinOpts, whereOpts, cb) {
     let sql = "SELECT * FROM posts";
 
+    console.log(selectOpts);
     // Handle selection
-    if (selectOpts.length > 0) {
+    if (selectOpts.length > 0 && selectOpts) {
       let selection = "";
 
       selectOpts.map(
