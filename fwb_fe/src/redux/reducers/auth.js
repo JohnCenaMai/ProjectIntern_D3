@@ -8,6 +8,7 @@ import {
   UPLOAD_PROFILE_IMAGE,
   UPLOAD_PROFILE_FAIL,
   UPLOAD_PROFILE_SUCCESS,
+  UPDATE_USER_HOBIT,
   AUTH_ERROR,
   JOIN_PREMIUM,
   LOGOUT,
@@ -47,6 +48,11 @@ function authReducer(state = initialState, action) {
       return {
         ...state,
         user: payload,
+      };
+    case UPDATE_USER_HOBIT:
+      return {
+        ...state,
+        user: { ...state.user, hobits: payload },
       };
     case JOIN_PREMIUM:
       return {

@@ -12,6 +12,7 @@ import {
   LOGOUT,
   UPLOAD_PROFILE_SUCCESS,
   JOIN_PREMIUM,
+  UPDATE_USER_HOBIT,
 } from "./types";
 import { setAlert } from "./alert";
 
@@ -177,6 +178,29 @@ export const joinPremium = (method, amount) => async (dispatch) => {
 
     dispatch({
       type: JOIN_PREMIUM,
+      payload: response.data.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateUserHobits = (id, hobits = []) => async (dispatch) => {
+  try {
+    let data = {
+      hobits,
+    };
+
+    const response = await api.patch(
+      `/users/hobits/${id}`,
+      JSON.stringify(data),
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    dispatch({
+      type: UPDATE_USER_HOBIT,
       payload: response.data.data,
     });
   } catch (error) {

@@ -110,6 +110,7 @@ const updateHobits = (req, res) => {
     res.status(200).json({
       status: "success",
       msg: "Hobits updated!",
+      data: hobits.split(","),
     });
   });
 };
