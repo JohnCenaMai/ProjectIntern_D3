@@ -25,3 +25,4 @@ export const ADD_POST = "ADD_POST";
 export const GET_POST = "GET_POST";
 export const JOIN_PREMIUM = "JOIN_PREMIUM";
 export const UPDATE_USER_HOBIT = "UPDATE_USER_HOBIT";
+export const LOAD_COMMENT = "LOAD_COMMENT";

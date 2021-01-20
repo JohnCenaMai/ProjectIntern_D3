@@ -7,7 +7,7 @@ import constants from "../utlis/constants.js";
 import Post from "./../models/Post.js";
 import connection from "./../server.js";
 
-const getPost = (req, res) => {
+const getPost = (req, res, next) => {
   // getAll has 3 parameters:
   // selectOpts: [],
   // joinOpts: {},
@@ -31,7 +31,7 @@ const getPost = (req, res) => {
     },
     req.params.id == null ? "" : `Where posts.id = ${req.params.id}`,
     (err, result) => {
-      if (err) console.log(err);
+      if (err) next(new AppError(err.sqlMessage, 500));
 
       if (result.like != null) {
         result.like = result.like.split(" ");

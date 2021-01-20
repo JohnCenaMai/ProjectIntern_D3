@@ -7,11 +7,12 @@ import {
   GET_POST,
   ADD_COMMENT,
   REMOVE_COMMENT,
+  LOAD_COMMENT,
 } from "../actions/types";
 
 const initialState = {
   posts: [],
-  post: null,
+  comments: [],
   loading: true,
   error: {},
 };
@@ -45,6 +46,21 @@ function postReducer(state = initialState, action) {
         ...state,
         posts: state.posts.filter((post) => post.id !== payload),
         loading: false,
+      };
+    case LOAD_COMMENT:
+      return {
+        ...state,
+        comments: payload,
+      };
+    case ADD_COMMENT:
+      return {
+        ...state,
+        comments: [payload, ...state.comments],
+      };
+    case REMOVE_COMMENT:
+      return {
+        ...state,
+        comments: state.comments.filter((comment) => comment.id !== payload),
       };
     default:
       return state;
