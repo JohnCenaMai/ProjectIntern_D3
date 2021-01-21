@@ -6,7 +6,7 @@ import { Spin, Space } from "antd";
 
 function PrivateRoutes({
   component: Component,
-  auth: { isAuthenticated, loading },
+  auth: { isAuthenticated = false, loading },
   ...rest
 }) {
   return (
@@ -14,7 +14,17 @@ function PrivateRoutes({
       {...rest}
       render={(props) =>
         loading ? (
-          <Spin size="large" />
+          <div
+            style={{
+              width: "100vw",
+              height: "100vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Spin size="large" />
+          </div>
         ) : isAuthenticated ? (
           <Component {...props} />
         ) : (

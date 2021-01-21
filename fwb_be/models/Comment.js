@@ -3,9 +3,22 @@ class Comment {
     this.connection = connection;
   }
 
-  get(whereOpts, cb) {
+  get(selectOpts, whereOpts, cb) {
     let sql = "SELECT * FROM comments";
 
+    // Handle selection
+    if (selectOpts.length > 0 && selectOpts) {
+      let selection = "";
+
+      selectOpts.map(
+        (select, index) =>
+          (selection += `${select} ${
+            index == selectOpts.length - 1 ? "" : ","
+          }`)
+      );
+
+      sql = sql.replace("*", selection);
+    }
     // Handle Where
     if (whereOpts != "") {
       sql += whereOpts;

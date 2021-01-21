@@ -12,6 +12,7 @@ import {
   LOGOUT,
   UPLOAD_PROFILE_SUCCESS,
   JOIN_PREMIUM,
+  UPDATE_USER_HOBIT,
 } from "./types";
 import { setAlert } from "./alert";
 
@@ -42,15 +43,16 @@ export const register = (username, birthday, gender, email, password) => async (
     const response = await api.post("/auth/register", body);
     console.log(response.data.token);
 
-    setCookie("jwt", response.data.token, { path: "/" });
+    setCookie("jwt", response.data.token, {
+      path: "/",
+      expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+    });
 
     dispatch({
       type: REGISTER_SUCCESS,
       payload: response.data,
     });
   } catch (error) {
-    const errors = error.response.data.errors;
-
     dispatch({
       type: REGISTER_FAIL,
     });
@@ -65,7 +67,10 @@ export const login = (email, password) => async (dispatch) => {
     const response = await api.post("/auth/login", body);
     console.log(response.data.token);
 
-    setCookie("jwt", response.data.token, { path: "/" });
+    setCookie("jwt", response.data.token, {
+      path: "/",
+      expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+    });
 
     dispatch({
       type: LOGIN_SUCCESS,
@@ -175,8 +180,32 @@ export const joinPremium = (method, amount) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     });
 
+    console.log(response.data.data);
     dispatch({
       type: JOIN_PREMIUM,
+      payload: response.data.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateUserHobits = (id, hobits = []) => async (dispatch) => {
+  try {
+    let data = {
+      hobits,
+    };
+
+    const response = await api.patch(
+      `/users/hobits/${id}`,
+      JSON.stringify(data),
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    dispatch({
+      type: UPDATE_USER_HOBIT,
       payload: response.data.data,
     });
   } catch (error) {

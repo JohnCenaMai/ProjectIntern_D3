@@ -6,8 +6,8 @@ import {
   UPDATE_LIKES,
   DELETE_POST,
   ADD_POST,
-  GET_POST,
   ADD_COMMENT,
+  LOAD_COMMENT,
   REMOVE_COMMENT,
 } from "./types";
 
@@ -32,6 +32,8 @@ export const getPosts = () => async (dispatch) => {
 export const likePost = (id) => async (dispatch) => {
   try {
     const response = await api.put(`/posts/like/${id}`);
+
+    console.log(response.data.data);
 
     dispatch({
       type: UPDATE_LIKES,
@@ -80,7 +82,74 @@ export const deletePost = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: POST_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err.response.msg, status: err.response.status },
     });
+  }
+};
+
+export const loadAllComment = (id) => async (dispatch) => {
+  try {
+    const response = await api.get(`/comments`);
+
+    dispatch({
+      type: LOAD_COMMENT,
+      payload: response.data.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.msg, status: err.status },
+    });
+  }
+};
+
+export const loadComment = (id) => async (dispatch) => {
+  try {
+    const response = await api.get(`/comments/${id}`);
+
+    dispatch({
+      type: LOAD_COMMENT,
+      payload: response.data.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.msg, status: err.status },
+    });
+  }
+};
+
+export const addComment = (content, parent_id = null, postId) => async (
+  dispatch
+) => {
+  console.log("Action", postId);
+  try {
+    const data = {
+      content,
+      parent_id,
+      postId,
+    };
+
+    const response = await api.post(`/comments`, JSON.stringify(data));
+
+    dispatch({
+      type: ADD_COMMENT,
+      payload: response.data.data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deleteComment = (id) => async (dispatch) => {
+  try {
+    await api.delete(`/comments/${id}`);
+
+    dispatch({
+      type: REMOVE_COMMENT,
+      payload: id,
+    });
+  } catch (err) {
+    console.log(err);
   }
 };

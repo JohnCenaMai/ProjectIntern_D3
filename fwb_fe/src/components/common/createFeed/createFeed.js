@@ -24,7 +24,8 @@ function CreateFeed({ addPost }) {
     e.preventDefault();
 
     if (text === "" || file === null) {
-      alert("Please write something");
+      alert("Please write something and choose an image");
+      return;
     }
 
     const token = getCookie("jwt");
@@ -51,7 +52,7 @@ function CreateFeed({ addPost }) {
             <Divider />
             <div className="createFeed__form--action">
               <div className="upload-btn-wrapper">
-                <button className="btn">Upload a file</button>
+                <button className="btn">Choose an image</button>
                 <input
                   type="file"
                   name="myfile"
@@ -59,9 +60,6 @@ function CreateFeed({ addPost }) {
                 />
               </div>
               <div>
-                <button className="createFeed__form--button discardBtn">
-                  Discard
-                </button>
                 <button
                   className="createFeed__form--button postBtn"
                   type="submit"

@@ -1,0 +1,15 @@
+.likes {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.likes__item {
+  margin: 10px;
+}
+
+.like__itemImg {
+  height: 250px;
+  object-fit: cover;
+}

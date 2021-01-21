@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import "./feedItem.css";
-import { Avatar, Image, Typography } from "antd";
+import { Avatar, Image, Tooltip, Typography } from "antd";
 import { Menu, Dropdown, Row, Col } from "antd";
 import {
   MoreOutlined,
@@ -14,8 +14,13 @@ import ReactTimeAgo from "react-time-ago";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { likePost, deletePost } from "./../../../redux/actions/post";
+import CommentModal from "../commentModal/commentModal";
+import { useHistory } from "react-router-dom";
 
 function FeedItem({ post, user, likePost, deletePost }) {
+  let history = useHistory();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const dropdownMenu = (
     <Menu onClick={(e) => handleMenuClick(e)}>
       <Menu.Item key="0">Edit post</Menu.Item>
@@ -30,6 +35,7 @@ function FeedItem({ post, user, likePost, deletePost }) {
   const handleMenuClick = (e) => {
     switch (e.key) {
       case "0":
+        history.push(`feeds/edit/${post.id}`);
         break;
       case "1":
         deletePost(post.id);
@@ -37,6 +43,18 @@ function FeedItem({ post, user, likePost, deletePost }) {
       default:
         break;
     }
+  };
+
+  const handleCmtClick = (id) => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
   };
 
   return (
@@ -93,6 +111,7 @@ function FeedItem({ post, user, likePost, deletePost }) {
               {post.like.includes(user.email) ? (
                 <LikeFilled
                   style={{ fontSize: "24px", marginRight: "0.5rem" }}
+                  onClick={handleLike}
                 />
               ) : (
                 <LikeOutlined
@@ -100,17 +119,29 @@ function FeedItem({ post, user, likePost, deletePost }) {
                   onClick={handleLike}
                 />
               )}
-              <Typography.Text>
-                {post.like ? post.like.length : 0} likes
-              </Typography.Text>
+              <Tooltip placement="top" title={post.like.toString()}>
+                <Typography.Text>
+                  {post.like ? post.like.length : 0} likes
+                </Typography.Text>
+              </Tooltip>
             </div>
-            <div className="feedItem__footer--infor">
+            <div
+              className="feedItem__footer--infor"
+              onClick={() => handleCmtClick(post.id)}
+            >
               <CommentOutlined
                 style={{ fontSize: "24px", marginRight: "0.5rem" }}
               />
-              <Typography.Text>15 comments</Typography.Text>
+              <Typography.Text>Click to comment</Typography.Text>
             </div>
           </div>
+
+          <CommentModal
+            postId={post.id}
+            isModalVisible={isModalVisible}
+            onCancle={handleCancel}
+            onOK={handleOk}
+          />
         </div>
       </Col>
     </Row>

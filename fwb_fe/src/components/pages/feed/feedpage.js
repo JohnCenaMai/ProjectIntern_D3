@@ -8,11 +8,12 @@ import CreateFeed from "../../common/createFeed/createFeed";
 // Redux
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getPosts } from "./../../../redux/actions/post";
+import { getPosts, loadAllComment } from "./../../../redux/actions/post";
 
-function FeedPage({ getPosts, posts: { posts } }) {
+function FeedPage({ getPosts, loadAllComment, posts: { posts } }) {
   useEffect(() => {
     getPosts();
+    loadAllComment();
   }, [getPosts]);
 
   return (
@@ -53,4 +54,4 @@ const mapStateToProps = (state) => ({
   posts: state.posts,
 });
 
-export default connect(mapStateToProps, { getPosts })(FeedPage);
+export default connect(mapStateToProps, { getPosts, loadAllComment })(FeedPage);

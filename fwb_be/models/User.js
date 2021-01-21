@@ -30,8 +30,6 @@ export default class User {
       sql += whereOpts;
     }
 
-    console.log(sql);
-
     this.connection.query(sql, cb);
   }
 

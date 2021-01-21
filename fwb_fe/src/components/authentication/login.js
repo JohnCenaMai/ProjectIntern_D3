@@ -115,7 +115,7 @@ function Login({ login, register, isAuthenticated }) {
       emailRegister,
       passwordRegister
     );
-    history.push("/find-near-you");
+    history.push("/me");
   };
 
   if (isAuthenticated) {
@@ -175,12 +175,6 @@ function Login({ login, register, isAuthenticated }) {
               >
                 Sign In
               </ButtonSignIn>
-            </Form.Item>
-
-            <Form.Item>
-              <ButtonSignInWithGG type="primary">
-                Sign In With Google
-              </ButtonSignInWithGG>
             </Form.Item>
 
             <Tooltip>

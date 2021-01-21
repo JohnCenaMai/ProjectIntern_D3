@@ -9,7 +9,7 @@ class Post {
     let sql = "SELECT * FROM posts";
 
     // Handle selection
-    if (selectOpts.length > 0) {
+    if (selectOpts.length > 0 && selectOpts) {
       let selection = "";
 
       selectOpts.map(
@@ -33,8 +33,6 @@ class Post {
     if (whereOpts !== "") {
       sql += whereOpts;
     }
-
-    console.log(sql);
 
     this.connection.query(`${sql} ORDER BY posts.created_at DESC`, cb);
   }

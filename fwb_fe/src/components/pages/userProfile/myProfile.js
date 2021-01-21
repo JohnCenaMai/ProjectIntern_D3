@@ -28,7 +28,9 @@ import {
 } from "./../../../redux/actions/auth";
 import store from "./../../../redux/store";
 import { getAllHobits } from "./../../../redux/actions/hobits";
+import { updateUserHobits } from "./../../../redux/actions/auth";
 import { getCookie } from "../../../utils/cookie";
+import setAuthToken from "./../../../utils/setAuthToken";
 
 function MyProfile({
   user,
@@ -37,6 +39,7 @@ function MyProfile({
   uploadProfilePic,
   loadUser,
   getAllHobits,
+  updateUserHobits,
 }) {
   let histoty = useHistory();
 
@@ -45,11 +48,11 @@ function MyProfile({
     loadUser();
   }, []);
 
-  const [userHobit, setUserHobit] = useState([]);
+  const [userHobit, setUserHobit] = useState([...user.hobits]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const checkInclude = (el) => {
-    return user.hobits.includes(el);
+    return userHobit.includes(el);
   };
 
   const handleChangeImage = (file) => {
@@ -62,7 +65,18 @@ function MyProfile({
     histoty.push("/");
   };
 
-  console.log(userHobit);
+  const handleOK = () => {
+    updateUserHobits(user.id, userHobit);
+    setIsModalVisible(false);
+  };
+
+  const handleHobitClick = (item) => {
+    if (checkInclude(item)) {
+      setUserHobit(userHobit.filter((el) => item !== el));
+    } else {
+      setUserHobit([...userHobit, item]);
+    }
+  };
 
   return (
     <Fragment>
@@ -78,7 +92,11 @@ function MyProfile({
             <div className="myProfile__pic">
               <img
                 className="myProfile__photo"
-                src={`http://localhost:5000/images/${user.imageUrl}`}
+                src={
+                  user.imageUrl
+                    ? `http://localhost:5000/images/${user.imageUrl}`
+                    : "https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg"
+                }
                 alt="myProfile__pic"
               />
               <form className="myProfile__uploadForm">
@@ -136,16 +154,17 @@ function MyProfile({
             <Modal
               title="Interest"
               visible={isModalVisible}
-              onOk={() => setIsModalVisible(false)}
+              onOk={() => handleOK()}
               onCancel={() => setIsModalVisible(false)}
             >
-              {hobits.map((item) => (
+              {hobits.map((hobit) => (
                 <div
+                  key={hobit}
                   className="hobitItem"
-                  onClick={() => setUserHobit([...userHobit, item])}
+                  onClick={() => handleHobitClick(hobit)}
                 >
-                  <Typography.Title level={5}>{item}</Typography.Title>
-                  {checkInclude(item) && (
+                  <Typography.Title level={5}>{hobit}</Typography.Title>
+                  {checkInclude(hobit) && (
                     <CheckOutlined
                       style={{ color: "#ff2e68", fontSize: "18px" }}
                     />
@@ -176,6 +195,7 @@ MyProfile.propTypes = {
   logout: PropTypes.func.isRequired,
   uploadProfilePic: PropTypes.func.isRequired,
   getAllHobits: PropTypes.func.isRequired,
+  updateUserHobits: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -188,4 +208,5 @@ export default connect(mapStateToProps, {
   uploadProfilePic,
   getAllHobits,
   loadUser,
+  updateUserHobits,
 })(MyProfile);
