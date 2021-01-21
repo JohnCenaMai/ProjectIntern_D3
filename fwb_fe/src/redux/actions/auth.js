@@ -180,6 +180,7 @@ export const joinPremium = (method, amount) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     });
 
+    console.log(response.data.data);
     dispatch({
       type: JOIN_PREMIUM,
       payload: response.data.data,

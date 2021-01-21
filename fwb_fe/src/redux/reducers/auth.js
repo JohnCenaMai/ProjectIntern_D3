@@ -57,7 +57,7 @@ function authReducer(state = initialState, action) {
     case JOIN_PREMIUM:
       return {
         ...state,
-        user: { ...state, role: payload },
+        user: { ...state.user, role: payload },
       };
     case AUTH_ERROR:
     case LOGOUT:
