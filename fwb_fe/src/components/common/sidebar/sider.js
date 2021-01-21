@@ -14,6 +14,7 @@ import {
   MessageFilled,
   EllipsisOutlined,
   SearchOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -35,7 +36,8 @@ const ButtonPayment = styled.button`
   cursor: pointer;
 `;
 
-function Sidebar({ user }) {
+function Sidebar({ user, appbarColor, textColor }) {
+  console.log(appbarColor);
   const [color, setColor] = useState("black");
 
   return (
@@ -48,6 +50,8 @@ function Sidebar({ user }) {
             // onMouseUp={ChangeColorText}
             mode="inline"
             style={{
+              backgroundColor: appbarColor,
+              color: textColor,
               width: "20vw",
               overflowX: "hidden",
               height: "100vh",
@@ -55,13 +59,12 @@ function Sidebar({ user }) {
               left: 0,
             }}
           >
-            <Menu.Item>
-              <Row>
-                <Image
-                  style={{ width: "150px", marginLeft: "50%" }}
-                  src="https://howzuapp.com/web/static/media/logo-c-64.60b36bd1.png"
-                />
-              </Row>
+            <Menu.Item style={{ marginBottom: "3rem", textAlign: "center" }}>
+              <img
+                alt="logo"
+                style={{ width: "150px" }}
+                src="https://howzuapp.com/web/static/media/logo-c-64.60b36bd1.png"
+              />
             </Menu.Item>
             <Menu.Item>
               <Link to="/me" style={{ display: "flex", alignItems: "center" }}>
@@ -103,8 +106,8 @@ function Sidebar({ user }) {
             <Menu.Item key="8" icon={<LikeFilled />}>
               <Link to="/likes">Likes</Link>
             </Menu.Item>
-            <Menu.Item key="9" icon={<EllipsisOutlined />}>
-              Help
+            <Menu.Item key="9" icon={<SettingOutlined />}>
+              <Link to="/settings">Settings</Link>
             </Menu.Item>
             <SubMenu
               style={{ fontSize: "17px" }}
@@ -135,6 +138,8 @@ Sidebar.propTypes = {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  appbarColor: state.settings.appbarColor,
+  textColor: state.settings.textColor,
 });
 
 export default connect(mapStateToProps, {})(Sidebar);

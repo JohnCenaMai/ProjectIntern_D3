@@ -16,6 +16,7 @@ import Payment from "../pages/payment/payment";
 import Checkout from "../pages/payment/checkout";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import Settings from "../pages/settings/settings";
 
 function Routes(props) {
   const promise = loadStripe(
@@ -31,6 +32,7 @@ function Routes(props) {
       <PrivateRoutes exact path="/me" component={MyProfile} />
       <PrivateRoutes exact path="/feeds/edit/:id" component={EditFeed} />
       <PrivateRoutes exact path="/feeds" component={FeedPage} />
+      <PrivateRoutes exact path="/settings" component={Settings} />
       <PrivateRoutes exact path="/message" component={Chat} />
       <PrivateRoutes exact path="/payment" component={Payment} />
       <PrivateRoutes exact path="/checkout">

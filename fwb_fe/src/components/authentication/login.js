@@ -177,12 +177,6 @@ function Login({ login, register, isAuthenticated }) {
               </ButtonSignIn>
             </Form.Item>
 
-            <Form.Item>
-              <ButtonSignInWithGG type="primary">
-                Sign In With Google
-              </ButtonSignInWithGG>
-            </Form.Item>
-
             <Tooltip>
               <a href="/filter">Forgot Password?</a>
             </Tooltip>
