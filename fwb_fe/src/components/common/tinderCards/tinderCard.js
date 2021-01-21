@@ -7,19 +7,25 @@ import "./tinderCards.css";
 import PropTypes from "prop-types";
 import { getRandomUser, likePeople } from "./../../../redux/actions/matching";
 import { connect } from "react-redux";
+import { useHistory } from "react-router";
 
 function TinderCards({ randoms, getRandomUser, likePeople }) {
   useEffect(() => {
     getRandomUser();
   }, []);
 
-  console.log(randoms);
+  let history = useHistory();
+
   const [people, setPeople] = useState(randoms);
 
   const handleSwipe = (direction, person) => {
     switch (direction) {
       case "right":
         likePeople(person.id);
+        break;
+
+      case "up":
+        history.push(`/profile/${person.id}`);
         break;
 
       default:

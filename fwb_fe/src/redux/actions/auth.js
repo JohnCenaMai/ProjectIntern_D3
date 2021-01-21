@@ -13,6 +13,8 @@ import {
   UPLOAD_PROFILE_SUCCESS,
   JOIN_PREMIUM,
   UPDATE_USER_HOBIT,
+  GET_USER_PROFILE,
+  SEND_RESET_PASSWORD_TOKEN,
 } from "./types";
 import { setAlert } from "./alert";
 
@@ -21,7 +23,6 @@ export const loadUser = () => async (dispatch) => {
   try {
     const response = await api.get("/users/me");
 
-    console.log("Load User");
     dispatch({
       type: USER_LOADED,
       payload: response.data.data,
@@ -30,6 +31,20 @@ export const loadUser = () => async (dispatch) => {
     dispatch({
       type: AUTH_ERROR,
     });
+  }
+};
+
+// GET user
+export const getUserProfile = (id) => async (dispatch) => {
+  try {
+    const response = await api.get(`/users/${id}`);
+
+    dispatch({
+      type: GET_USER_PROFILE,
+      payload: response.data.data,
+    });
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -180,7 +195,6 @@ export const joinPremium = (method, amount) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     });
 
-    console.log(response.data.data);
     dispatch({
       type: JOIN_PREMIUM,
       payload: response.data.data,

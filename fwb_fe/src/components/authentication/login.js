@@ -12,7 +12,7 @@ import {
 import "antd/dist/antd.css";
 import "./login.css";
 import "./responsive.css";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, Redirect, Link } from "react-router-dom";
 // Redux
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -177,14 +177,8 @@ function Login({ login, register, isAuthenticated }) {
               </ButtonSignIn>
             </Form.Item>
 
-            <Form.Item>
-              <ButtonSignInWithGG type="primary">
-                Sign In With Google
-              </ButtonSignInWithGG>
-            </Form.Item>
-
             <Tooltip>
-              <a href="/filter">Forgot Password?</a>
+              <Link to="/forgotPassword">Forgot Password?</Link>
             </Tooltip>
           </Form>
         </TabPane>

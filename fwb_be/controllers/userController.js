@@ -6,7 +6,7 @@ import connection from "./../server.js";
 const getUserProfile = (req, res) => {
   const user = new User(connection);
 
-  user.getOne([], {}, `id = ${req.params.id}`, (err, result) => {
+  user.getOne([], {}, ` WHERE id = ${req.params.id}`, (err, result) => {
     if (err) console.log(err);
 
     result[0].hobits = result[0].hobits.split(",");
@@ -134,8 +134,8 @@ const getRandomUser = (req, res, next) => {
   const user = new User(connection);
 
   user.getRandomUser(
-    ["id", "email, username, full_name", "imageUrl", "region", "country"],
-    [req.user.id],
+    ["users.id", "email, username, full_name", "imageUrl", "region", "country"],
+    [req.user.id, req.user.id],
     (err, result) => {
       if (err) {
         next(new AppError(err.sqlMessage, 500));

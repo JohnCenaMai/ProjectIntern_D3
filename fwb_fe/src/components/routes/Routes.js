@@ -16,6 +16,7 @@ import Payment from "../pages/payment/payment";
 import Checkout from "../pages/payment/checkout";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import ViewUser from "../pages/viewUser/viewUser";
 
 function Routes(props) {
   const promise = loadStripe(
@@ -28,6 +29,8 @@ function Routes(props) {
       <PrivateRoutes exact path="/find-new-people" component={Match} />
       <PrivateRoutes exact path="/likes" component={Likes} />
       <PrivateRoutes exact path="/me/edit" component={EditProfile} />
+      <PrivateRoutes exact path="/profile/:id" component={ViewUser} />
+      <Route exact path="/forgotPassword" component={ForgotPassword} />
       <PrivateRoutes exact path="/me" component={MyProfile} />
       <PrivateRoutes exact path="/feeds/edit/:id" component={EditFeed} />
       <PrivateRoutes exact path="/feeds" component={FeedPage} />
