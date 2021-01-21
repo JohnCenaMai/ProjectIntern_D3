@@ -30,6 +30,7 @@ import store from "./../../../redux/store";
 import { getAllHobits } from "./../../../redux/actions/hobits";
 import { updateUserHobits } from "./../../../redux/actions/auth";
 import { getCookie } from "../../../utils/cookie";
+import setAuthToken from "./../../../utils/setAuthToken";
 
 function MyProfile({
   user,
@@ -91,7 +92,11 @@ function MyProfile({
             <div className="myProfile__pic">
               <img
                 className="myProfile__photo"
-                src={`http://localhost:5000/images/${user.imageUrl}`}
+                src={
+                  user.imageUrl
+                    ? `http://localhost:5000/images/${user.imageUrl}`
+                    : "https://icon-library.com/images/no-user-image-icon/no-user-image-icon-27.jpg"
+                }
                 alt="myProfile__pic"
               />
               <form className="myProfile__uploadForm">

@@ -24,7 +24,8 @@ function CreateFeed({ addPost }) {
     e.preventDefault();
 
     if (text === "" || file === null) {
-      alert("Please write something");
+      alert("Please write something and choose an image");
+      return;
     }
 
     const token = getCookie("jwt");

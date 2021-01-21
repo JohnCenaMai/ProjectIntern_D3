@@ -43,15 +43,16 @@ export const register = (username, birthday, gender, email, password) => async (
     const response = await api.post("/auth/register", body);
     console.log(response.data.token);
 
-    setCookie("jwt", response.data.token, { path: "/" });
+    setCookie("jwt", response.data.token, {
+      path: "/",
+      expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+    });
 
     dispatch({
       type: REGISTER_SUCCESS,
       payload: response.data,
     });
   } catch (error) {
-    const errors = error.response.data.errors;
-
     dispatch({
       type: REGISTER_FAIL,
     });
@@ -66,7 +67,10 @@ export const login = (email, password) => async (dispatch) => {
     const response = await api.post("/auth/login", body);
     console.log(response.data.token);
 
-    setCookie("jwt", response.data.token, { path: "/" });
+    setCookie("jwt", response.data.token, {
+      path: "/",
+      expires: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
+    });
 
     dispatch({
       type: LOGIN_SUCCESS,

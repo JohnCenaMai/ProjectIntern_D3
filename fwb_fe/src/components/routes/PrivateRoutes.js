@@ -6,7 +6,7 @@ import { Spin, Space } from "antd";
 
 function PrivateRoutes({
   component: Component,
-  auth: { isAuthenticated, loading },
+  auth: { isAuthenticated = false, loading },
   ...rest
 }) {
   return (

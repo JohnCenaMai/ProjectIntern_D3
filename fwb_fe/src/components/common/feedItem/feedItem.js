@@ -15,8 +15,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { likePost, deletePost } from "./../../../redux/actions/post";
 import CommentModal from "../commentModal/commentModal";
+import { useHistory } from "react-router-dom";
 
 function FeedItem({ post, user, likePost, deletePost }) {
+  let history = useHistory();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const dropdownMenu = (
@@ -33,6 +35,7 @@ function FeedItem({ post, user, likePost, deletePost }) {
   const handleMenuClick = (e) => {
     switch (e.key) {
       case "0":
+        history.push(`feeds/edit/${post.id}`);
         break;
       case "1":
         deletePost(post.id);
@@ -108,6 +111,7 @@ function FeedItem({ post, user, likePost, deletePost }) {
               {post.like.includes(user.email) ? (
                 <LikeFilled
                   style={{ fontSize: "24px", marginRight: "0.5rem" }}
+                  onClick={handleLike}
                 />
               ) : (
                 <LikeOutlined

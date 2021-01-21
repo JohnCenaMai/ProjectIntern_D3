@@ -18,7 +18,7 @@ const getUserProfile = (req, res) => {
   });
 };
 
-const getMyProfile = (req, res) => {
+const getMyProfile = (req, res, next) => {
   const user = new User(connection);
 
   user.getOne(
@@ -45,7 +45,7 @@ const getMyProfile = (req, res) => {
     },
     ` WHERE users.id = ${req.user.id}`,
     (err, result) => {
-      if (err) console.log(err);
+      if (err) next(new AppError(err.sqlMessage, 500));
 
       result[0].hobits = result[0].hobits.split(",");
 

@@ -115,7 +115,7 @@ function Login({ login, register, isAuthenticated }) {
       emailRegister,
       passwordRegister
     );
-    history.push("/find-near-you");
+    history.push("/me");
   };
 
   if (isAuthenticated) {

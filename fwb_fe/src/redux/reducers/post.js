@@ -37,7 +37,9 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         posts: state.posts.map((post) =>
-          post.id === payload.id ? { ...post, like: payload.like } : post
+          post.id === payload.id
+            ? { ...post, like: payload.like.filter((el) => el) }
+            : post
         ),
         loading: false,
       };

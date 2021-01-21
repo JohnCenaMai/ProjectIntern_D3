@@ -89,10 +89,7 @@ function Sidebar({ user }) {
               <Link to="/find-near-you"> People near you</Link>
             </Menu.Item>
             <Menu.Item key="2" icon={<SearchOutlined />}>
-              Find new people
-            </Menu.Item>
-            <Menu.Item key="3" icon={<EyeFilled />}>
-              Visitors
+              <Link to="/find-new-people">Find new people</Link>
             </Menu.Item>
             <Menu.Item key="4" icon={<MessageFilled />}>
               <Link to="/message">Message</Link>
@@ -101,13 +98,10 @@ function Sidebar({ user }) {
               <Link to="/feeds">Feeds</Link>
             </Menu.Item>
             <Menu.Item key="6" icon={<HeartFilled />}>
-              <Link to="/matches">Matches</Link>
-            </Menu.Item>
-            <Menu.Item key="7" icon={<StarFilled />}>
-              Super Likes
+              <Link to="/">Matches</Link>
             </Menu.Item>
             <Menu.Item key="8" icon={<LikeFilled />}>
-              Likes
+              <Link to="/likes">Likes</Link>
             </Menu.Item>
             <Menu.Item key="9" icon={<EllipsisOutlined />}>
               Help

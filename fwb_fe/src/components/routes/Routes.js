@@ -8,6 +8,8 @@ import ForgotPassword from "./../pages/forgotPassword/forgotPassword";
 import MyMatching from "./../pages/myMatching/myMatching";
 import MyProfile from "./../pages/userProfile/myProfile";
 import EditProfile from "./../pages/editProfile/editProfile";
+import Likes from "./../pages/likes/likes";
+import EditFeed from "./../pages/feed/editFeed";
 import { Route } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
 import Payment from "../pages/payment/payment";
@@ -23,9 +25,11 @@ function Routes(props) {
   return (
     <div>
       <PrivateRoutes exact path="/find-near-you" component={HomePage} />
-      <PrivateRoutes exact path="/matches" component={Match} />
+      <PrivateRoutes exact path="/find-new-people" component={Match} />
+      <PrivateRoutes exact path="/likes" component={Likes} />
       <PrivateRoutes exact path="/me/edit" component={EditProfile} />
       <PrivateRoutes exact path="/me" component={MyProfile} />
+      <PrivateRoutes exact path="/feeds/edit/:id" component={EditFeed} />
       <PrivateRoutes exact path="/feeds" component={FeedPage} />
       <PrivateRoutes exact path="/message" component={Chat} />
       <PrivateRoutes exact path="/payment" component={Payment} />
