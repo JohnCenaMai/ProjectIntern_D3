@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect } from "react";
-import { Row, Col, Typography, Image, Spin, Button } from "antd";
+import React, { Fragment, useEffect, useState } from "react";
+import { Row, Col, Typography, Image, Spin, Button, message } from "antd";
 import Sidebar from "../../common/sidebar/sider";
 import "./viewUser.css";
 import { GlobalOutlined } from "@ant-design/icons";
@@ -7,16 +7,24 @@ import { GlobalOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getUserProfile } from "./../../../redux/actions/auth";
+import { likePeople } from "./../../../redux/actions/matching";
 import { useParams } from "react-router";
 
-function ViewUser({ profile, getUserProfile }) {
+function ViewUser({ profile, getUserProfile, likePeople }) {
   const { id } = useParams();
+  const [btnText, setBtnText] = useState("Like");
+  const [btnState, setBtnState] = useState(false);
 
   useEffect(() => {
     getUserProfile(id);
   }, []);
 
-  console.log(profile);
+  const sendLike = (id) => {
+    likePeople(id);
+    setBtnText("Liked");
+    setBtnState(true);
+    message.success("Like sent");
+  };
 
   return (
     <Fragment>
@@ -81,8 +89,13 @@ function ViewUser({ profile, getUserProfile }) {
                       <Button className="viewProfile__btn" type="primary">
                         Send message
                       </Button>
-                      <Button className="viewProfile__btn" type="primary">
-                        Like
+                      <Button
+                        className="viewProfile__btn"
+                        type="primary"
+                        disabled={btnState}
+                        onClick={() => sendLike(profile.id)}
+                      >
+                        {btnText}
                       </Button>
                     </div>
                   </div>
@@ -109,4 +122,6 @@ const mapStateToProps = (state) => ({
   profile: state.auth.viewProfile,
 });
 
-export default connect(mapStateToProps, { getUserProfile })(ViewUser);
+export default connect(mapStateToProps, { getUserProfile, likePeople })(
+  ViewUser
+);

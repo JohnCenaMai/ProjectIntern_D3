@@ -108,12 +108,14 @@ function ForgotPassword() {
                 <Input
                   placeholder="Enter you new password..."
                   value={newPassword}
+                  type="password"
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
               </Form.Item>
               <Form.Item label="Reeenter your new password">
                 <Input
                   placeholder="Reenter you new password..."
+                  type="password"
                   value={newPasswordCf}
                   onChange={(e) => setNewPasswordCf(e.target.value)}
                 />

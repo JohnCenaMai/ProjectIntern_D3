@@ -4,17 +4,11 @@ import TinderCard from "react-tinder-card";
 import { Button, Tooltip } from "antd";
 import { LikeOutlined, CloseOutlined } from "@ant-design/icons";
 import "./tinderCards.css";
-import PropTypes from "prop-types";
-import { getRandomUser, likePeople } from "./../../../redux/actions/matching";
-import { connect } from "react-redux";
 import { useHistory } from "react-router";
 
-function TinderCards({ randoms, getRandomUser, likePeople }) {
-  useEffect(() => {
-    getRandomUser();
-  }, []);
-
+function TinderCards({ randoms, likePeople }) {
   let history = useHistory();
+  console.log(randoms);
 
   const [people, setPeople] = useState(randoms);
 
@@ -77,14 +71,4 @@ function TinderCards({ randoms, getRandomUser, likePeople }) {
   );
 }
 
-TinderCards.propTypes = {
-  getRandomUser: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  randoms: state.matching.randoms,
-});
-
-export default connect(mapStateToProps, { getRandomUser, likePeople })(
-  TinderCards
-);
+export default TinderCards;

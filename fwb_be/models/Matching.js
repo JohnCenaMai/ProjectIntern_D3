@@ -6,7 +6,28 @@ class Matching {
   getAllMatchingByUser(data, selectOpts, cb) {
     let sql = `SELECT * FROM matchings
     INNER JOIN users ON users.id = matchings.matching_name_two
-    WHERE matching_name_one = ? ORDER BY status`;
+    WHERE matching_name_one = ? AND matchings.status = 0 ORDER BY matchings.created_at DESC`;
+
+    if (selectOpts.length > 0) {
+      let selection = "";
+
+      selectOpts.map(
+        (select, index) =>
+          (selection += `${select} ${
+            index == selectOpts.length - 1 ? "" : ","
+          }`)
+      );
+
+      sql = sql.replace("*", selection);
+    }
+
+    this.connection.query(sql, data, cb);
+  }
+
+  getAllReceiveMatchingByUser(data, selectOpts, cb) {
+    let sql = `SELECT * FROM matchings
+    INNER JOIN users ON users.id = matchings.matching_name_one
+    WHERE matching_name_two = ? AND matchings.status = 0 ORDER BY matchings.created_at DESC`;
 
     if (selectOpts.length > 0) {
       let selection = "";
