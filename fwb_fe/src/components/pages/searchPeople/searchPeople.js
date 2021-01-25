@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
   Row,
   Col,
@@ -13,12 +13,14 @@ import {
   Avatar,
   Radio,
   DatePicker,
+  AutoComplete,
   Button,
 } from "antd";
-import { FilterOutlined } from "@ant-design/icons";
+import { FilterOutlined, CloseOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import Sidebar from "../../common/sidebar/sider";
 import "./searchPeople.css";
+import api from "./../../../utils/api";
 import {
   CountryDropdown,
   RegionDropdown,
@@ -26,8 +28,9 @@ import {
 } from "react-country-region-selector";
 
 const initialFilterValue = {
+  username: "",
   gender: null,
-  age: null,
+  age: [null, null],
   country: "",
   region: "",
 };
@@ -36,55 +39,56 @@ function SearchPeople() {
   const [filterData, setFilterData] = useState(initialFilterValue);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [searchResult, setSearchResult] = useState([
-    {
-      id: 95,
-      email: "lamnk@gmail.com",
-      username: "nklam",
-      full_name: "NGUYEN KHAC LAM",
-      imageUrl: "image-1611027008332.jpeg",
-      region: "Capital Federal",
-      country: "Argentina",
-    },
-    {
-      id: 93,
-      email: "lam@gmail.com",
-      username: "Lam Nguyen Khac",
-      full_name: "Nguyen Khac Lam",
-      imageUrl: "image-1611196172695.jpeg",
-      region: "Bedford",
-      country: "United Kingdom",
-    },
-    {
-      id: 103,
-      email: "blabla@gmail.com",
-      username: "Fan Mu",
-      full_name: "Fan Mu",
-      imageUrl: "image-1611198647626.jpeg",
-      region: "Karlovačka Županija",
-      country: "Croatia",
-    },
-    {
-      id: 103,
-      email: "blabla@gmail.com",
-      username: "Fan Mu",
-      full_name: "Fan Mu",
-      imageUrl: "image-1611198647626.jpeg",
-      region: "Karlovačka Županija",
-      country: "Croatia",
-    },
-  ]);
+  const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const filter = () => {
     setIsModalVisible(true);
   };
 
-  const onSearch = () => {};
+  const onSearch = async () => {
+    if (filterData.username === "") {
+      alert("Please type something!");
+      return;
+    }
+
+    if (!localStorage.getItem("history").includes(filterData.username)) {
+      localStorage.setItem(
+        "history",
+        `${localStorage.getItem("history")} ${filterData.username}`
+      );
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await api.get("/users/profile/search", {
+        params: {
+          username: filterData.username,
+          gender: filterData.gender,
+          fromAge: filterData.age[0],
+          toAge: filterData.age[1],
+          country: filterData.country,
+          region: filterData.region,
+        },
+      });
+
+      setSearchResult(response.data.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleOk = () => {
     setIsModalVisible(false);
-    console.log(filterData);
+  };
+
+  const deleteHistory = (title) => {
+    localStorage.setItem(
+      "history",
+      localStorage.getItem("history").replace(title, "")
+    );
   };
 
   const renderResult = () => {
@@ -92,6 +96,9 @@ function SearchPeople() {
     if (searchResult.length !== 0) {
       results = (
         <div className="searchResults">
+          <Typography.Title level={4}>
+            Result: {searchResult.length}
+          </Typography.Title>
           <List
             itemLayout="horizontal"
             dataSource={searchResult}
@@ -130,17 +137,76 @@ function SearchPeople() {
     return results;
   };
 
+  const renderTitle = (title) => {
+    return <span>{title}</span>;
+  };
+
+  const renderItem = (title) => {
+    return {
+      value: title,
+      label: (
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography.Text
+            onClick={() => setFilterData({ ...filterData, username: title })}
+          >
+            {title}
+          </Typography.Text>
+
+          <span onClick={() => deleteHistory(title)}>
+            <CloseOutlined />
+          </span>
+        </div>
+      ),
+    };
+  };
+
+  const buildSuggestion = () => {
+    if (!localStorage.getItem("history")) {
+      localStorage.setItem("history", "");
+    }
+
+    let data = [];
+
+    localStorage
+      .getItem("history")
+      .trim()
+      .split(" ")
+      .map((item) => data.push(renderItem(item)));
+
+    return data;
+  };
+
+  const options = [
+    {
+      label: renderTitle("History"),
+      options: buildSuggestion(),
+    },
+  ];
+
   return (
     <Fragment>
       <Row>
         <Col span={19} push={5}>
           <div className="searchPeople">
             <div className="searchPeople__searchBar">
-              <Input.Search
-                placeholder="Type something..."
-                onSearch={onSearch}
-                enterButton
-              />
+              <AutoComplete
+                dropdownClassName="certain-category-search-dropdown"
+                dropdownMatchSelectWidth={400}
+                style={{ width: "90%" }}
+                options={options}
+              >
+                <Input.Search
+                  value={filterData.username}
+                  onChange={(e) =>
+                    setFilterData({ ...filterData, username: e.target.value })
+                  }
+                  allowClear
+                  placeholder="Type something..."
+                  onSearch={onSearch}
+                  enterButton
+                />
+              </AutoComplete>
+
               <FilterOutlined style={{ fontSize: "2rem" }} onClick={filter} />
             </div>
 

@@ -86,9 +86,6 @@ function Sidebar({ user }) {
                 </Typography.Title>
               </Link>
             </Menu.Item>
-            <Menu.Item key="1" icon={<LoadingOutlined />}>
-              <Link to="/find-near-you"> People near you</Link>
-            </Menu.Item>
             <Menu.Item key="2" icon={<SearchOutlined />}>
               <Link to="/find-new-people">Find new people</Link>
             </Menu.Item>

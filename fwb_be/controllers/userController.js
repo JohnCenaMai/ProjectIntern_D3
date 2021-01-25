@@ -150,6 +150,68 @@ const getRandomUser = (req, res, next) => {
   );
 };
 
+const searchPeople = (req, res, next) => {
+  const { username, gender, fromAge, toAge, country, region } = req.query;
+
+  const user = new User(connection);
+
+  user.getOne(
+    [
+      "users.id",
+      "users.username",
+      "users.full_name",
+      "users.email",
+      "users.birthday",
+      "users.country",
+      "users.region",
+      "users.description",
+      "users.gender",
+      "users.imageUrl",
+      "users.hobits",
+      "roles.name AS role",
+    ],
+    {
+      table_name: ["user_role", "roles"],
+      condition: [
+        "users.id = user_role.user_id",
+        "user_role.role_id = roles.id",
+      ],
+    },
+    ` WHERE users.username LIKE "%${username}%" AND ${
+      gender ? `gender = ${gender} AND` : ""
+    } users.country LIKE "%${country}%" AND users.region LIKE "%${region}%"`,
+    (err, result) => {
+      if (err) next(new AppError(err.sqlMessage, 500));
+
+      if (result.length > 0) {
+        result[0].hobits = result[0].hobits.split(",");
+
+        let data = result;
+
+        console.log(fromAge, toAge);
+        if (fromAge !== undefined && toAge !== undefined) {
+          data = result.filter((item) => {
+            const yearOfBirth = new Date(item.birthday).getFullYear();
+            return yearOfBirth >= fromAge && yearOfBirth <= toAge;
+          });
+        }
+
+        res.status(200).json({
+          status: "success",
+          count: data.length,
+          data: data,
+        });
+      } else {
+        res.status(200).json({
+          status: "success",
+          msg: "No result",
+          data: [],
+        });
+      }
+    }
+  );
+};
+
 export {
   getUserProfile,
   updateProfile,
@@ -157,4 +219,5 @@ export {
   uploadProfileImage,
   getRandomUser,
   getMyProfile,
+  searchPeople,
 };
