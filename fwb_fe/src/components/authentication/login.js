@@ -104,7 +104,7 @@ function Login({ login, register, isAuthenticated }) {
     console.log("Logining...");
     console.log(login);
     login(emailLogin, passwordLogin);
-    history.push("/find-near-you");
+    history.push("/feeds");
   };
 
   const handleRegister = () => {
@@ -119,7 +119,7 @@ function Login({ login, register, isAuthenticated }) {
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/find-near-you" />;
+    return <Redirect to="/feeds" />;
   }
 
   return (

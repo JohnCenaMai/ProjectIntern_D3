@@ -14,6 +14,7 @@ import {
   MessageFilled,
   EllipsisOutlined,
   SearchOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -35,7 +36,8 @@ const ButtonPayment = styled.button`
   cursor: pointer;
 `;
 
-function Sidebar({ user }) {
+function Sidebar({ user, appbarColor, textColor }) {
+  console.log(appbarColor);
   const [color, setColor] = useState("black");
 
   return (
@@ -48,6 +50,8 @@ function Sidebar({ user }) {
             // onMouseUp={ChangeColorText}
             mode="inline"
             style={{
+              backgroundColor: appbarColor,
+              color: textColor,
               width: "20vw",
               overflowX: "hidden",
               height: "100vh",
@@ -104,6 +108,9 @@ function Sidebar({ user }) {
             <Menu.Item key="7" icon={<LikeFilled />}>
               <Link to="/likes">Likes</Link>
             </Menu.Item>
+            <Menu.Item key="9" icon={<SettingOutlined />}>
+              <Link to="/settings">Settings</Link>
+            </Menu.Item>
             <SubMenu
               style={{ fontSize: "17px" }}
               icon={<AppstoreFilled />}
@@ -133,6 +140,8 @@ Sidebar.propTypes = {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
+  appbarColor: state.settings.appbarColor,
+  textColor: state.settings.textColor,
 });
 
 export default connect(mapStateToProps, {})(Sidebar);

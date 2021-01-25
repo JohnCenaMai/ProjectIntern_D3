@@ -4,6 +4,7 @@ import posts from "./post";
 import alert from "./alert";
 import hobits from "./hobits";
 import matching from "./matching";
+import settings from "./settings";
 
 export default combineReducers({
   auth,
@@ -11,4 +12,5 @@ export default combineReducers({
   hobits,
   matching,
   posts,
+  settings,
 });

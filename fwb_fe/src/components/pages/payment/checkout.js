@@ -31,7 +31,6 @@ function Checkout({ joinPremium }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submit");
 
     const payload = await stripe
       .confirmCardPayment(clientSercet, {

@@ -18,15 +18,15 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import ViewUser from "../pages/viewUser/viewUser";
 import SearchPeople from "../pages/searchPeople/searchPeople";
+import Settings from "../pages/settings/settings";
 
-function Routes(props) {
+function Routes() {
   const promise = loadStripe(
     "pk_test_51IAuM3BX9LsAfc8lOwZ4Qt6Yis3gqOv4puKxwj8GsE6z5OFSnUXSyEGC34FKqfU7SUnB9b48Dq6FpVgeo4YNIYri00X3mOoJ9W"
   );
 
   return (
     <div>
-      <PrivateRoutes exact path="/find-near-you" component={HomePage} />
       <PrivateRoutes exact path="/suggest" component={Match} />
       <PrivateRoutes exact path="/find-new-people" component={SearchPeople} />
       <PrivateRoutes exact path="/likes" component={Likes} />
@@ -38,6 +38,7 @@ function Routes(props) {
       <PrivateRoutes exact path="/feeds" component={FeedPage} />
       <PrivateRoutes exact path="/message" component={Chat} />
       <PrivateRoutes exact path="/payment" component={Payment} />
+      <PrivateRoutes exact path="/settings" component={Settings} />
       <PrivateRoutes exact path="/checkout">
         <Elements stripe={promise}>
           <Checkout />
