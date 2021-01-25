@@ -1,0 +1,18 @@
+.match {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.swipe {
+  margin-bottom: 2rem;
+}
+
+.swipeButtons__item {
+  width: 80px;
+  height: 80px;
+  margin: 0 15px;
+}

@@ -1,0 +1,91 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+/* Custom */
+.ant-btn-primary {
+  background-color: #ff2e68 !important;
+  border: none !important;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon {
+  border-color: #ff2e68 !important;
+}
+
+.ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-icon {
+  background: #ff2e68 !important;
+  color: white !important;
+}
+
+.ant-steps-item-process .ant-steps-item-icon {
+  border-color: #ff2e68 !important;
+}
+
+.ant-steps-item-process > .ant-steps-item-container > .ant-steps-icon {
+}
+.ant-steps-item-active.ant-steps-item-process
+  > .ant-steps-item-container
+  > .ant-steps-item-icon
+  .ant-steps-icon {
+  color: #fff !important;
+}
+
+.ant-steps-item-process
+  > .ant-steps-item-container
+  > .ant-steps-item-icon
+  .ant-steps-icon {
+  color: #ff2e68 !important;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
+  color: #ff2e68 !important;
+}
+
+.ant-steps-item-finish
+  > .ant-steps-item-container
+  > .ant-steps-item-content
+  > .ant-steps-item-title::after {
+  background-color: #ff2e68 !important;
+}
+
+.ant-btn:hover {
+  color: white !important;
+  border-color: #ff2e68 !important;
+}
+
+/* End Custom */
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

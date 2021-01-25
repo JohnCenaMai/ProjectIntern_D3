@@ -1,0 +1,78 @@
+.payment {
+  width: 100%;
+  height: 50vh;
+}
+
+.payment__slider {
+  width: 100%;
+  position: relative;
+}
+
+.payment__sliderItem {
+  text-align: center;
+}
+
+.payment__sliderItem img {
+  display: inline-block !important;
+}
+
+.payment__sliderItem h3 {
+  font-weight: 800;
+}
+
+.payment__sliderItem p {
+}
+
+.slick-dots.slick-dots-bottom {
+  position: absolute;
+  bottom: 15%;
+}
+
+.slick-dots.slick-dots-bottom li button {
+  width: 10px;
+  height: 10px;
+  border-radius: 500%;
+  background: aqua !important;
+  color: aqua;
+}
+
+.slick-dots.slick-dots-bottom .slick-active button {
+  background: brown !important;
+  color: brown;
+}
+
+.joinBtn {
+  display: inline-block;
+  margin-top: 2rem;
+  background-color: #ff2e68;
+  color: white;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  width: 250px;
+  height: 50px;
+}
+
+.checkout form {
+  padding: 1rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout__card {
+  width: 80%;
+  box-shadow: 1px 12px 23px -8px rgba(0, 0, 0, 0.55);
+  border-radius: 1rem;
+}
+
+.checkout__btn {
+  width: 80%;
+  margin-top: 1rem;
+  color: white;
+  background-color: #ff2e68;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  height: 40px;
+}

@@ -1,0 +1,12 @@
+.likes,
+.receiveLikes {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.likes__list,
+.receiveLikes__list {
+  width: 80%;
+}

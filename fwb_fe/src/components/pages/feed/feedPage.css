@@ -1,0 +1,17 @@
+.feedPage {
+  padding: 1rem 2rem 1rem 2rem;
+}
+
+.feedPage__container {
+}
+
+.feedPage--noFeeds {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+}
+
+.feedPage--content {
+  margin-top: 3rem;
+}

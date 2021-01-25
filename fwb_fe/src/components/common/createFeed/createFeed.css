@@ -1,0 +1,73 @@
+.createFeed {
+  padding: 1rem;
+  box-shadow: 1px 12px 23px -8px rgba(0, 0, 0, 0.55);
+  border-radius: 1rem;
+}
+
+.createFeed__form input,
+textarea {
+  outline: none;
+  margin-top: 10px;
+  border: none;
+  width: 100%;
+  padding: 10px;
+}
+
+.createFeed__form--action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.createFeed__form--button {
+  border: none;
+  outline: none;
+  padding: 5px 25px;
+  margin-left: 15px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.discardBtn {
+  background-color: transparent;
+  transition: 0.3s;
+}
+
+.discardBtn:hover {
+  background-color: red;
+  color: white;
+}
+
+.postBtn {
+  background-color: #ff2e68;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  border: 2px solid gray;
+  color: gray;
+  background-color: white;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.upload-btn-wrapper input[type="file"] {
+  font-size: 24px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}

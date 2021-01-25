@@ -1,0 +1,81 @@
+.ant-row > .ant-col-8{
+    text-align: center;
+    padding: 1% 0 1% 0;
+    border-bottom: 1px solid #E8E8E8;
+    font-size: 20px;
+    font-weight: bold;
+}
+.ant-row > .ant-col-8:first-child{
+    padding-right: 25%;
+}
+.ant-row > .ant-col-8:last-child{
+    padding-left: 22%;
+}
+.profile{
+    width: 200px!important;
+    height: 200px!important;
+    margin: 0px auto;
+    margin-top: 23%;
+    animation: ripple 1s linear infinite;
+}
+@keyframes ripple {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 64, 0.7), 0 0 0 0 rgba(255, 0, 64, 0.7);
+    }
+    40% {
+        box-shadow: 0 0 0 50px rgba(255, 0, 64, 0), 0 0 0 0 rgba(255, 0, 64, 0.7);
+    }
+    80% {
+        box-shadow: 0 0 0 50px rgba(255, 0, 64, 0), 0 0 0 30px rgba(255, 0, 64, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 0, 64, 0), 0 0 0 30px rgba(255, 0, 64, 0);
+    }
+}
+
+.space_input {
+    margin-bottom: 7%!important;
+}
+.rdEditProfile{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.choice_country{
+    width: 100%;border: 1px solid #E8E8E8;height: 30px;
+}
+.filter{
+    font-size: 25px;
+    font-weight: bold;
+}
+.filter__interesting{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   
+}
+.filter__interesting>input{
+    border-radius: 55%;
+    border: none;
+    width: 80px;
+    height: 80px;
+    color: white;
+    cursor: pointer;
+}
+input[type="button"]{
+    outline: none;
+}
+.filter__matches--require{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.filter__matches--require>input{
+    border-radius: 55%;
+    border: none;
+    width: 80px;
+    height: 80px;
+    color: white;
+    cursor: pointer;
+}
