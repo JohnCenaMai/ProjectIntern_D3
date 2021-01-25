@@ -55,13 +55,14 @@ function Sidebar({ user }) {
               left: 0,
             }}
           >
-            <Menu.Item>
-              <Row>
-                <Image
-                  style={{ width: "150px", marginLeft: "50%" }}
+            <Menu.Item style={{ textAlign: "center", marginBottom: "2rem" }}>
+              <Link to="/find-near-you">
+                <img
+                  style={{ width: "150px" }}
+                  alt="logo"
                   src="https://howzuapp.com/web/static/media/logo-c-64.60b36bd1.png"
                 />
-              </Row>
+              </Link>
             </Menu.Item>
             <Menu.Item>
               <Link to="/me" style={{ display: "flex", alignItems: "center" }}>
@@ -91,6 +92,9 @@ function Sidebar({ user }) {
             <Menu.Item key="2" icon={<SearchOutlined />}>
               <Link to="/find-new-people">Find new people</Link>
             </Menu.Item>
+            <Menu.Item key="3" icon={<SearchOutlined />}>
+              <Link to="/suggest">Suggested</Link>
+            </Menu.Item>
             <Menu.Item key="4" icon={<MessageFilled />}>
               <Link to="/message">Message</Link>
             </Menu.Item>
@@ -100,11 +104,8 @@ function Sidebar({ user }) {
             <Menu.Item key="6" icon={<HeartFilled />}>
               <Link to="/">Matches</Link>
             </Menu.Item>
-            <Menu.Item key="8" icon={<LikeFilled />}>
+            <Menu.Item key="7" icon={<LikeFilled />}>
               <Link to="/likes">Likes</Link>
-            </Menu.Item>
-            <Menu.Item key="9" icon={<EllipsisOutlined />}>
-              Help
             </Menu.Item>
             <SubMenu
               style={{ fontSize: "17px" }}

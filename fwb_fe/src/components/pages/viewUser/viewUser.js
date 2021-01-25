@@ -8,10 +8,11 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getUserProfile } from "./../../../redux/actions/auth";
 import { likePeople } from "./../../../redux/actions/matching";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 
 function ViewUser({ profile, getUserProfile, likePeople }) {
   const { id } = useParams();
+  let history = useHistory();
   const [btnText, setBtnText] = useState("Like");
   const [btnState, setBtnState] = useState(false);
 
@@ -86,7 +87,11 @@ function ViewUser({ profile, getUserProfile, likePeople }) {
                       Hobits: {profile.hobits.toString()}
                     </Typography.Title>
                     <div className="viewProfile__btnContainer">
-                      <Button className="viewProfile__btn" type="primary">
+                      <Button
+                        className="viewProfile__btn"
+                        type="primary"
+                        onClick={() => history.push("/message")}
+                      >
                         Send message
                       </Button>
                       <Button

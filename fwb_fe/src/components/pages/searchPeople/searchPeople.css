@@ -1,0 +1,14 @@
+.searchPeople {
+  padding: 1rem;
+}
+
+.searchPeople__searchBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.searchPeople__searchBar .ant-input-group-wrapper {
+  width: 80% !important;
+}

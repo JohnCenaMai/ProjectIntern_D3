@@ -16,3 +16,7 @@
   height: 80px;
   margin: 0 15px;
 }
+
+.arrow {
+  position: absolute;
+}

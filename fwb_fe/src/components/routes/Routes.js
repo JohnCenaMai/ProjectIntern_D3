@@ -17,6 +17,7 @@ import Checkout from "../pages/payment/checkout";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import ViewUser from "../pages/viewUser/viewUser";
+import SearchPeople from "../pages/searchPeople/searchPeople";
 
 function Routes(props) {
   const promise = loadStripe(
@@ -26,7 +27,8 @@ function Routes(props) {
   return (
     <div>
       <PrivateRoutes exact path="/find-near-you" component={HomePage} />
-      <PrivateRoutes exact path="/find-new-people" component={Match} />
+      <PrivateRoutes exact path="/suggest" component={Match} />
+      <PrivateRoutes exact path="/find-new-people" component={SearchPeople} />
       <PrivateRoutes exact path="/likes" component={Likes} />
       <PrivateRoutes exact path="/me/edit" component={EditProfile} />
       <PrivateRoutes exact path="/profile/:id" component={ViewUser} />

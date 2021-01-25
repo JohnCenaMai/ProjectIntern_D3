@@ -8,7 +8,6 @@ import { useHistory } from "react-router";
 
 function TinderCards({ randoms, likePeople }) {
   let history = useHistory();
-  console.log(randoms);
 
   const [people, setPeople] = useState(randoms);
 
@@ -53,7 +52,7 @@ function TinderCards({ randoms, likePeople }) {
           </div>
         </TinderCard>
       ))}
-      <div className="swipeButtons">
+      {/* <div className="swipeButtons">
         <Button
           shape="circle"
           className="swipeButtons__item"
@@ -66,7 +65,7 @@ function TinderCards({ randoms, likePeople }) {
           className="swipeButtons__item"
           icon={<LikeOutlined style={{ fontSize: "32px", color: "#07cdea" }} />}
         />
-      </div>
+      </div> */}
     </Fragment>
   );
 }
