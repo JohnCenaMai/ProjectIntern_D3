@@ -1,0 +1,28 @@
+.viewProfile {
+  margin-top: 3rem;
+}
+
+.viewProfile__image {
+  height: 300px;
+  width: 300px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.viewProfile .ant-image-mask {
+  border-radius: 50%;
+}
+
+.viewProfile__btnContainer {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.viewProfile__btn {
+  margin-right: 1rem;
+}
+
+.viewProfile__btn {
+  background-color: aqua;
+}

@@ -10,7 +10,7 @@ function MyMatching() {
       imageUrl:
         "https://cynramedia.com/wp-content/uploads/2019/08/nancy-momoland-1-1-1024x800.jpg",
       createdAt: "12-12-2020",
-      status: 0,
+      status: 1,
     },
     {
       username: "Nancy",

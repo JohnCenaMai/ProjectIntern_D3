@@ -69,9 +69,11 @@ export default class User {
 
   getRandomUser(selectOpts, data, cb) {
     let sql = `SELECT * FROM users
-    WHERE id NOT IN (SELECT id FROM users WHERE id = ?)
+    LEFT JOIN matchings ON users.id = matchings.matching_name_one
+    WHERE users.id NOT IN (SELECT id FROM users WHERE users.id = ?)
+    AND users.id NOT IN (SELECT matching_name_two FROM matchings WHERE matchings.matching_name_one = ?)
     ORDER BY RAND()
-    LIMIT 3`;
+    LIMIT 10`;
 
     if (selectOpts.length > 0) {
       let selection = "";

@@ -12,6 +12,8 @@ import {
   AUTH_ERROR,
   JOIN_PREMIUM,
   LOGOUT,
+  GET_USER_PROFILE,
+  SEND_RESET_PASSWORD_TOKEN,
 } from "../actions/types";
 
 const initialState = {
@@ -19,6 +21,7 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   user: null,
+  viewProfile: null,
 };
 
 function authReducer(state = initialState, action) {
@@ -30,6 +33,11 @@ function authReducer(state = initialState, action) {
         isAuthenticated: true,
         loading: false,
         user: payload,
+      };
+    case GET_USER_PROFILE:
+      return {
+        ...state,
+        viewProfile: payload,
       };
     case UPLOAD_PROFILE_IMAGE:
       return {

@@ -12,7 +12,7 @@ import {
 import "antd/dist/antd.css";
 import "./login.css";
 import "./responsive.css";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, Redirect, Link } from "react-router-dom";
 // Redux
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -104,7 +104,7 @@ function Login({ login, register, isAuthenticated }) {
     console.log("Logining...");
     console.log(login);
     login(emailLogin, passwordLogin);
-    history.push("/find-near-you");
+    history.push("/feeds");
   };
 
   const handleRegister = () => {
@@ -119,7 +119,7 @@ function Login({ login, register, isAuthenticated }) {
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/find-near-you" />;
+    return <Redirect to="/feeds" />;
   }
 
   return (
@@ -178,7 +178,7 @@ function Login({ login, register, isAuthenticated }) {
             </Form.Item>
 
             <Tooltip>
-              <a href="/filter">Forgot Password?</a>
+              <Link to="/forgotPassword">Forgot Password?</Link>
             </Tooltip>
           </Form>
         </TabPane>

@@ -7,15 +7,7 @@ import Header from "../../common/header/header";
 function HomePage() {
   return (
     <Fragment>
-      <Row
-        style={{
-          overflow: "auto",
-          height: "100vh",
-          position: "sticky",
-          top: 0,
-          left: 0,
-        }}
-      >
+      <Row>
         <Col span={19} push={5}>
           <Header />
           <Row>

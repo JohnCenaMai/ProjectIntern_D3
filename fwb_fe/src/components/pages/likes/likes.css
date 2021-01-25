@@ -1,15 +1,12 @@
-.likes {
-  height: 100vh;
+.likes,
+.receiveLikes {
+  margin-top: 2rem;
   display: flex;
-  justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
-.likes__item {
-  margin: 10px;
-}
-
-.like__itemImg {
-  height: 250px;
-  object-fit: cover;
+.likes__list,
+.receiveLikes__list {
+  width: 80%;
 }

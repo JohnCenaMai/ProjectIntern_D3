@@ -59,12 +59,14 @@ function Sidebar({ user, appbarColor, textColor }) {
               left: 0,
             }}
           >
-            <Menu.Item style={{ marginBottom: "3rem", textAlign: "center" }}>
-              <img
-                alt="logo"
-                style={{ width: "150px" }}
-                src="https://howzuapp.com/web/static/media/logo-c-64.60b36bd1.png"
-              />
+            <Menu.Item style={{ textAlign: "center", marginBottom: "2rem" }}>
+              <Link to="/find-near-you">
+                <img
+                  style={{ width: "150px" }}
+                  alt="logo"
+                  src="https://howzuapp.com/web/static/media/logo-c-64.60b36bd1.png"
+                />
+              </Link>
             </Menu.Item>
             <Menu.Item>
               <Link to="/me" style={{ display: "flex", alignItems: "center" }}>
@@ -88,11 +90,11 @@ function Sidebar({ user, appbarColor, textColor }) {
                 </Typography.Title>
               </Link>
             </Menu.Item>
-            <Menu.Item key="1" icon={<LoadingOutlined />}>
-              <Link to="/find-near-you"> People near you</Link>
-            </Menu.Item>
             <Menu.Item key="2" icon={<SearchOutlined />}>
               <Link to="/find-new-people">Find new people</Link>
+            </Menu.Item>
+            <Menu.Item key="3" icon={<SearchOutlined />}>
+              <Link to="/suggest">Suggested</Link>
             </Menu.Item>
             <Menu.Item key="4" icon={<MessageFilled />}>
               <Link to="/message">Message</Link>
@@ -103,7 +105,7 @@ function Sidebar({ user, appbarColor, textColor }) {
             <Menu.Item key="6" icon={<HeartFilled />}>
               <Link to="/">Matches</Link>
             </Menu.Item>
-            <Menu.Item key="8" icon={<LikeFilled />}>
+            <Menu.Item key="7" icon={<LikeFilled />}>
               <Link to="/likes">Likes</Link>
             </Menu.Item>
             <Menu.Item key="9" icon={<SettingOutlined />}>

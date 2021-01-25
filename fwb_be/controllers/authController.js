@@ -169,36 +169,41 @@ const resetPassword = async (req, res) => {
   // Find user with reset token
   const user = new User(connection);
 
-  user.getOne(`reset_token = "${req.params.token}"`, async (err, result) => {
-    console.log(result);
+  user.getOne(
+    [],
+    {},
+    ` WHERE reset_token = "${req.params.token}"`,
+    async (err, result) => {
+      console.log(result);
 
-    if (result.length == 0) {
-      return res.status(404).json({
-        status: "fail",
-        msg: "Can't found this user",
-      });
-    } else {
-      if (result[0].reset_token_expire < Date.now()) {
-        return res.status(400).json({
+      if (result.length == 0) {
+        return res.status(404).json({
           status: "fail",
-          msg: "Invalid reset token",
+          msg: "Can't found this user",
         });
       } else {
-        const salt = await bcrypt.genSalt(10);
-        const encriptPassword = await bcrypt.hash(req.body.password, salt);
-
-        const data = [encriptPassword, result[0].id];
-        user.updatePassword(data, (err, result) => {
-          if (err) console.log(err);
-
-          return res.status(201).json({
-            status: "success",
-            msg: "Password changed!",
+        if (result[0].reset_token_expire < Date.now()) {
+          return res.status(400).json({
+            status: "fail",
+            msg: "Invalid reset token",
           });
-        });
+        } else {
+          const salt = await bcrypt.genSalt(10);
+          const encriptPassword = await bcrypt.hash(req.body.password, salt);
+
+          const data = [encriptPassword, result[0].id];
+          user.updatePassword(data, (err, result) => {
+            if (err) console.log(err);
+
+            return res.status(201).json({
+              status: "success",
+              msg: "Password changed!",
+            });
+          });
+        }
       }
     }
-  });
+  );
   // Check if token expired
   // Change Password
   // Send token to user by email

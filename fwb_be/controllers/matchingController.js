@@ -15,6 +15,32 @@ const getAllMatchingByUser = (req, res) => {
       "users.imageUrl",
       "users.birthday",
       "matchings.status",
+      "matchings.created_at",
+    ],
+    (err, result) => {
+      if (err) console.log(err);
+      res.status(200).json({
+        status: "success",
+        count: result.length,
+        data: result,
+      });
+    }
+  );
+};
+const getAllReceiveMatchingByUser = (req, res) => {
+  const matching = new Matching(connection);
+
+  matching.getAllReceiveMatchingByUser(
+    [req.user.id],
+    [
+      "users.id AS userId",
+      "users.username",
+      "users.email",
+      "users.full_name",
+      "users.imageUrl",
+      "users.birthday",
+      "matchings.status",
+      "matchings.created_at",
     ],
     (err, result) => {
       if (err) console.log(err);
@@ -46,7 +72,7 @@ const likePeople = (req, res) => {
 const acceptMatching = (req, res) => {
   const matching = new Matching(connection);
 
-  matching.acceptMatching([req.user.id, req.params.id], (err, result) => {
+  matching.acceptMatching([req.params.id, req.user.id], (err, result) => {
     if (err) console.log(err);
 
     res.status(201).json({
@@ -59,7 +85,7 @@ const acceptMatching = (req, res) => {
 const rejectMatching = (req, res) => {
   const matching = new Matching(connection);
 
-  matching.rejectMatching([req.user.id, req.params.id], (err, result) => {
+  matching.rejectMatching([req.params.id, req.user.id], (err, result) => {
     if (err) console.log(err);
 
     res.status(201).json({
@@ -69,4 +95,10 @@ const rejectMatching = (req, res) => {
   });
 };
 
-export { getAllMatchingByUser, likePeople, acceptMatching, rejectMatching };
+export {
+  getAllMatchingByUser,
+  likePeople,
+  acceptMatching,
+  rejectMatching,
+  getAllReceiveMatchingByUser,
+};
