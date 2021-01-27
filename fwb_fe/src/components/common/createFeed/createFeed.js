@@ -15,10 +15,13 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addPost } from "./../../../redux/actions/post";
 import { getCookie } from "./../../../utils/cookie";
+import { useTranslation } from "react-i18next";
 
 function CreateFeed({ addPost }) {
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
+
+  const { t } = useTranslation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,7 +41,7 @@ function CreateFeed({ addPost }) {
     <Row>
       <Col span={24} push={3}>
         <div className="createFeed">
-          <Typography.Title level={3}>How do you feel now?</Typography.Title>
+          <Typography.Title level={3}>{t("create_feed")}</Typography.Title>
           <form onSubmit={(e) => handleSubmit(e)} className="createFeed__form">
             <Input.TextArea
               value={text}
@@ -47,12 +50,12 @@ function CreateFeed({ addPost }) {
               maxLength={1000}
               rows={3}
               onChange={(e) => setText(e.target.value)}
-              placeholder="Let's help people know more about this"
+              placeholder={t("post_decription")}
             />
             <Divider />
             <div className="createFeed__form--action">
               <div className="upload-btn-wrapper">
-                <button className="btn">Choose an image</button>
+                <button className="btn">{t("choose_an_image")}</button>
                 <input
                   type="file"
                   name="myfile"
@@ -64,7 +67,7 @@ function CreateFeed({ addPost }) {
                   className="createFeed__form--button postBtn"
                   type="submit"
                 >
-                  Post
+                  {t("post")}
                 </button>
               </div>
             </div>

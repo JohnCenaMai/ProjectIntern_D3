@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { Row, Col, Typography, Carousel, Button, Switch } from "antd";
+import React, { Fragment, useState } from "react";
+import { Row, Col, Typography, Carousel, Button, Switch, Select } from "antd";
 import Sidebar from "../../common/sidebar/sider";
 import { LeftOutlined } from "@ant-design/icons";
 import "./settings.css";
@@ -7,12 +7,25 @@ import { useHistory } from "react-router";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { toogleDarkMode } from "./../../../redux/actions/settings";
+import i18next from "i18next";
+
+const languageMap = {
+  en: { label: "English", dir: "ltr", active: true },
+  vi: { label: "Vietnamese", dir: "ltr", active: false },
+};
 
 function Settings({ isDarkMode, toogleDarkMode, appbarColor, textColor }) {
   let history = useHistory();
+  // const [language, setLanguage] = useState("")
+  const selected = localStorage.getItem("i18nextLng") || "en";
 
   const handleChangeTheme = () => {
     toogleDarkMode();
+  };
+
+  const onLanguageChange = (val) => {
+    console.log(val);
+    i18next.changeLanguage(val);
   };
 
   return (
@@ -45,8 +58,18 @@ function Settings({ isDarkMode, toogleDarkMode, appbarColor, textColor }) {
                   />
                 </div>
                 <div className="settings__sectionItem">
-                  <Typography.Text>Notification</Typography.Text>
-                  <Switch />
+                  <Typography.Text>Language</Typography.Text>
+                  <Select
+                    value={selected}
+                    style={{ width: 120 }}
+                    onChange={(val) => onLanguageChange(val)}
+                  >
+                    {Object.keys(languageMap)?.map((item) => (
+                      <Select.Option value={item}>
+                        {languageMap[item].label}
+                      </Select.Option>
+                    ))}
+                  </Select>
                 </div>
               </div>
             </div>

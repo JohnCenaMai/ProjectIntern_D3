@@ -101,10 +101,8 @@ function Login({ login, register, isAuthenticated }) {
   };
 
   const handleLogin = () => {
-    console.log("Logining...");
-    console.log(login);
     login(emailLogin, passwordLogin);
-    history.push("/feeds");
+    history.push("/find-new-people");
   };
 
   const handleRegister = () => {
@@ -119,7 +117,7 @@ function Login({ login, register, isAuthenticated }) {
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/feeds" />;
+    return <Redirect to="/find-new-people" />;
   }
 
   return (

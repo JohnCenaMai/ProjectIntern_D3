@@ -1,0 +1,21 @@
+{
+  "find_new_people": "Find new people",
+  "suggested": "Suggested",
+  "messages": "Messages",
+  "feeds": "Feeds",
+  "matches": "Matches",
+  "likes": "Likes",
+  "settings": "Settings",
+  "multi_language": "Multi Language",
+  "english": "English",
+  "vietnamese": "Vietnamese",
+  "become_a_premium_member": "Become a Premium Member",
+
+  "create_feed": "How do you feel now?",
+  "just_created_a_post": "just_created_a_post",
+  "choose_an_image": "Choose an image",
+  "post": "Post",
+  "post_decription": "Let's help people know more about this",
+  "click_to_comment": "Click to comment",
+  "delete_post": "Delete post"
+}

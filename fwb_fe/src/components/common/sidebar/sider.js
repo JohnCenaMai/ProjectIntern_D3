@@ -13,11 +13,13 @@ import {
   HeartFilled,
   MessageFilled,
   EllipsisOutlined,
+  QuestionCircleOutlined,
   SearchOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -37,7 +39,7 @@ const ButtonPayment = styled.button`
 `;
 
 function Sidebar({ user, appbarColor, textColor }) {
-  console.log(appbarColor);
+  const { t } = useTranslation();
   const [color, setColor] = useState("black");
 
   return (
@@ -91,39 +93,31 @@ function Sidebar({ user, appbarColor, textColor }) {
               </Link>
             </Menu.Item>
             <Menu.Item key="2" icon={<SearchOutlined />}>
-              <Link to="/find-new-people">Find new people</Link>
+              <Link to="/find-new-people">{t("find_new_people")}</Link>
             </Menu.Item>
-            <Menu.Item key="3" icon={<SearchOutlined />}>
-              <Link to="/suggest">Suggested</Link>
+            <Menu.Item key="3" icon={<QuestionCircleOutlined />}>
+              <Link to="/suggest">{t("suggested")}</Link>
             </Menu.Item>
             <Menu.Item key="4" icon={<MessageFilled />}>
-              <Link to="/message">Message</Link>
+              <Link to="/message">{t("messages")}</Link>
             </Menu.Item>
             <Menu.Item key="5" icon={<HeartFilled />}>
-              <Link to="/feeds">Feeds</Link>
+              <Link to="/feeds">{t("feeds")}</Link>
             </Menu.Item>
             <Menu.Item key="6" icon={<HeartFilled />}>
-              <Link to="/">Matches</Link>
+              <Link to="/">{t("matches")}</Link>
             </Menu.Item>
             <Menu.Item key="7" icon={<LikeFilled />}>
-              <Link to="/likes">Likes</Link>
+              <Link to="/likes">{t("likes")}</Link>
             </Menu.Item>
             <Menu.Item key="9" icon={<SettingOutlined />}>
-              <Link to="/settings">Settings</Link>
+              <Link to="/settings">{t("settings")}</Link>
             </Menu.Item>
-            <SubMenu
-              style={{ fontSize: "17px" }}
-              icon={<AppstoreFilled />}
-              title="Multi Language"
-            >
-              <Menu.Item key="10">English</Menu.Item>
-              <Menu.Item key="11">Vietnam</Menu.Item>
-              <Menu.Item key="12">China</Menu.Item>
-            </SubMenu>
+
             {user !== null && user.role === "free" && (
               <ButtonPayment>
                 <Link to="/payment" style={{ color: "white" }}>
-                  Become a Premium Member
+                  {t("become_a_premium_member")}
                 </Link>
               </ButtonPayment>
             )}
